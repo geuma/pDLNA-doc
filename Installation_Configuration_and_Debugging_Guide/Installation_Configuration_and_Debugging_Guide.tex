@@ -58,7 +58,7 @@
   \end{center}
 }
 
-\newcommand{\pDLNAversion}{0.61.0}
+\newcommand{\pDLNAversion}{0.62.0}
 
 \begin{document}
 \pagestyle{empty}
@@ -1746,21 +1746,21 @@ Table~\ref{tab:supportedaudiotranscodingprofiles} gives an overview about the cu
 		\diagbox{Out}{In}		& \textsc{aac} 			& \textsc{ac3} 			& \textsc{flac} 			& \textsc{mp3} 				& \textsc{vorbis} 		& \textsc{wav} 				& \textsc{wmav1}		& \textsc{wmav2} \\
 		\hline
 		\hline
-		\textsc{aac} 				& \cellcolor{Grey} 	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&										& \cellcolor{Green} \\
+		\textsc{aac} 				& \cellcolor{Grey} 	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{ac3}				& \cellcolor{Green} &	\cellcolor{Grey}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&										& \cellcolor{Green} \\
+		\textsc{ac3}				& \cellcolor{Green} &	\cellcolor{Grey}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{flac} 			& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&										& \cellcolor{Green} \\
+		\textsc{flac} 			& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{mp3} 				& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		&										& \cellcolor{Green} \\
+		\textsc{mp3} 				& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{vorbis} 		& \cellcolor{Green} & \cellcolor{Green}	& \cellcolor{Green}	 	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		&										& \cellcolor{Green} \\
+		\textsc{vorbis} 		& \cellcolor{Green} & \cellcolor{Green}	& \cellcolor{Green}	 	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{wav} 				& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green} 	& \cellcolor{Green}		& \cellcolor{Grey} 		&										& \cellcolor{Green} \\
+		\textsc{wav} 				& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green} 	& \cellcolor{Green}		& \cellcolor{Grey} 		&	\cellcolor{Green}	& \cellcolor{Green} \\
 		\hline
-		\textsc{wmav1}			& 									&										& 										& 										& 										& 										& \cellcolor{Grey} &										\\
+		\textsc{wmav1}			& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Grey} 	&	\cellcolor{Green}	\\
 		\hline
-		\textsc{wmav2}			& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&										& \cellcolor{Grey} \\
+		\textsc{wmav2}			& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Grey} \\
 		\hline
 	\end{tabular}
 	\caption{Supported Audio Transcoding Profiles}
@@ -1804,6 +1804,8 @@ Since it is possible to define multiple transcoding profiles, the first transcod
 		\textsc{vorbis} 					& \verb|libvorbis|						& \verb|ogg| \\
 		\hline
 		\textsc{wav} 							& \verb|pcm_s16le|						& \verb|wav| \\
+		\hline
+		\textsc{wmav1} 						& \verb|wmav1|								& \verb|asf| \\
 		\hline
 		\textsc{wmav2} 						& \verb|wmav2|								& \verb|asf| \\
 		\hline
@@ -2259,7 +2261,16 @@ In case of having a {\em DLNA} aware device, which is not working properly with 
 \chapter{Known Issues}
 \label{knownissues}
 
-\section{Use of uninitialized value \$request\_line in string ne at /PDLNA/HTTPServer.pm line 92.}
+Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via mail or via \url{https://github.com/geuma/pDLNA/issues}.
+
+\chapter{Fixed Issues}
+\label{fixedissues}
+
+\section{Use of uninitialized value \$request\_line in string ne at /PDLNA/HTTPServer.pm line xxx.}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.62.0.
+\end{colframeimportantnote}
 
 \subsection{Describtion}
 
@@ -2267,16 +2278,13 @@ Apparently {\em pDLNA} sometimes starts to print, for unknown reasons, the follo
 \begin{colframecmd}
 \begin{verbatim}
 Use of uninitialized value $request_line in string ne at
-  /PDLNA/HTTPServer.pm line 92.
+  /PDLNA/HTTPServer.pm line xxx.
 \end{verbatim}
 \end{colframecmd}
 
 \subsection{Workaround}
 
 Since, this message is only a warning message, it does not affect the functionality of {\em pDLNA}. But actually, it increases the system load. A restart of {\em pDLNA} will fix the problem temporarily, but the issue might takes place again.
-
-\chapter{Fixed Issues}
-\label{fixedissues}
 
 \section{AllowedClients auto detection on FreeBSD is defect}
 
