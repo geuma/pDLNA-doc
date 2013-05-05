@@ -134,7 +134,7 @@ Additionally, for those without interest in their Perl version, {\em pDLNA} has 
 
 \section{Perl modules}
 
-The following three tables give an overview about the necessary Perl modules. While table~\ref{tab:NecessaryPerlModulesDebian6} lists the Debian GNU/Linux 6 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
+The following three tables give an overview about the necessary Perl modules. While table~\ref{tab:NecessaryPerlModulesDebian6} lists the Debian GNU/Linux 6 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names (for a i686 installation) of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
 
 \begin{table}
 	\centering
@@ -177,6 +177,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|GD| 												& \verb|libgd-gd2-perl| \\
 		\hline
+		\verb|GD::Graph::area| 						& \verb|libgd-graph-perl| \\
+		\hline
 		\verb|Getopt::Long::Descriptive| 	& \verb|libgetopt-long-descriptive-perl| \\
 		\hline
 		\verb|Image::Info| 								& \verb|libimage-info-perl| \\
@@ -213,6 +215,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Proc::ProcessTable| 				& \verb|libproc-processtable-perl| \\
 		\hline
+		\verb|SOAP::Lite| 								& \verb|libsoap-lite-perl| \\
+		\hline
 		\verb|Socket| 										& \\
 		\hline
 		\verb|Sys::Hostname| 							& \\
@@ -222,6 +226,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|threads| 										& \\
 		\hline
 		\verb|threads::shared| 						& \\
+		\hline
+		\verb|Time::HiRes|								& \\
 		\hline
 		\verb|URI::Split| 								& \\
 		\hline
@@ -273,6 +279,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|GD| 												& \verb|perl-GD.i686|\\
 		\hline
+		\verb|GD::Graph::area| 						& \verb|perl-GDGraph.noarch| \\
+		\hline
 		\verb|Getopt::Long::Descriptive| 	& \\
 		\hline
 		\verb|Image::Info| 								& \verb|perl-Image-Info.noarch| \\
@@ -309,6 +317,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Proc::ProcessTable| 				& \\
 		\hline
+		\verb|SOAP::Lite| 								& \verb|perl-SOAP-Lite.noarch| \\
+		\hline
 		\verb|Socket| 										& \\
 		\hline
 		\verb|Sys::Hostname| 							& \\
@@ -318,6 +328,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|threads| 										& \\
 		\hline
 		\verb|threads::shared| 						& \\
+		\hline
+		\verb|Time::HiRes|								& \verb|perl-Time-HiRes.i686| \\
 		\hline
 		\verb|URI::Split| 								& \\
 		\hline
@@ -369,6 +381,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|GD| 												& \verb|graphics/p5-GD| \\
 		\hline
+		\verb|GD::Graph::area| 						& \verb|graphics/p5-GD-Graph| \\
+		\hline
 		\verb|Getopt::Long::Descriptive| 	& \verb|devel/p5-Getopt-Long-Descriptive| \\
 		\hline
 		\verb|Image::Info| 								& \verb|graphics/p5-Image-Info| \\
@@ -405,6 +419,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Proc::ProcessTable| 				& \verb|devel/p5-Proc-ProcessTable| \\
 		\hline
+		\verb|SOAP::Lite| 								& \verb|net/p5-SOAP-Lite| \\
+		\hline
 		\verb|Socket| 										& \verb|net/p5-Socket| \\
 		\hline
 		\verb|Sys::Hostname| 							& \\
@@ -414,6 +430,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|threads| 										& \\
 		\hline
 		\verb|threads::shared| 						& \\
+		\hline
+		\verb|Time::HiRes|								& \verb|devel/p5-Time-HiRes| \\
 		\hline
 		\verb|URI::Split| 								& \\
 		\hline
@@ -518,7 +536,8 @@ pdlna@mediaserver:~$ sudo apt-get install \
  libmp4-info-perl libnet-ip-perl \
  libnet-netmask-perl libogg-vorbis-header-perl \
  libproc-processtable-perl libdbi-perl \
- libdbd-sqlite3-perl
+ libdbd-sqlite3-perl libgd-graph-perl \
+ libsoap-lite-perl
 \end{verbatim}
 \end{colframecmd}
 
@@ -544,7 +563,8 @@ pdlna@mediaserver:~$ sudo yum install \
  perl-Digest-SHA1.i686 perl-GD.i686 \
  perl-Image-Info.noarch perl-Net-IP.noarch \
  perl-XML-Simple.noarch shared-mime-info.i686 \
- perl-DBI.i686 perl-DBD-SQLite.i686
+ perl-DBI.i686 perl-DBD-SQLite.i686 \
+ perl-GDGraph.noarch perl-SOAP-Lite.noarch
 \end{verbatim}
 \end{colframecmd}
 
@@ -725,32 +745,35 @@ ok 14 - use File::Basename;
 ok 15 - use File::Glob;
 ok 16 - use File::MimeInfo;
 ok 17 - use GD;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::Address::Ethernet;
-ok 29 - use Net::Interface;
-ok 30 - use Net::IP;
-ok 31 - use Net::Netmask;
-ok 32 - use Movie::Info;
-ok 33 - use Ogg::Vorbis::Header;
-ok 34 - use POSIX;
-ok 35 - use Proc::ProcessTable;
-ok 36 - use Socket;
-ok 37 - use Sys::Hostname;
-ok 38 - use Sys::Syslog;
-ok 39 - use threads;
-ok 40 - use threads::shared;
-ok 41 - use URI::Split;
-ok 42 - use XML::Simple;
-1..42
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::Address::Ethernet;
+ok 30 - use Net::Interface;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Movie::Info;
+ok 34 - use Ogg::Vorbis::Header;
+ok 35 - use POSIX;
+ok 36 - use Proc::ProcessTable;
+ok 37 - use SOAP::Lite;
+ok 38 - use Socket;
+ok 39 - use Sys::Hostname;
+ok 40 - use Sys::Syslog;
+ok 41 - use threads;
+ok 42 - use threads::shared;
+ok 43 - use Time::HiRes;
+ok 44 - use URI::Split;
+ok 45 - use XML::Simple;
+1..45
 \end{verbatim}
 \end{colframecmd}
 The output above shows the executed \verb|install.pl| script with its output. As long as all of these checks return \verb|ok|, all necessary requirements are fullfilled.
@@ -837,32 +860,35 @@ ok 14 - use File::Basename;
 ok 15 - use File::Glob;
 ok 16 - use File::MimeInfo;
 ok 17 - use GD;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::Address::Ethernet;
-ok 29 - use Net::Interface;
-ok 30 - use Net::IP;
-ok 31 - use Net::Netmask;
-ok 32 - use Movie::Info;
-ok 33 - use Ogg::Vorbis::Header;
-ok 34 - use POSIX;
-ok 35 - use Proc::ProcessTable;
-ok 36 - use Socket;
-ok 37 - use Sys::Hostname;
-ok 38 - use Sys::Syslog;
-ok 39 - use threads;
-ok 40 - use threads::shared;
-ok 41 - use URI::Split;
-ok 42 - use XML::Simple;
-1..42
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::Address::Ethernet;
+ok 30 - use Net::Interface;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Movie::Info;
+ok 34 - use Ogg::Vorbis::Header;
+ok 35 - use POSIX;
+ok 36 - use Proc::ProcessTable;
+ok 37 - use SOAP::Lite;
+ok 38 - use Socket;
+ok 39 - use Sys::Hostname;
+ok 40 - use Sys::Syslog;
+ok 41 - use threads;
+ok 42 - use threads::shared;
+ok 43 - use Time::HiRes;
+ok 44 - use URI::Split;
+ok 45 - use XML::Simple;
+1..45
 \end{verbatim}
 \end{colframecmd}
 The attached output, shows the different tests and their results, which were performed by the installation script. For a complete overview regarding the requirements please see chapter~\ref{require}.
@@ -874,7 +900,7 @@ The attached output, shows the different tests and their results, which were per
 When all requirements have been fixed and installed, you are able to rerun the installation script by executing the installation script with the \verb|--install| parameter. By default, the script will install {\em pDLNA} to the \verb|/opt| directory, which can be changed by setting the \verb|--prefix=/path/to/your/directory| parameter. The following output shows the installation process, which is started by checking the requirements for {\em pDLNA}. While step 2 is checking for two more Perl modules for installation, step 3 installs the necessary files from {\em pDLNA} to the specified directory and step 4 modifies the installed files for the installation specific parts. In the end, step 5 verifies the installation.
 \begin{colframecmd}
 \begin{verbatim}
-pdlna@mediaserver:/tmp/pDLNA$ perl install.pl -i
+pdlna@mediaserver:/tmp/pDLNA$ sudo perl install.pl -i
 ------------------------------------------------------
 Step 1:
 Testing for necessary Perl Modules ...
@@ -896,31 +922,34 @@ ok 14 - use File::Basename;
 ok 15 - use File::Glob;
 ok 16 - use File::MimeInfo;
 ok 17 - use GD;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::Address::Ethernet;
-ok 29 - use Net::Interface;
-ok 30 - use Net::IP;
-ok 31 - use Net::Netmask;
-ok 32 - use Movie::Info;
-ok 33 - use Ogg::Vorbis::Header;
-ok 34 - use POSIX;
-ok 35 - use Proc::ProcessTable;
-ok 36 - use Socket;
-ok 37 - use Sys::Hostname;
-ok 38 - use Sys::Syslog;
-ok 39 - use threads;
-ok 40 - use threads::shared;
-ok 41 - use URI::Split;
-ok 42 - use XML::Simple;
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::Address::Ethernet;
+ok 30 - use Net::Interface;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Movie::Info;
+ok 34 - use Ogg::Vorbis::Header;
+ok 35 - use POSIX;
+ok 36 - use Proc::ProcessTable;
+ok 37 - use SOAP::Lite;
+ok 38 - use Socket;
+ok 39 - use Sys::Hostname;
+ok 40 - use Sys::Syslog;
+ok 41 - use threads;
+ok 42 - use threads::shared;
+ok 43 - use Time::HiRes;
+ok 44 - use URI::Split;
+ok 45 - use XML::Simple;
 ------------------------------------------------------
 \end{verbatim}
 \end{colframecmd}
@@ -930,55 +959,57 @@ ok 42 - use XML::Simple;
 Step 2:
 Testing for necessary Perl Modules for installation ...
 ------------------------------------------------------
-ok 43 - use File::Copy;
-ok 44 - use File::Copy::Recursive;
+ok 46 - use File::Copy;
+ok 47 - use File::Copy::Recursive;
 ------------------------------------------------------
 Step 3:
 Installing files ...
 ------------------------------------------------------
-ok 45 - Installed './PDLNA' to '/opt/pDLNA/PDLNA'.
-ok 46 - Set rights for '/opt/pDLNA/PDLNA'.
-ok 47 - Installed './external_programs' to
-  '/opt/pDLNA/external_programs'.
-ok 48 - Set rights for '/opt/pDLNA/external_programs'.
-ok 49 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
-ok 50 - Set rights for '/opt/pDLNA/VERSION'.
-ok 51 - Installed './pDLNA.pl' to '/opt/pDLNA/pDLNA.pl'.
-ok 52 - Set rights for '/opt/pDLNA/pDLNA.pl'.
-ok 53 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
-ok 54 - Set rights for '/opt/pDLNA/LICENSE'.
-ok 55 - Installed './README' to '/opt/pDLNA/README'.
-ok 56 - Set rights for '/opt/pDLNA/README'.
-ok 57 - Installed './pdlna.conf' to '/etc/pdlna.conf'.
-ok 58 - Set rights for '/etc/pdlna.conf'.
-ok 59 - Installed './rc.pDLNA' to '/etc/init.d/rc.pDLNA'.
-ok 60 - Set rights for '/etc/init.d/rc.pDLNA'.
+ok 48 - Installed './PDLNA' to '/opt/pDLNA/PDLNA'.
+ok 49 - Set rights for '/opt/pDLNA/PDLNA'.
+ok 50 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
+ok 51 - Set rights for '/opt/pDLNA/external_programs'.
+ok 52 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
+ok 53 - Set rights for '/opt/pDLNA/VERSION'.
+ok 54 - Installed './pDLNA.pl' to '/opt/pDLNA/pDLNA.pl'.
+ok 55 - Set rights for '/opt/pDLNA/pDLNA.pl'.
+ok 56 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
+ok 57 - Set rights for '/opt/pDLNA/LICENSE'.
+ok 58 - Installed './README' to '/opt/pDLNA/README'.
+ok 59 - Set rights for '/opt/pDLNA/README'.
+ok 60 - Installed './pdlna.conf' to '/etc/pdlna.conf'.
+ok 61 - Set rights for '/etc/pdlna.conf'.
+ok 62 - Installed './rc.pDLNA' to '/etc/init.d/rc.pDLNA'.
+ok 63 - Set rights for '/etc/init.d/rc.pDLNA'.
 ------------------------------------------------------
 Step 4:
 Setting of relevant paths ...
 ------------------------------------------------------
-ok 61 - Changed path for binary in '/etc/init.d/rc.pDLNA'.
-ok 62 - Changed path for lib in '/opt/pDLNA/pDLNA.pl'.
+ok 64 - Changed path for binary in '/etc/init.d/rc.pDLNA'.
+ok 65 - Changed path for lib in '/opt/pDLNA/pDLNA.pl'.
 ------------------------------------------------------
 Step 5:
 Checking for pDLNA Perl Modules ...
 ------------------------------------------------------
-ok 63 - use PDLNA::Config;
-ok 64 - use PDLNA::ContentLibrary;
-ok 65 - use PDLNA::Daemon;
-ok 66 - use PDLNA::Database;
-ok 67 - use PDLNA::Devices;
-ok 68 - use PDLNA::HTTPServer;
-ok 69 - use PDLNA::HTTPXML;
-ok 70 - use PDLNA::Log;
-ok 71 - use PDLNA::Media;
-ok 72 - use PDLNA::SpecificViews;
-ok 73 - use PDLNA::SSDP;
-ok 74 - use PDLNA::Status;
-ok 75 - use PDLNA::Transcode;
-ok 76 - use PDLNA::Utils;
-ok 77 - use PDLNA::WebUI;
-1..77
+ok 66 - use PDLNA::Config;
+ok 67 - use PDLNA::ContentLibrary;
+ok 68 - use PDLNA::Daemon;
+ok 69 - use PDLNA::Database;
+ok 70 - use PDLNA::Devices;
+ok 71 - use PDLNA::HTTPServer;
+ok 72 - use PDLNA::HTTPXML;
+ok 73 - use PDLNA::Log;
+ok 74 - use PDLNA::Media;
+ok 75 - use PDLNA::SOAPClient;
+ok 76 - use PDLNA::SOAPMessages;
+ok 77 - use PDLNA::SpecificViews;
+ok 78 - use PDLNA::SSDP;
+ok 79 - use PDLNA::Statistics;
+ok 80 - use PDLNA::Status;
+ok 81 - use PDLNA::Transcode;
+ok 82 - use PDLNA::Utils;
+ok 83 - use PDLNA::WebUI;
+1..83
 \end{verbatim}
 \end{colframecmd}
 
@@ -1077,6 +1108,41 @@ If you do not like {\em pDLNA} to check for a new version, you are able to deact
 \begin{colframefile}
 \begin{verbatim}
 Check4Updates Off
+\end{verbatim}
+\end{colframefile}
+
+\subsection{Check4UpdatesNotification}
+\label{config-check4updatesnotification}
+
+If {\em Check4Updates} and {\em Check4UpdatesNotification} is enabled and a device with a \verb|urn:samsung.com:serviceId:MessageBoxService| is connected, {\em pDLNA} will send a message regarding an available update to this service.
+
+You are also able to deactivate this {\em FunFeature} by adding  the following line to your configuration file:
+
+\begin{colframefile}
+\begin{verbatim}
+Check4UpdatesNotification Off
+\end{verbatim}
+\end{colframefile}
+
+\subsection{EnableGeneralStatistics}
+\label{config-enablegeneralstatistics}
+
+With the {\em EnableGeneralStatistics} configuration parameter, you are able to specify if {\em pDLNA} should store statistics data like
+\begin{itemize}
+	\item memory usage
+	\item amount of media items
+\end{itemize}
+in the database and should draw graphs in the WebUI.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This feature is currently not available on FreeBSD.
+\end{colframeimportantnote}
+
+By default, this feature is activated and you are able to deactivate it by adding the following line to your configuration file.
+
+\begin{colframefile}
+\begin{verbatim}
+EnableGeneralStatistics Off
 \end{verbatim}
 \end{colframefile}
 
@@ -1479,7 +1545,7 @@ LogLevel 1
 \begin{colframefile}
 \begin{verbatim}
 LogCategory discovery,httpdir,httpstream,library,httpgeneric,
- database,transcoding
+ database,transcoding,soap
 \end{verbatim}
 \end{colframefile}
 
@@ -1505,6 +1571,8 @@ By default, only some generic messages will be logged and \textbf{none} of these
 		\verb|database| & Database log messages, like queries and so on \\
 		\hline
 		\verb|transcoding| & Transcoding log messages \\
+		\hline
+		\verb|soap| & SOAP log messages \\
 		\hline
 	\end{tabular}
 	\caption{Available LogCategory configuration parameters}
