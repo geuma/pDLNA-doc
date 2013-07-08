@@ -58,7 +58,7 @@
   \end{center}
 }
 
-\newcommand{\pDLNAversion}{0.62.0}
+\newcommand{\pDLNAversion}{0.63.0}
 
 \begin{document}
 \pagestyle{empty}
@@ -113,6 +113,7 @@ This chapter gives an overview regarding the supported Perl versions, necessary 
 Currently, {\em pDLNA} has been tested with the following Perl versions:
 \begin{itemize}
 	\item 5.10
+	\item 5.12
 \end{itemize}
 Your installed Perl version can be determined by executing:
 \begin{colframecmd}
@@ -121,9 +122,10 @@ pdlna@mediaserver:~$ perl -v
 \end{verbatim}
 \end{colframecmd}
 
-Additionally, for those without interest in their Perl version, {\em pDLNA} has been tested with the following UNIX derivates or Linux distrubutions:
+Additionally, for those without interest in their Perl version, {\em pDLNA} in its current version has been tested with the following UNIX derivates or Linux distrubutions:
 \begin{itemize}
 	\item Debian GNU/Linux 6 (squeeze)
+	\item Debian GNU/Linux 7 (wheezy)
 	\item CentOS 6
 	\item FreeBSD 9
 \end{itemize}
@@ -134,206 +136,194 @@ Additionally, for those without interest in their Perl version, {\em pDLNA} has 
 
 \section{Perl modules}
 
-The following three tables give an overview about the necessary Perl modules. While table~\ref{tab:NecessaryPerlModulesDebian6} lists the Debian GNU/Linux 6 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names (for a i686 installation) of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
+The following three tables give an overview about the necessary Perl modules. While table~\ref{tab:NecessaryPerlModulesDebian7} lists the Debian GNU/Linux 7 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names (for a i686 installation) of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
 
 \begin{table}
 	\centering
-	\begin{tabular}{|p{15em}|p{17em}|}
+	\begin{tabular}{|p{15em}|p{18em}|}
 		\hline
-		\textsc{Perl module name} 				& \textsc{Debian 6 package name} \\
+		\textsc{Perl module name} 						& \textsc{Debian 7 package name} \\
 		\hline
 		\hline
-		\verb|Audio::FLAC::Header| 				& \verb|libaudio-flac-header-perl| \\
+		\verb|Audio::FLAC::Header| 						& \verb|libaudio-flac-header-perl| \\
 		\hline
-		\verb|Audio::Wav| 								& \verb|libaudio-wav-perl| \\
+		\verb|Audio::Wav| 										& \verb|libaudio-wav-perl| \\
 		\hline
-		\verb|Audio::WMA| 								& \verb|libaudio-wma-perl| \\
+		\verb|Audio::WMA| 										& \verb|libaudio-wma-perl| \\
 		\hline
-		\verb|Config| 										& \\
+		\verb|Config| 												& \\
 		\hline
-		\verb|Config::ApacheFormat|				& \verb|libconfig-apacheformat-perl| \\
+		\verb|Config::ApacheFormat|						& \verb|libconfig-apacheformat-perl| \\
 		\hline
-		\verb|Data::Dumper| 							& \\
+		\verb|Data::Dumper| 									& \\
 		\hline
-		\verb|Date::Format| 							& \\
+		\verb|Date::Format| 									& \\
 		\hline
-		\verb|DBD::SQLite|								& \verb|libdbd-sqlite3-perl| \\
+		\verb|DBD::SQLite|										& \verb|libdbd-sqlite3-perl| \\
 		\hline
-		\verb|DBI|												& \verb|libdbi-perl| \\
+		\verb|DBI|														& \verb|libdbi-perl| \\
 		\hline
-		\verb|Devel::Size| 								& \verb|libdevel-size-perl| \\
+		\verb|Digest::MD5| 										& \verb|libdigest-md5-perl| \\
 		\hline
-		\verb|Digest::MD5| 								& \verb|libdigest-md5-perl| \\
+		\verb|Digest::SHA| 										& \verb|libdigest-sha-perl| \\
 		\hline
-		\verb|Digest::SHA1| 							& \verb|libdigest-sha1-perl| \\
+		\verb|Fcntl| 													& \\
 		\hline
-		\verb|Fcntl| 											& \\
+		\verb|File::Basename| 								& \\
 		\hline
-		\verb|File::Basename| 						& \\
+		\verb|File::Glob| 										& \\
 		\hline
-		\verb|File::Glob| 								& \\
+		\verb|File::MimeInfo| 								& \verb|libfile-mimeinfo-perl| \\
 		\hline
-		\verb|File::MimeInfo| 						& \verb|libfile-mimeinfo-perl| \\
+		\verb|GD| 														& \verb|libgd-gd2-perl| \\
 		\hline
-		\verb|GD| 												& \verb|libgd-gd2-perl| \\
+		\verb|GD::Graph::area| 								& \verb|libgd-graph-perl| \\
 		\hline
-		\verb|GD::Graph::area| 						& \verb|libgd-graph-perl| \\
+		\verb|Getopt::Long::Descriptive| 			& \verb|libgetopt-long-descriptive-perl| \\
 		\hline
-		\verb|Getopt::Long::Descriptive| 	& \verb|libgetopt-long-descriptive-perl| \\
+		\verb|Image::Info| 										& \verb|libimage-info-perl| \\
 		\hline
-		\verb|Image::Info| 								& \verb|libimage-info-perl| \\
+		\verb|IO::Interface::Simple| 					& \verb|libio-interface-perl| \\
 		\hline
-		\verb|IO::Interface| 							& \verb|libio-interface-perl| \\
+		\verb|IO::Select| 										& \\
 		\hline
-		\verb|IO::Select| 								& \\
+		\verb|IO::Socket| 										& \\
 		\hline
-		\verb|IO::Socket| 								& \\
+		\verb|IO::Socket::INET| 							& \\
 		\hline
-		\verb|IO::Socket::INET| 					& \\
+		\verb|IO::Socket::Multicast| 					& \verb|libio-socket-multicast-perl| \\
 		\hline
-		\verb|IO::Socket::Multicast| 			& \verb|libio-socket-multicast-perl| \\
+		\verb|LWP::UserAgent| 								& \\
 		\hline
-		\verb|LWP::UserAgent| 						& \\
+		\verb|MP3::Info| 											& \verb|libmp3-info-perl| \\
 		\hline
-		\verb|MP3::Info| 									& \verb|libmp3-info-perl| \\
+		\verb|MP4::Info| 											& \verb|libmp4-info-perl| \\
 		\hline
-		\verb|MP4::Info| 									& \verb|libmp4-info-perl| \\
+		\verb|Net::IP| 												& \verb|libnet-ip-perl| \\
 		\hline
-		\verb|Net::Address::Ethernet| 		& \\
+		\verb|Net::Netmask| 									& \verb|libnet-netmask-perl| \\
 		\hline
-		\verb|Net::Interface| 						& \\
+		\verb|Movie::Info| 										& \\
 		\hline
-		\verb|Net::IP| 										& \verb|libnet-ip-perl| \\
+		\verb|Ogg::Vorbis::Header::PurePerl| 	& \verb|libogg-vorbis-header-pureperl-perl| \\
 		\hline
-		\verb|Net::Netmask| 							& \verb|libnet-netmask-perl| \\
+		\verb|POSIX| 													& \\
 		\hline
-		\verb|Movie::Info| 								& \\
+		\verb|Proc::ProcessTable| 						& \verb|libproc-processtable-perl| \\
 		\hline
-		\verb|Ogg::Vorbis::Header| 				& \verb|libogg-vorbis-header-perl| \\
+		\verb|SOAP::Lite| 										& \verb|libsoap-lite-perl| \\
 		\hline
-		\verb|POSIX| 											& \\
+		\verb|Socket| 												& \\
 		\hline
-		\verb|Proc::ProcessTable| 				& \verb|libproc-processtable-perl| \\
+		\verb|Sys::Hostname| 									& \\
 		\hline
-		\verb|SOAP::Lite| 								& \verb|libsoap-lite-perl| \\
+		\verb|Sys::Syslog| 										& \verb|libsys-syslog-perl| \\
 		\hline
-		\verb|Socket| 										& \\
+		\verb|threads| 												& \\
 		\hline
-		\verb|Sys::Hostname| 							& \\
+		\verb|threads::shared| 								& \\
 		\hline
-		\verb|Sys::Syslog| 								& \verb|libsys-syslog-perl| \\
+		\verb|Time::HiRes|										& \\
 		\hline
-		\verb|threads| 										& \\
+		\verb|URI::Split| 										& \\
 		\hline
-		\verb|threads::shared| 						& \\
-		\hline
-		\verb|Time::HiRes|								& \\
-		\hline
-		\verb|URI::Split| 								& \\
-		\hline
-		\verb|XML::Simple| 								& \verb|libxml-simple-perl| \\
+		\verb|XML::Simple| 										& \verb|libxml-simple-perl| \\
 		\hline
 	\end{tabular}
-	\caption{Necessary Perl modules on Debian GNU/Linux 6}
-	\label{tab:NecessaryPerlModulesDebian6}
+	\caption{Necessary Perl modules on Debian GNU/Linux 7}
+	\label{tab:NecessaryPerlModulesDebian7}
 \end{table}
 
 \begin{table}
 	\centering
-	\begin{tabular}{|p{15em}|p{17em}|}
+	\begin{tabular}{|p{15em}|p{18em}|}
 		\hline
-		\textsc{Perl module name} 				&  \textsc{CentOS 6 package name}\\
+		\textsc{Perl module name} 						&  \textsc{CentOS 6 package name}\\
 		\hline
 		\hline
-		\verb|Audio::FLAC::Header| 				& \\
+		\verb|Audio::FLAC::Header| 						& \\
 		\hline
-		\verb|Audio::Wav| 								& \\
+		\verb|Audio::Wav| 										& \\
 		\hline
-		\verb|Audio::WMA| 								& \\
+		\verb|Audio::WMA| 										& \\
 		\hline
-		\verb|Config| 										& \\
+		\verb|Config| 												& \\
 		\hline
-		\verb|Config::ApacheFormat|				& \\
+		\verb|Config::ApacheFormat|						& \\
 		\hline
-		\verb|Data::Dumper| 							& \\
+		\verb|Data::Dumper| 									& \\
 		\hline
-		\verb|Date::Format| 							&	\\
+		\verb|Date::Format| 									&	\\
 		\hline
-		\verb|DBD::SQLite|								& \verb|perl-DBD-SQLite.i686| \\
+		\verb|DBD::SQLite|										& \verb|perl-DBD-SQLite.i686| \\
 		\hline
-		\verb|DBI|												& \verb|perl-DBI.i686| \\
+		\verb|DBI|														& \verb|perl-DBI.i686| \\
 		\hline
-		\verb|Devel::Size| 								& \\
+		\verb|Digest::MD5| 										& \\
 		\hline
-		\verb|Digest::MD5| 								& \\
+		\verb|Digest::SHA| 										& \verb|perl-Digest-SHA.i686| \\
 		\hline
-		\verb|Digest::SHA1| 							& \verb|perl-Digest-SHA1.i686| \\
+		\verb|Fcntl| 													& \\
 		\hline
-		\verb|Fcntl| 											& \\
+		\verb|File::Basename| 								& \\
 		\hline
-		\verb|File::Basename| 						& \\
+		\verb|File::Glob| 										& \\
 		\hline
-		\verb|File::Glob| 								& \\
+		\verb|File::MimeInfo| 								& \\
 		\hline
-		\verb|File::MimeInfo| 						& \\
+		\verb|GD| 														& \verb|perl-GD.i686|\\
 		\hline
-		\verb|GD| 												& \verb|perl-GD.i686|\\
+		\verb|GD::Graph::area| 								& \verb|perl-GDGraph.noarch| \\
 		\hline
-		\verb|GD::Graph::area| 						& \verb|perl-GDGraph.noarch| \\
+		\verb|Getopt::Long::Descriptive| 			& \\
 		\hline
-		\verb|Getopt::Long::Descriptive| 	& \\
+		\verb|Image::Info| 										& \verb|perl-Image-Info.noarch| \\
 		\hline
-		\verb|Image::Info| 								& \verb|perl-Image-Info.noarch| \\
+		\verb|IO::Interface| 									& \\
 		\hline
-		\verb|IO::Interface| 							& \\
+		\verb|IO::Select| 										& \\
 		\hline
-		\verb|IO::Select| 								& \\
+		\verb|IO::Socket| 										& \\
 		\hline
-		\verb|IO::Socket| 								& \\
+		\verb|IO::Socket::INET| 							& \\
 		\hline
-		\verb|IO::Socket::INET| 					& \\
+		\verb|IO::Socket::Multicast| 					& \\
 		\hline
-		\verb|IO::Socket::Multicast| 			& \\
+		\verb|LWP::UserAgent| 								& \\
 		\hline
-		\verb|LWP::UserAgent| 						& \\
+		\verb|MP3::Info| 											& \\
 		\hline
-		\verb|MP3::Info| 									& \\
+		\verb|MP4::Info| 											& \\
 		\hline
-		\verb|MP4::Info| 									& \\
+		\verb|Net::IP| 												& \verb|perl-Net-IP.noarch| \\
 		\hline
-		\verb|Net::Address::Ethernet| 		& \\
+		\verb|Net::Netmask| 									& \\
 		\hline
-		\verb|Net::Interface| 						&	\\
+		\verb|Movie::Info| 										& \\
 		\hline
-		\verb|Net::IP| 										& \verb|perl-Net-IP.noarch| \\
+		\verb|Ogg::Vorbis::Header::PurePerl| 	& \\
 		\hline
-		\verb|Net::Netmask| 							& \\
+		\verb|POSIX| 													& \\
 		\hline
-		\verb|Movie::Info| 								& \\
+		\verb|Proc::ProcessTable| 						& \\
 		\hline
-		\verb|Ogg::Vorbis::Header| 				& \\
+		\verb|SOAP::Lite| 										& \verb|perl-SOAP-Lite.noarch| \\
 		\hline
-		\verb|POSIX| 											& \\
+		\verb|Socket| 												& \\
 		\hline
-		\verb|Proc::ProcessTable| 				& \\
+		\verb|Sys::Hostname| 									& \\
 		\hline
-		\verb|SOAP::Lite| 								& \verb|perl-SOAP-Lite.noarch| \\
+		\verb|Sys::Syslog| 										& \\
 		\hline
-		\verb|Socket| 										& \\
+		\verb|threads| 												& \\
 		\hline
-		\verb|Sys::Hostname| 							& \\
+		\verb|threads::shared| 								& \\
 		\hline
-		\verb|Sys::Syslog| 								& \\
+		\verb|Time::HiRes|										& \verb|perl-Time-HiRes.i686| \\
 		\hline
-		\verb|threads| 										& \\
+		\verb|URI::Split| 										& \\
 		\hline
-		\verb|threads::shared| 						& \\
-		\hline
-		\verb|Time::HiRes|								& \verb|perl-Time-HiRes.i686| \\
-		\hline
-		\verb|URI::Split| 								& \\
-		\hline
-		\verb|XML::Simple| 								& \verb|perl-XML-Simple.noarch| \\
+		\verb|XML::Simple| 										& \verb|perl-XML-Simple.noarch| \\
 		\hline
 	\end{tabular}
 	\caption{Necessary Perl modules on CentOS 6}
@@ -342,103 +332,97 @@ The following three tables give an overview about the necessary Perl modules. Wh
 
 \begin{table}
 	\centering
-	\begin{tabular}{|p{15em}|p{17em}|}
+	\begin{tabular}{|p{15em}|p{18em}|}
 		\hline
-		\textsc{Perl module name} 				&  \textsc{FreeBSD 9 port name}\\
+		\textsc{Perl module name} 						&  \textsc{FreeBSD 9 port name}\\
 		\hline
 		\hline
-		\verb|Audio::FLAC::Header| 				& \verb|audio/p5-Audio-FLAC-Header| \\
+		\verb|Audio::FLAC::Header| 						& \verb|audio/p5-Audio-FLAC-Header| \\
 		\hline
-		\verb|Audio::Wav| 								& \verb|audio/p5-Audio-Wav| \\
+		\verb|Audio::Wav| 										& \verb|audio/p5-Audio-Wav| \\
 		\hline
-		\verb|Audio::WMA| 								& \verb|audio/p5-Audio-WMA| \\
+		\verb|Audio::WMA| 										& \verb|audio/p5-Audio-WMA| \\
 		\hline
-		\verb|Config| 										& \\
+		\verb|Config| 												& \\
 		\hline
-		\verb|Config::ApacheFormat|				& \verb|devel/p5-Config-ApacheFormat| \\
+		\verb|Config::ApacheFormat|						& \verb|devel/p5-Config-ApacheFormat| \\
 		\hline
-		\verb|Data::Dumper| 							& \verb|devel/p5-Data-Dumper| \\
+		\verb|Data::Dumper| 									& \verb|devel/p5-Data-Dumper| \\
 		\hline
-		\verb|Date::Format| 							&	\\
+		\verb|Date::Format| 									&	\\
 		\hline
-		\verb|DBD::SQLite|								& \verb|databases/p5-DBD-SQLite| \\
+		\verb|DBD::SQLite|										& \verb|databases/p5-DBD-SQLite| \\
 		\hline
-		\verb|DBI|												& \verb|databases/p5-DBI| \\
+		\verb|DBI|														& \verb|databases/p5-DBI| \\
 		\hline
-		\verb|Devel::Size| 								& \verb|devel/p5-Devel-Size| \\
+		\verb|Digest::MD5| 										& \\
 		\hline
-		\verb|Digest::MD5| 								& \\
+		\verb|Digest::SHA1| 									& \verb|security/p5-Digest-SHA1| \\
 		\hline
-		\verb|Digest::SHA1| 							& \verb|security/p5-Digest-SHA1| \\
+		\verb|Fcntl| 													& \\
 		\hline
-		\verb|Fcntl| 											& \\
+		\verb|File::Basename| 								& \\
 		\hline
-		\verb|File::Basename| 						& \\
+		\verb|File::Glob| 										& \\
 		\hline
-		\verb|File::Glob| 								& \\
+		\verb|File::MimeInfo| 								& \verb|devel/p5-File-MimeInfo| \\
 		\hline
-		\verb|File::MimeInfo| 						& \verb|devel/p5-File-MimeInfo| \\
+		\verb|GD| 														& \verb|graphics/p5-GD| \\
 		\hline
-		\verb|GD| 												& \verb|graphics/p5-GD| \\
+		\verb|GD::Graph::area| 								& \verb|graphics/p5-GD-Graph| \\
 		\hline
-		\verb|GD::Graph::area| 						& \verb|graphics/p5-GD-Graph| \\
+		\verb|Getopt::Long::Descriptive| 			& \verb|devel/p5-Getopt-Long-Descriptive| \\
 		\hline
-		\verb|Getopt::Long::Descriptive| 	& \verb|devel/p5-Getopt-Long-Descriptive| \\
+		\verb|Image::Info| 										& \verb|graphics/p5-Image-Info| \\
 		\hline
-		\verb|Image::Info| 								& \verb|graphics/p5-Image-Info| \\
+		\verb|IO::Interface| 									& \verb|net/p5-IO-Interface| \\
 		\hline
-		\verb|IO::Interface| 							& \verb|net/p5-IO-Interface| \\
+		\verb|IO::Select| 										& \\
 		\hline
-		\verb|IO::Select| 								& \\
+		\verb|IO::Socket| 										& \\
 		\hline
-		\verb|IO::Socket| 								& \\
+		\verb|IO::Socket::INET| 							& \\
 		\hline
-		\verb|IO::Socket::INET| 					& \\
+		\verb|IO::Socket::Multicast| 					& \verb|net/p5-IO-Socket-Multicast| \\
 		\hline
-		\verb|IO::Socket::Multicast| 			& \verb|net/p5-IO-Socket-Multicast| \\
+		\verb|LWP::UserAgent| 								& \\
 		\hline
-		\verb|LWP::UserAgent| 						& \\
+		\verb|MP3::Info| 											& \verb|audio/p5-MP3-Info| \\
 		\hline
-		\verb|MP3::Info| 									& \verb|audio/p5-MP3-Info| \\
+		\verb|MP4::Info| 											& \verb|multimedia/p5-MP4-Info| \\
 		\hline
-		\verb|MP4::Info| 									& \verb|multimedia/p5-MP4-Info| \\
+		\verb|Net::IP| 												& \verb|net-mgmt/p5-Net-IP| \\
 		\hline
-		\verb|Net::Address::Ethernet| 		& \verb|net/p5-Net-Address-Ethernet| \\
+		\verb|Net::Netmask| 									& \verb|net-mgmt/p5-Net-Netmask| \\
 		\hline
-		\verb|Net::Interface| 						&	\verb|net/p5-Net-Interface| \\
+		\verb|Movie::Info| 										& \\
 		\hline
-		\verb|Net::IP| 										& \verb|net-mgmt/p5-Net-IP| \\
+		\verb|Ogg::Vorbis::Header::PurePerl|	& \verb|audio/p5-Ogg-Vorbis-Header-PurePerl| \\
 		\hline
-		\verb|Net::Netmask| 							& \verb|net-mgmt/p5-Net-Netmask| \\
+		\verb|POSIX| 													& \\
 		\hline
-		\verb|Movie::Info| 								& \\
+		\verb|Proc::ProcessTable| 						& \verb|devel/p5-Proc-ProcessTable| \\
 		\hline
-		\verb|Ogg::Vorbis::Header| 				& \verb|audio/p5-Ogg-Vorbis-Header| \\
+		\verb|SOAP::Lite| 										& \verb|net/p5-SOAP-Lite| \\
 		\hline
-		\verb|POSIX| 											& \\
+		\verb|Socket| 												& \verb|net/p5-Socket| \\
 		\hline
-		\verb|Proc::ProcessTable| 				& \verb|devel/p5-Proc-ProcessTable| \\
+		\verb|Sys::Hostname| 									& \\
 		\hline
-		\verb|SOAP::Lite| 								& \verb|net/p5-SOAP-Lite| \\
+		\verb|Sys::Syslog| 										& \verb|sysutils/p5-Sys-Syslog| \\
 		\hline
-		\verb|Socket| 										& \verb|net/p5-Socket| \\
+		\verb|threads| 												& \\
 		\hline
-		\verb|Sys::Hostname| 							& \\
+		\verb|threads::shared| 								& \\
 		\hline
-		\verb|Sys::Syslog| 								& \verb|sysutils/p5-Sys-Syslog| \\
+		\verb|Time::HiRes|										& \verb|devel/p5-Time-HiRes| \\
 		\hline
-		\verb|threads| 										& \\
+		\verb|URI::Split| 										& \\
 		\hline
-		\verb|threads::shared| 						& \\
-		\hline
-		\verb|Time::HiRes|								& \verb|devel/p5-Time-HiRes| \\
-		\hline
-		\verb|URI::Split| 								& \\
-		\hline
-		\verb|XML::Simple| 								& \verb|textproc/p5-XML-Simple| \\
+		\verb|XML::Simple| 										& \verb|textproc/p5-XML-Simple| \\
 		\hline
 	\end{tabular}
-	\caption{Necessary Perl modules on FreeBSD}
+	\caption{Necessary Perl modules on FreeBSD 9}
 	\label{tab:NecessaryPerlModulesFreeBSD9}
 \end{table}
 
@@ -517,9 +501,9 @@ This chapter gives an overview about the different methods for installing {\em p
 \section{Install prerequisites}
 \label{install-prerequisites}
 
-\subsection{Debian GNU/Linux 6}
+\subsection{Debian GNU/Linux 7}
 
-On a fresh installed Debian GNU/Linux 6 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and mostly all necessary Perl modules from the Debian repository:
+On a fresh installed Debian GNU/Linux 7 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and mostly all necessary Perl modules from the Debian repository:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ sudo apt-get install \
@@ -529,25 +513,23 @@ pdlna@mediaserver:~$ sudo apt-get install \
  libfile-copy-recursive-perl \
  libaudio-flac-header-perl libaudio-wav-perl \
  libaudio-wma-perl libconfig-apacheformat-perl \
- libdevel-size-perl libdigest-sha1-perl \
+ libdevel-size-perl libdigest-sha-perl \
  libfile-mimeinfo-perl libgd-gd2-perl \
  libimage-info-perl libio-interface-perl \
  libio-socket-multicast-perl libmp3-info-perl \
  libmp4-info-perl libnet-ip-perl \
- libnet-netmask-perl libogg-vorbis-header-perl \
+ libnet-netmask-perl libsoap-lite-perl \
+ libogg-vorbis-header-pureperl-perl \
  libproc-processtable-perl libdbi-perl \
- libdbd-sqlite3-perl libgd-graph-perl \
- libsoap-lite-perl
+ libdbd-sqlite3-perl libgd-graph-perl
 \end{verbatim}
 \end{colframecmd}
 
-Afterwards you still need to install some more Perl modules via {\em CPAN} itself:
+Afterwards you still need to install one more Perl modules via {\em CPAN} itself:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ sudo cpan
-cpan[1]> install Net::Address::Ethernet
-cpan[2]> install Net::Interface
-cpan[3]> install Movie::Info
+cpan[1]> install Movie::Info
 \end{verbatim}
 \end{colframecmd}
 
@@ -560,7 +542,7 @@ pdlna@mediaserver:~$ sudo yum install \
  git bind-utils sudo cpan make gcc \
  libogg-devel.i686 libogg.i686 libvorbis.i686 \
  libvorbis-devel.i686 vorbis-tools.i686 \
- perl-Digest-SHA1.i686 perl-GD.i686 \
+ perl-Digest-SHA.i686 perl-GD.i686 \
  perl-Image-Info.noarch perl-Net-IP.noarch \
  perl-XML-Simple.noarch shared-mime-info.i686 \
  perl-DBI.i686 perl-DBD-SQLite.i686 \
@@ -583,19 +565,16 @@ cpan[4]> install Audio::Wav
 cpan[5]> install Audio::WMA
 cpan[6]> install Config::ApacheFormat
 cpan[7]> install Date::Format
-cpan[8]> install Devel::Size
-cpan[9]> install File::MimeInfo
-cpan[10]> install IO::Interface
-cpan[11]> install IO::Socket::Multicast
-cpan[12]> install MP3::Info
-cpan[13]> install MP4::Info
-cpan[14]> install Net::Address::Ethernet
-cpan[15]> install Net::Interface
-cpan[16]> install Net::Netmask
-cpan[17]> install Movie::Info
-cpan[18]> install Inline::MakeMaker
-cpan[19]> install Ogg::Vorbis::Header
-cpan[20]> install Proc::ProcessTable
+cpan[8]> install File::MimeInfo
+cpan[9]> install IO::Interface
+cpan[10]> install IO::Socket::Multicast
+cpan[11]> install MP3::Info
+cpan[12]> install MP4::Info
+cpan[13]> install Net::Netmask
+cpan[14]> install Movie::Info
+cpan[15]> install Inline::MakeMaker
+cpan[16]> install Ogg::Vorbis::Header::PurePerl
+cpan[17]> install Proc::ProcessTable
 \end{verbatim}
 \end{colframecmd}
 
@@ -737,43 +716,40 @@ ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
 ok 8 - use DBD::SQLite;
 ok 9 - use DBI;
-ok 10 - use Devel::Size;
-ok 11 - use Digest::MD5;
-ok 12 - use Digest::SHA1;
-ok 13 - use Fcntl;
-ok 14 - use File::Basename;
-ok 15 - use File::Glob;
-ok 16 - use File::MimeInfo;
-ok 17 - use GD;
-ok 18 - use GD::Graph::area;
-ok 19 - use Getopt::Long::Descriptive;
-ok 20 - use Image::Info;
-ok 21 - use IO::Interface;
-ok 22 - use IO::Select;
-ok 23 - use IO::Socket;
-ok 24 - use IO::Socket::INET;
-ok 25 - use IO::Socket::Multicast;
-ok 26 - use LWP::UserAgent;
-ok 27 - use MP3::Info;
-ok 28 - use MP4::Info;
-ok 29 - use Net::Address::Ethernet;
-ok 30 - use Net::Interface;
-ok 31 - use Net::IP;
-ok 32 - use Net::Netmask;
-ok 33 - use Movie::Info;
-ok 34 - use Ogg::Vorbis::Header;
-ok 35 - use POSIX;
-ok 36 - use Proc::ProcessTable;
-ok 37 - use SOAP::Lite;
-ok 38 - use Socket;
-ok 39 - use Sys::Hostname;
-ok 40 - use Sys::Syslog;
-ok 41 - use threads;
-ok 42 - use threads::shared;
-ok 43 - use Time::HiRes;
-ok 44 - use URI::Split;
-ok 45 - use XML::Simple;
-1..45
+ok 10 - use Digest::MD5;
+ok 11 - use Digest::SHA;
+ok 12 - use Fcntl;
+ok 13 - use File::Basename;
+ok 14 - use File::Glob;
+ok 15 - use File::MimeInfo;
+ok 16 - use GD;
+ok 17 - use GD::Graph::area;
+ok 18 - use Getopt::Long::Descriptive;
+ok 19 - use Image::Info;
+ok 20 - use IO::Interface::Simple;
+ok 21 - use IO::Select;
+ok 22 - use IO::Socket;
+ok 23 - use IO::Socket::INET;
+ok 24 - use IO::Socket::Multicast;
+ok 25 - use LWP::UserAgent;
+ok 26 - use MP3::Info;
+ok 27 - use MP4::Info;
+ok 28 - use Net::IP;
+ok 29 - use Net::Netmask;
+ok 30 - use Movie::Info;
+ok 31 - use Ogg::Vorbis::Header::PurePerl;
+ok 32 - use POSIX;
+ok 33 - use Proc::ProcessTable;
+ok 34 - use SOAP::Lite;
+ok 35 - use Socket;
+ok 36 - use Sys::Hostname;
+ok 37 - use Sys::Syslog;
+ok 38 - use threads;
+ok 39 - use threads::shared;
+ok 40 - use Time::HiRes;
+ok 41 - use URI::Split;
+ok 42 - use XML::Simple;
+1..42
 \end{verbatim}
 \end{colframecmd}
 The output above shows the executed \verb|install.pl| script with its output. As long as all of these checks return \verb|ok|, all necessary requirements are fullfilled.
@@ -810,16 +786,16 @@ the new version is going to be started.
 \section{Installing the latest release}
 \label{install-unix-latestrelease}
 
-Installing the latest release of {\em pDLNA} is the simpliest way to install {\em pDLNA}. Every release of {\em pDLNA} will be packaged as a tarball and available via the changelog section on \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog}.
+Installing the latest release of {\em pDLNA} is the simpliest way to install {\em pDLNA}. Every release of {\em pDLNA} will be packaged as a tarball and available via the changelog section on \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog} or can be downloaded directly via \url{http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest}.
 
 \subsection{Downloading latest release}
 
-For downloading the latest release of {\em pDLNA} you should visit \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog} to look for the latest release. The following snippet shows the commands to download the latest version using \verb|wget|:
+For downloading the latest release of {\em pDLNA} you should visit \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog} to look for the latest release. The following snippet shows the command to download the latest version using \verb|wget|:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ cd /tmp/
 pdlna@mediaserver:/tmp$ wget \
-  www.pdlna.com/downloads/releases/pDLNA-$pDLNAversion.tgz
+  http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest
 \end{verbatim}
 \end{colframecmd}
 
@@ -852,43 +828,40 @@ ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
 ok 8 - use DBD::SQLite;
 ok 9 - use DBI;
-ok 10 - use Devel::Size;
-ok 11 - use Digest::MD5;
-ok 12 - use Digest::SHA1;
-ok 13 - use Fcntl;
-ok 14 - use File::Basename;
-ok 15 - use File::Glob;
-ok 16 - use File::MimeInfo;
-ok 17 - use GD;
-ok 18 - use GD::Graph::area;
-ok 19 - use Getopt::Long::Descriptive;
-ok 20 - use Image::Info;
-ok 21 - use IO::Interface;
-ok 22 - use IO::Select;
-ok 23 - use IO::Socket;
-ok 24 - use IO::Socket::INET;
-ok 25 - use IO::Socket::Multicast;
-ok 26 - use LWP::UserAgent;
-ok 27 - use MP3::Info;
-ok 28 - use MP4::Info;
-ok 29 - use Net::Address::Ethernet;
-ok 30 - use Net::Interface;
-ok 31 - use Net::IP;
-ok 32 - use Net::Netmask;
-ok 33 - use Movie::Info;
-ok 34 - use Ogg::Vorbis::Header;
-ok 35 - use POSIX;
-ok 36 - use Proc::ProcessTable;
-ok 37 - use SOAP::Lite;
-ok 38 - use Socket;
-ok 39 - use Sys::Hostname;
-ok 40 - use Sys::Syslog;
-ok 41 - use threads;
-ok 42 - use threads::shared;
-ok 43 - use Time::HiRes;
-ok 44 - use URI::Split;
-ok 45 - use XML::Simple;
-1..45
+ok 10 - use Digest::MD5;
+ok 11 - use Digest::SHA;
+ok 12 - use Fcntl;
+ok 13 - use File::Basename;
+ok 14 - use File::Glob;
+ok 15 - use File::MimeInfo;
+ok 16 - use GD;
+ok 17 - use GD::Graph::area;
+ok 18 - use Getopt::Long::Descriptive;
+ok 19 - use Image::Info;
+ok 20 - use IO::Interface::Simple;
+ok 21 - use IO::Select;
+ok 22 - use IO::Socket;
+ok 23 - use IO::Socket::INET;
+ok 24 - use IO::Socket::Multicast;
+ok 25 - use LWP::UserAgent;
+ok 26 - use MP3::Info;
+ok 27 - use MP4::Info;
+ok 28 - use Net::IP;
+ok 29 - use Net::Netmask;
+ok 30 - use Movie::Info;
+ok 31 - use Ogg::Vorbis::Header::PurePerl;
+ok 32 - use POSIX;
+ok 33 - use Proc::ProcessTable;
+ok 34 - use SOAP::Lite;
+ok 35 - use Socket;
+ok 36 - use Sys::Hostname;
+ok 37 - use Sys::Syslog;
+ok 38 - use threads;
+ok 39 - use threads::shared;
+ok 40 - use Time::HiRes;
+ok 41 - use URI::Split;
+ok 42 - use XML::Simple;
+1..42
 \end{verbatim}
 \end{colframecmd}
 The attached output, shows the different tests and their results, which were performed by the installation script. For a complete overview regarding the requirements please see chapter~\ref{require}.
@@ -914,42 +887,39 @@ ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
 ok 8 - use DBD::SQLite;
 ok 9 - use DBI;
-ok 10 - use Devel::Size;
-ok 11 - use Digest::MD5;
-ok 12 - use Digest::SHA1;
-ok 13 - use Fcntl;
-ok 14 - use File::Basename;
-ok 15 - use File::Glob;
-ok 16 - use File::MimeInfo;
-ok 17 - use GD;
-ok 18 - use GD::Graph::area;
-ok 19 - use Getopt::Long::Descriptive;
-ok 20 - use Image::Info;
-ok 21 - use IO::Interface;
-ok 22 - use IO::Select;
-ok 23 - use IO::Socket;
-ok 24 - use IO::Socket::INET;
-ok 25 - use IO::Socket::Multicast;
-ok 26 - use LWP::UserAgent;
-ok 27 - use MP3::Info;
-ok 28 - use MP4::Info;
-ok 29 - use Net::Address::Ethernet;
-ok 30 - use Net::Interface;
-ok 31 - use Net::IP;
-ok 32 - use Net::Netmask;
-ok 33 - use Movie::Info;
-ok 34 - use Ogg::Vorbis::Header;
-ok 35 - use POSIX;
-ok 36 - use Proc::ProcessTable;
-ok 37 - use SOAP::Lite;
-ok 38 - use Socket;
-ok 39 - use Sys::Hostname;
-ok 40 - use Sys::Syslog;
-ok 41 - use threads;
-ok 42 - use threads::shared;
-ok 43 - use Time::HiRes;
-ok 44 - use URI::Split;
-ok 45 - use XML::Simple;
+ok 10 - use Digest::MD5;
+ok 11 - use Digest::SHA;
+ok 12 - use Fcntl;
+ok 13 - use File::Basename;
+ok 14 - use File::Glob;
+ok 15 - use File::MimeInfo;
+ok 16 - use GD;
+ok 17 - use GD::Graph::area;
+ok 18 - use Getopt::Long::Descriptive;
+ok 19 - use Image::Info;
+ok 20 - use IO::Interface::Simple;
+ok 21 - use IO::Select;
+ok 22 - use IO::Socket;
+ok 23 - use IO::Socket::INET;
+ok 24 - use IO::Socket::Multicast;
+ok 25 - use LWP::UserAgent;
+ok 26 - use MP3::Info;
+ok 27 - use MP4::Info;
+ok 28 - use Net::IP;
+ok 29 - use Net::Netmask;
+ok 30 - use Movie::Info;
+ok 31 - use Ogg::Vorbis::Header::PurePerl;
+ok 32 - use POSIX;
+ok 33 - use Proc::ProcessTable;
+ok 34 - use SOAP::Lite;
+ok 35 - use Socket;
+ok 36 - use Sys::Hostname;
+ok 37 - use Sys::Syslog;
+ok 38 - use threads;
+ok 39 - use threads::shared;
+ok 40 - use Time::HiRes;
+ok 41 - use URI::Split;
+ok 42 - use XML::Simple;
 ------------------------------------------------------
 \end{verbatim}
 \end{colframecmd}
@@ -959,57 +929,57 @@ ok 45 - use XML::Simple;
 Step 2:
 Testing for necessary Perl Modules for installation ...
 ------------------------------------------------------
-ok 46 - use File::Copy;
-ok 47 - use File::Copy::Recursive;
+ok 43 - use File::Copy;
+ok 44 - use File::Copy::Recursive;
 ------------------------------------------------------
 Step 3:
 Installing files ...
 ------------------------------------------------------
-ok 48 - Installed './PDLNA' to '/opt/pDLNA/PDLNA'.
-ok 49 - Set rights for '/opt/pDLNA/PDLNA'.
-ok 50 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
-ok 51 - Set rights for '/opt/pDLNA/external_programs'.
-ok 52 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
-ok 53 - Set rights for '/opt/pDLNA/VERSION'.
-ok 54 - Installed './pDLNA.pl' to '/opt/pDLNA/pDLNA.pl'.
-ok 55 - Set rights for '/opt/pDLNA/pDLNA.pl'.
-ok 56 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
-ok 57 - Set rights for '/opt/pDLNA/LICENSE'.
-ok 58 - Installed './README' to '/opt/pDLNA/README'.
-ok 59 - Set rights for '/opt/pDLNA/README'.
-ok 60 - Installed './pdlna.conf' to '/etc/pdlna.conf'.
-ok 61 - Set rights for '/etc/pdlna.conf'.
-ok 62 - Installed './rc.pDLNA' to '/etc/init.d/rc.pDLNA'.
-ok 63 - Set rights for '/etc/init.d/rc.pDLNA'.
+ok 45 - Installed './PDLNA' to '/opt/pDLNA/PDLNA'.
+ok 46 - Set rights for '/opt/pDLNA/PDLNA'.
+ok 47 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
+ok 48 - Set rights for '/opt/pDLNA/external_programs'.
+ok 49 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
+ok 50 - Set rights for '/opt/pDLNA/VERSION'.
+ok 51 - Installed './pDLNA.pl' to '/opt/pDLNA/pDLNA.pl'.
+ok 52 - Set rights for '/opt/pDLNA/pDLNA.pl'.
+ok 53 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
+ok 54 - Set rights for '/opt/pDLNA/LICENSE'.
+ok 55 - Installed './README' to '/opt/pDLNA/README'.
+ok 56 - Set rights for '/opt/pDLNA/README'.
+ok 57 - Installed './pdlna.conf' to '/etc/pdlna.conf'.
+ok 58 - Set rights for '/etc/pdlna.conf'.
+ok 59 - Installed './rc.pDLNA' to '/etc/init.d/rc.pDLNA'.
+ok 60 - Set rights for '/etc/init.d/rc.pDLNA'.
 ------------------------------------------------------
 Step 4:
 Setting of relevant paths ...
 ------------------------------------------------------
-ok 64 - Changed path for binary in '/etc/init.d/rc.pDLNA'.
-ok 65 - Changed path for lib in '/opt/pDLNA/pDLNA.pl'.
+ok 61 - Changed path for binary in '/etc/init.d/rc.pDLNA'.
+ok 62 - Changed path for lib in '/opt/pDLNA/pDLNA.pl'.
 ------------------------------------------------------
 Step 5:
 Checking for pDLNA Perl Modules ...
 ------------------------------------------------------
-ok 66 - use PDLNA::Config;
-ok 67 - use PDLNA::ContentLibrary;
-ok 68 - use PDLNA::Daemon;
-ok 69 - use PDLNA::Database;
-ok 70 - use PDLNA::Devices;
-ok 71 - use PDLNA::HTTPServer;
-ok 72 - use PDLNA::HTTPXML;
-ok 73 - use PDLNA::Log;
-ok 74 - use PDLNA::Media;
-ok 75 - use PDLNA::SOAPClient;
-ok 76 - use PDLNA::SOAPMessages;
-ok 77 - use PDLNA::SpecificViews;
-ok 78 - use PDLNA::SSDP;
-ok 79 - use PDLNA::Statistics;
-ok 80 - use PDLNA::Status;
-ok 81 - use PDLNA::Transcode;
-ok 82 - use PDLNA::Utils;
-ok 83 - use PDLNA::WebUI;
-1..83
+ok 63 - use PDLNA::Config;
+ok 64 - use PDLNA::ContentLibrary;
+ok 65 - use PDLNA::Daemon;
+ok 66 - use PDLNA::Database;
+ok 67 - use PDLNA::Devices;
+ok 68 - use PDLNA::HTTPServer;
+ok 69 - use PDLNA::HTTPXML;
+ok 70 - use PDLNA::Log;
+ok 71 - use PDLNA::Media;
+ok 72 - use PDLNA::SOAPClient;
+ok 73 - use PDLNA::SOAPMessages;
+ok 74 - use PDLNA::SpecificViews;
+ok 75 - use PDLNA::SSDP;
+ok 76 - use PDLNA::Statistics;
+ok 77 - use PDLNA::Status;
+ok 78 - use PDLNA::Transcode;
+ok 79 - use PDLNA::Utils;
+ok 80 - use PDLNA::WebUI;
+1..80
 \end{verbatim}
 \end{colframecmd}
 
@@ -2074,7 +2044,14 @@ The following sections describe some specific settings, which are made to the di
 
 \subsubsection{Logon customization}
 
-The logon customization, as can be seen in figure~\ref{fig:centos6-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was modified to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files.
+The logon customization, as can be seen in figure~\ref{fig:centos6-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was modified to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files. The following three lines have also been added to this file, to delete sensitive data on startup:
+\begin{colframefile}
+\begin{verbatim}
+/bin/rm -f /var/log/pdlna.log
+/bin/rm -f /tmp/pdlna.db
+/bin/rm -f /var/run/pdlna.pid
+\end{verbatim}
+\end{colframefile}
 
 Additionally, the \verb|OpenSSH| server's configuration file (\verb|/etc/ssh/sshd_config|) has been modified to use the \verb|/etc/issue.net| file as a banner:
 \begin{colframefile}
@@ -2115,11 +2092,18 @@ pdlna@mediaserver:~$ sudo vi /etc/sysconfig/keyboard
 
 Additional documentation can be found here: \url{www.centos.org/docs/5/html/5.1/Deployment_Guide/s2-sysconfig-kybd.html}
 
-\subsection{Debian GNU/Linux 6}
+\subsection{Debian GNU/Linux 7}
 
 \subsubsection{Logon customization}
 
-The logon customization, as can be seen in figure~\ref{fig:debian6-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was modified to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files.
+The logon customization, as can be seen in figure~\ref{fig:debian7-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was modified to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files. The following three lines have also been added to this file, to delete sensitive data on startup:
+\begin{colframefile}
+\begin{verbatim}
+/bin/rm -f /var/log/pdlna.log
+/bin/rm -f /tmp/pdlna.db
+/bin/rm -f /var/run/pdlna.pid
+\end{verbatim}
+\end{colframefile}
 
 Additionally, the \verb|OpenSSH| server's configuration file (\verb|/etc/ssh/sshd_config|) has been modified to use the \verb|/etc/issue.net| file as a banner:
 \begin{colframefile}
@@ -2128,18 +2112,18 @@ Banner /etc/issue.net
 \end{verbatim}
 \end{colframefile}
 
-The \verb|/usr/local/bin/update-issue.sh| script can also be found on GitHub (\url{github.com/geuma/pDLNA-utils/blob/master/preinstalled-VMs/Debian6/update-issue.sh}).
+The \verb|/usr/local/bin/update-issue.sh| script can also be found on GitHub (\url{github.com/geuma/pDLNA-utils/blob/master/preinstalled-VMs/Debian7/update-issue.sh}).
 
 \begin{figure}
 	\centering
-		\includegraphics[width=34em]{images/vm_debian6_loginscreen}
-	\label{fig:debian6-loginscreen}
-	\caption{Boot-up screen of preinstalled Debian 6 VMware image}
+		\includegraphics[width=34em]{images/vm_debian7_loginscreen}
+	\label{fig:debian7-loginscreen}
+	\caption{Boot-up screen of preinstalled Debian 7 VMware image}
 \end{figure}
 
 \subsubsection{Changing the timezone}
 
-Changing the timezone in Debian GNU/Linux 6 can be done by executing the following command as a superuser and use its wizard to configure the correct timezone.
+Changing the timezone in Debian GNU/Linux 7 can be done by executing the following command as a superuser and use its wizard to configure the correct timezone.
 
 \begin{colframecmd}
 \begin{verbatim}
@@ -2161,12 +2145,15 @@ pdlna@mediaserver:~$ sudo dpkg-reconfigure keyboard-configuration
 
 \subsubsection{Logon customization}
 
-The logon customization, as can be seen in figure~\ref{fig:freebsd9-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was created to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files. The script \verb|/etc/rc.local| has been created with the following content and the executable bit has been set. By default, FreeBSD 9 executes this script at startup via \verb|/etc/rc.d/local|.
+The logon customization, as can be seen in figure~\ref{fig:freebsd9-loginscreen}, is handeled by the script \verb|/etc/rc.local|, which was created to call \verb|/usr/local/bin/update-issue.sh|, which updates the \verb|/etc/issue| and \verb|/etc/issue.net| files and delete sensitive data. The script \verb|/etc/rc.local| has been created with the following content and the executable bit has been set. By default, FreeBSD 9 executes this script at startup via \verb|/etc/rc.d/local|.
 \begin{colframefile}
 \begin{verbatim}
 #!/bin/sh
 
 /usr/local/bin/update-issue.sh
+/bin/rm -f /var/log/pdlna.log
+/bin/rm -f /tmp/pdlna.db
+/bin/rm -f /var/run/pdlna.pid
 \end{verbatim}
 \end{colframefile}
 
@@ -2329,7 +2316,44 @@ In case of having a {\em DLNA} aware device, which is not working properly with 
 \chapter{Known Issues}
 \label{knownissues}
 
-Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via mail or via \url{https://github.com/geuma/pDLNA/issues}.
+%Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via mail or via \url{https://github.com/geuma/pDLNA/issues}.
+
+\section{FreeBSD: initscript unable to completely shut down pDLNA}
+
+\subsection{Description}
+
+On FreeBSD, there seems to be a problem shutting down {\em pDLNA} via the included initscript\footnote{\url{https://github.com/geuma/pDLNA/issues/20}}. After stopping and starting {\em pDLNA}, the following error message will occur:
+\begin{colframecmd}
+\begin{verbatim}
+[root@mediaserver ~]# /etc/rc.d/rc.pDLNA start
+Starting pDLNA ...
+[root@mediaserver ~]# /etc/rc.d/rc.pDLNA restart
+Starting pDLNA ...
+[root@mediaserver ~]# Cannot bind to Multicast socket:
+ Address already in use
+Going to terminate pDLNA/v0.63.0 on freebsd/9.0-release
+ with FriendlyName 'pDLNA v0.63.0 on mediaserver' ...
+\end{verbatim}
+\end{colframecmd}
+
+\subsection{Workaround}
+
+Since there is no fix for this issue today, this problem can be handled by a workaround. Get the process ID of the still running {\em pDLNA} process, kill it, remove the PID file (if any) and use the initscript afterwards again to start {\em pDLNA}:
+\begin{colframecmd}
+\begin{verbatim}
+[root@mediaserver ~]# ps | grep pDLNA
+2327   0  I    0:22.46 /usr/bin/perl ./pDLNA.pl -f /etc/pdlna.conf
+2651   0  R+   0:00.01 grep pDLNA
+[root@mediaserver ~]# kill -9 2327
+[root@mediaserver ~]# rm /var/run/pdlna.pid
+[root@mediaserver ~]# /etc/rc.d/rc.pDLNA start
+Starting pDLNA ...
+\end{verbatim}
+\end{colframecmd}
+
+%
+% FIXED ISSUES
+%
 
 \chapter{Fixed Issues}
 \label{fixedissues}
@@ -2352,7 +2376,7 @@ Use of uninitialized value $request_line in string ne at
 
 \subsection{Workaround}
 
-Since, this message is only a warning message, it does not affect the functionality of {\em pDLNA}. But actually, it increases the system load. A restart of {\em pDLNA} will fix the problem temporarily, but the issue might takes place again.
+Since, this message is only a warning message, it does not affect the functionality of {\em pDLNA}. But actually, it increases the system load. A restart of {\em pDLNA} will fix the problem temporarily, but the issue might take place again.
 
 \section{AllowedClients auto detection on FreeBSD is defect}
 
