@@ -58,7 +58,7 @@
   \end{center}
 }
 
-\newcommand{\pDLNAversion}{0.63.0}
+\newcommand{\pDLNAversion}{0.64.0}
 
 \begin{document}
 \pagestyle{empty}
@@ -203,8 +203,6 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Net::Netmask| 									& \verb|libnet-netmask-perl| \\
 		\hline
-		\verb|Movie::Info| 										& \\
-		\hline
 		\verb|Ogg::Vorbis::Header::PurePerl| 	& \verb|libogg-vorbis-header-pureperl-perl| \\
 		\hline
 		\verb|POSIX| 													& \\
@@ -299,8 +297,6 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Net::Netmask| 									& \\
 		\hline
-		\verb|Movie::Info| 										& \\
-		\hline
 		\verb|Ogg::Vorbis::Header::PurePerl| 	& \\
 		\hline
 		\verb|POSIX| 													& \\
@@ -394,8 +390,6 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|Net::IP| 												& \verb|net-mgmt/p5-Net-IP| \\
 		\hline
 		\verb|Net::Netmask| 									& \verb|net-mgmt/p5-Net-Netmask| \\
-		\hline
-		\verb|Movie::Info| 										& \\
 		\hline
 		\verb|Ogg::Vorbis::Header::PurePerl|	& \verb|audio/p5-Ogg-Vorbis-Header-PurePerl| \\
 		\hline
@@ -503,7 +497,7 @@ This chapter gives an overview about the different methods for installing {\em p
 
 \subsection{Debian GNU/Linux 7}
 
-On a fresh installed Debian GNU/Linux 7 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and mostly all necessary Perl modules from the Debian repository:
+On a fresh installed Debian GNU/Linux 7 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and all the necessary Perl modules from the Debian repository:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ sudo apt-get install \
@@ -522,14 +516,6 @@ pdlna@mediaserver:~$ sudo apt-get install \
  libogg-vorbis-header-pureperl-perl \
  libproc-processtable-perl libdbi-perl \
  libdbd-sqlite3-perl libgd-graph-perl
-\end{verbatim}
-\end{colframecmd}
-
-Afterwards you still need to install one more Perl modules via {\em CPAN} itself:
-\begin{colframecmd}
-\begin{verbatim}
-pdlna@mediaserver:~$ sudo cpan
-cpan[1]> install Movie::Info
 \end{verbatim}
 \end{colframecmd}
 
@@ -571,10 +557,9 @@ cpan[10]> install IO::Socket::Multicast
 cpan[11]> install MP3::Info
 cpan[12]> install MP4::Info
 cpan[13]> install Net::Netmask
-cpan[14]> install Movie::Info
-cpan[15]> install Inline::MakeMaker
-cpan[16]> install Ogg::Vorbis::Header::PurePerl
-cpan[17]> install Proc::ProcessTable
+cpan[14]> install Inline::MakeMaker
+cpan[15]> install Ogg::Vorbis::Header::PurePerl
+cpan[16]> install Proc::ProcessTable
 \end{verbatim}
 \end{colframecmd}
 
@@ -609,7 +594,6 @@ Afterwards you still need to install some Perl modules via {\em CPAN} itself, si
 [pdlna@mediaserver ~]$ sudo cpan
 cpan[1]> install Date::Format
 cpan[2]> install LWP::UserAgent
-cpan[3]> install Movie::Info
 \end{verbatim}
 \end{colframecmd}
 
