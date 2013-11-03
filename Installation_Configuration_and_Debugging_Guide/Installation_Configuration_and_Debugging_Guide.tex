@@ -136,7 +136,11 @@ Additionally, for those without interest in their Perl version, {\em pDLNA} in i
 
 \section{Perl modules}
 
-The following three tables give an overview about the necessary Perl modules. While table~\ref{tab:NecessaryPerlModulesDebian7} lists the Debian GNU/Linux 7 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names (for a i686 installation) of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
+There are three tables, which give an overview about the necessary Perl modules regarding a specific Linux distrubution. While table~\ref{tab:NecessaryPerlModulesDebian7} lists the Debian GNU/Linux 7 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 package names (for a i686 installation) of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
+
+\begin{colframeimportantnote}
+If your favorite Linux distrubution is not one of those, you will need make sure, that these Perl modules are installed anyway.
+\end{colframeimportantnote}
 
 \begin{table}
 	\centering
@@ -158,6 +162,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|Data::Dumper| 									& \\
 		\hline
 		\verb|Date::Format| 									& \\
+		\hline
+		\verb|DBD::mysql|											& \verb|libdbd-mysql-perl| \\
 		\hline
 		\verb|DBD::SQLite|										& \verb|libdbd-sqlite3-perl| \\
 		\hline
@@ -253,6 +259,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\hline
 		\verb|Date::Format| 									&	\\
 		\hline
+		\verb|DBD::mysql|											& \verb|perl-DBD-MySQL.i686| \\
+		\hline
 		\verb|DBD::SQLite|										& \verb|perl-DBD-SQLite.i686| \\
 		\hline
 		\verb|DBI|														& \verb|perl-DBI.i686| \\
@@ -346,6 +354,8 @@ The following three tables give an overview about the necessary Perl modules. Wh
 		\verb|Data::Dumper| 									& \verb|devel/p5-Data-Dumper| \\
 		\hline
 		\verb|Date::Format| 									&	\\
+		\hline
+		\verb|DBD::mysql|											& \verb|databases/p5-DBD-mysql| \\
 		\hline
 		\verb|DBD::SQLite|										& \verb|databases/p5-DBD-SQLite| \\
 		\hline
@@ -443,27 +453,6 @@ For Perl modules without a package provided by your Linux distribution, you need
 
 {\em pDLNA} requires for specific functionalities third party software, which is open source software.
 
-\subsection{MPlayer}
-\label{mplayer}
-
-\begin{colframeimportantnote}
-\verb|MPlayer| (\url{www.mplayerhq.hu} is needed, when even one of the following conditions are configured:
-\begin{itemize}
-	\item if \verb|EnableVideoThumbnails| is enabled (see section~\ref{EnableVideoThumbnails} for detailed information)
-	\item if \verb|LowResourceMode| is disabled (see section~\ref{LowResourceMode} for detailed information)
-\end{itemize}
-\end{colframeimportantnote}
-
-The \verb|MPlayer| source code or binaries can be obtained from the project's official website \url{www.mplayerhq.hu} or can be installed via the package management of your favorite Linux distribution. The following command will install the \verb|MPlayer| package on the Debian GNU/Linux distribution and its variants.
-
-\begin{colframecmd}
-\begin{verbatim}
-pdlna@mediaserver:~$ sudo apt-get install mplayer
-\end{verbatim}
-\end{colframecmd}
-
-The official website of \verb|MPlayer| does also provide binaries for your Windows operating system.
-
 \subsection{FFmpeg}
 \label{ffmpeg}
 
@@ -501,8 +490,7 @@ On a fresh installed Debian GNU/Linux 7 operating system, you are able to execut
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ sudo apt-get install \
- build-essential git \
- mplayer ffmpeg \
+ build-essential git ffmpeg \
  libgetopt-long-descriptive-perl \
  libfile-copy-recursive-perl \
  libaudio-flac-header-perl libaudio-wav-perl \
@@ -515,7 +503,8 @@ pdlna@mediaserver:~$ sudo apt-get install \
  libnet-netmask-perl libsoap-lite-perl \
  libogg-vorbis-header-pureperl-perl \
  libproc-processtable-perl libdbi-perl \
- libdbd-sqlite3-perl libgd-graph-perl
+ libdbd-sqlite3-perl libgd-graph-perl \
+ libdbd-mysql-perl
 \end{verbatim}
 \end{colframecmd}
 
@@ -532,12 +521,13 @@ pdlna@mediaserver:~$ sudo yum install \
  perl-Image-Info.noarch perl-Net-IP.noarch \
  perl-XML-Simple.noarch shared-mime-info.i686 \
  perl-DBI.i686 perl-DBD-SQLite.i686 \
- perl-GDGraph.noarch perl-SOAP-Lite.noarch
+ perl-GDGraph.noarch perl-SOAP-Lite.noarch \
+ perl-DBD-MySQL.i686
 \end{verbatim}
 \end{colframecmd}
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} In the default repositories of CentOS, there are no packages for \verb|Mplayer| or \verb|FFmpeg|, so {\em pDLNA} is able to run in \verb|LowResourceMode| (see section~\ref{LowResourceMode} for detailed information).
+\textsc{IMPORTANT NOTE:} In the default repositories of CentOS, there is no package for \verb|FFmpeg|. Either install \verb|FFmpeg| manually or run {\em pDLNA} in \verb|LowResourceMode| (see section~\ref{LowResourceMode} for detailed information).
 \end{colframeimportantnote}
 
 Afterwards you still need to install a lot of Perl modules via {\em CPAN} itself, since they are not included in the official repository:
@@ -583,10 +573,10 @@ Afterwards, you will be able to look, if there is already a {\em Port} for the r
 \end{colframecmd}
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} FreeBSD 9 comes with a \textbf{non-threaded} Perl version. Please ensure to deinstall the running Perl version and recompile it with threads. This can be done by the command \verb|[pdlna@mediaserver /usr/ports/lang/perl5.12/]$ make WITH_THREADS=yes|.
+\textsc{IMPORTANT NOTE:} FreeBSD 9 comes with a \textbf{non-threaded} Perl version. Please ensure to deinstall the running Perl version and recompile it with threads. This can be done by the command \verb|[pdlna@ms /usr/ports/lang/perl5.12/]$ make WITH_THREADS=yes|.
 \end{colframeimportantnote}
 
-To install all required Perl modules, which are included in the {\em Ports Collection} (see table~\ref{tab:NecessaryPerlModulesFreeBSD9}), follow the two steps listed above for compiling and installation. Additionally, you are able to install the Perl module \verb|File::Copy::Recursive| (necessary for the \verb|install.pl| script) which is named \verb|p5-File-Copy-Recursive| and member of the \verb|devel| category.
+To install all required Perl modules, which are included in the {\em Ports Collection} (see table~\ref{tab:NecessaryPerlModulesFreeBSD9}), follow the two steps listed above for compiling and installing. Additionally, you are able to install the Perl module \verb|File::Copy::Recursive| (necessary for the \verb|install.pl| script) which is named \verb|p5-File-Copy-Recursive| and member of the \verb|devel| category.
 
 Afterwards you still need to install some Perl modules via {\em CPAN} itself, since they are not included in the {\em Ports Collection}:
 \begin{colframecmd}
@@ -597,14 +587,10 @@ cpan[2]> install LWP::UserAgent
 \end{verbatim}
 \end{colframecmd}
 
-If you would like {\em pDLNA} to use \verb|MPlayer| (see section~\ref{mplayer}) and \verb|FFmpeg| (see section~\ref{ffmpeg}), you are also able to install them via the {\em Ports Collection} by the following commands:
+If you would like {\em pDLNA} to use \verb|FFmpeg| (see section~\ref{ffmpeg}), you are also able to install them via the {\em Ports Collection} by the following commands:
 \begin{colframecmd}
 \begin{verbatim}
-[pdlna@mediaserver ~]$ cd /usr/ports/multimedia/mplayer
-[pdlna@mediaserver /usr/ports/multimedia/mplayer]$
-  sudo make install clean
-[pdlna@mediaserver /usr/ports/multimedia/mplayer]$
-  cd /usr/ports/multimedia/ffmpeg
+[pdlna@mediaserver ~]$ cd /usr/ports/multimedia/ffmpeg
 [pdlna@mediaserver /usr/ports/multimedia/ffmpeg]$
   sudo make install clean
 \end{verbatim}
@@ -698,29 +684,29 @@ ok 4 - use Config;
 ok 5 - use Config::ApacheFormat;
 ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
-ok 8 - use DBD::SQLite;
-ok 9 - use DBI;
-ok 10 - use Digest::MD5;
-ok 11 - use Digest::SHA;
-ok 12 - use Fcntl;
-ok 13 - use File::Basename;
-ok 14 - use File::Glob;
-ok 15 - use File::MimeInfo;
-ok 16 - use GD;
-ok 17 - use GD::Graph::area;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface::Simple;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::IP;
-ok 29 - use Net::Netmask;
-ok 30 - use Movie::Info;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::SQLite;
+ok 10 - use DBI;
+ok 11 - use Digest::MD5;
+ok 12 - use Digest::SHA;
+ok 13 - use Fcntl;
+ok 14 - use File::Basename;
+ok 15 - use File::Glob;
+ok 16 - use File::MimeInfo;
+ok 17 - use GD;
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface::Simple;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::IP;
+ok 30 - use Net::Netmask;
 ok 31 - use Ogg::Vorbis::Header::PurePerl;
 ok 32 - use POSIX;
 ok 33 - use Proc::ProcessTable;
@@ -739,7 +725,7 @@ ok 42 - use XML::Simple;
 The output above shows the executed \verb|install.pl| script with its output. As long as all of these checks return \verb|ok|, all necessary requirements are fullfilled.
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|MPlayer| and \verb|FFmpeg| are installed. For detailed information regarding the usage of \verb|MPlayer| see section~\ref{mplayer} or the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
+\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|FFmpeg| is installed. For detailed information regarding the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
 \end{colframeimportantnote}
 
 After the initial configuration (see chapter~\ref{config}), you are able to start {\em pDLNA} by executing the following command:
@@ -774,7 +760,9 @@ Installing the latest release of {\em pDLNA} is the simpliest way to install {\e
 
 \subsection{Downloading latest release}
 
-For downloading the latest release of {\em pDLNA} you should visit \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog} to look for the latest release. The following snippet shows the command to download the latest version using \verb|wget|:
+The latest release of {\em pDLNA} can be downloaded via \url{http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest}. The changelog section (\url{www.pdlna.com/cgi-bin/index.pl?menu=changelog}) gives detailed information about all releases.
+
+The following snippet shows the command to download the latest version using \verb|wget|:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ cd /tmp/
@@ -810,29 +798,29 @@ ok 4 - use Config;
 ok 5 - use Config::ApacheFormat;
 ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
-ok 8 - use DBD::SQLite;
-ok 9 - use DBI;
-ok 10 - use Digest::MD5;
-ok 11 - use Digest::SHA;
-ok 12 - use Fcntl;
-ok 13 - use File::Basename;
-ok 14 - use File::Glob;
-ok 15 - use File::MimeInfo;
-ok 16 - use GD;
-ok 17 - use GD::Graph::area;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface::Simple;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::IP;
-ok 29 - use Net::Netmask;
-ok 30 - use Movie::Info;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::SQLite;
+ok 10 - use DBI;
+ok 11 - use Digest::MD5;
+ok 12 - use Digest::SHA;
+ok 13 - use Fcntl;
+ok 14 - use File::Basename;
+ok 15 - use File::Glob;
+ok 16 - use File::MimeInfo;
+ok 17 - use GD;
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface::Simple;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::IP;
+ok 30 - use Net::Netmask;
 ok 31 - use Ogg::Vorbis::Header::PurePerl;
 ok 32 - use POSIX;
 ok 33 - use Proc::ProcessTable;
@@ -851,7 +839,7 @@ ok 42 - use XML::Simple;
 The attached output, shows the different tests and their results, which were performed by the installation script. For a complete overview regarding the requirements please see chapter~\ref{require}.
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|MPlayer| and \verb|FFmpeg| are installed. For detailed information regarding the usage of \verb|MPlayer| see section~\ref{mplayer} or the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
+\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|FFmpeg| is installed. For detailed information regarding the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
 \end{colframeimportantnote}
 
 When all requirements have been fixed and installed, you are able to rerun the installation script by executing the installation script with the \verb|--install| parameter. By default, the script will install {\em pDLNA} to the \verb|/opt| directory, which can be changed by setting the \verb|--prefix=/path/to/your/directory| parameter. The following output shows the installation process, which is started by checking the requirements for {\em pDLNA}. While step 2 is checking for two more Perl modules for installation, step 3 installs the necessary files from {\em pDLNA} to the specified directory and step 4 modifies the installed files for the installation specific parts. In the end, step 5 verifies the installation.
@@ -869,29 +857,29 @@ ok 4 - use Config;
 ok 5 - use Config::ApacheFormat;
 ok 6 - use Data::Dumper;
 ok 7 - use Date::Format;
-ok 8 - use DBD::SQLite;
-ok 9 - use DBI;
-ok 10 - use Digest::MD5;
-ok 11 - use Digest::SHA;
-ok 12 - use Fcntl;
-ok 13 - use File::Basename;
-ok 14 - use File::Glob;
-ok 15 - use File::MimeInfo;
-ok 16 - use GD;
-ok 17 - use GD::Graph::area;
-ok 18 - use Getopt::Long::Descriptive;
-ok 19 - use Image::Info;
-ok 20 - use IO::Interface::Simple;
-ok 21 - use IO::Select;
-ok 22 - use IO::Socket;
-ok 23 - use IO::Socket::INET;
-ok 24 - use IO::Socket::Multicast;
-ok 25 - use LWP::UserAgent;
-ok 26 - use MP3::Info;
-ok 27 - use MP4::Info;
-ok 28 - use Net::IP;
-ok 29 - use Net::Netmask;
-ok 30 - use Movie::Info;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::SQLite;
+ok 10 - use DBI;
+ok 11 - use Digest::MD5;
+ok 12 - use Digest::SHA;
+ok 13 - use Fcntl;
+ok 14 - use File::Basename;
+ok 15 - use File::Glob;
+ok 16 - use File::MimeInfo;
+ok 17 - use GD;
+ok 18 - use GD::Graph::area;
+ok 19 - use Getopt::Long::Descriptive;
+ok 20 - use Image::Info;
+ok 21 - use IO::Interface::Simple;
+ok 22 - use IO::Select;
+ok 23 - use IO::Socket;
+ok 24 - use IO::Socket::INET;
+ok 25 - use IO::Socket::Multicast;
+ok 26 - use LWP::UserAgent;
+ok 27 - use MP3::Info;
+ok 28 - use MP4::Info;
+ok 29 - use Net::IP;
+ok 30 - use Net::Netmask;
 ok 31 - use Ogg::Vorbis::Header::PurePerl;
 ok 32 - use POSIX;
 ok 33 - use Proc::ProcessTable;
@@ -921,7 +909,8 @@ Installing files ...
 ------------------------------------------------------
 ok 45 - Installed './PDLNA' to '/opt/pDLNA/PDLNA'.
 ok 46 - Set rights for '/opt/pDLNA/PDLNA'.
-ok 47 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
+ok 47 - Installed './external_programs' to
+ '/opt/pDLNA/external_programs'.
 ok 48 - Set rights for '/opt/pDLNA/external_programs'.
 ok 49 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
 ok 50 - Set rights for '/opt/pDLNA/VERSION'.
@@ -950,17 +939,17 @@ ok 64 - use PDLNA::ContentLibrary;
 ok 65 - use PDLNA::Daemon;
 ok 66 - use PDLNA::Database;
 ok 67 - use PDLNA::Devices;
-ok 68 - use PDLNA::HTTPServer;
-ok 69 - use PDLNA::HTTPXML;
-ok 70 - use PDLNA::Log;
-ok 71 - use PDLNA::Media;
-ok 72 - use PDLNA::SOAPClient;
-ok 73 - use PDLNA::SOAPMessages;
-ok 74 - use PDLNA::SpecificViews;
-ok 75 - use PDLNA::SSDP;
-ok 76 - use PDLNA::Statistics;
-ok 77 - use PDLNA::Status;
-ok 78 - use PDLNA::Transcode;
+ok 68 - use PDLNA::FFmpeg;
+ok 69 - use PDLNA::HTTPServer;
+ok 70 - use PDLNA::HTTPXML;
+ok 71 - use PDLNA::Log;
+ok 72 - use PDLNA::Media;
+ok 73 - use PDLNA::SOAPClient;
+ok 74 - use PDLNA::SOAPMessages;
+ok 75 - use PDLNA::SpecificViews;
+ok 76 - use PDLNA::SSDP;
+ok 77 - use PDLNA::Statistics;
+ok 78 - use PDLNA::Status;
 ok 79 - use PDLNA::Utils;
 ok 80 - use PDLNA::WebUI;
 1..80
@@ -1044,11 +1033,38 @@ The parsing of these values is case insenstive and if you would like to disable 
 
 \subsection{FriendlyName}
 
-The {\em FriendlyName} configures a name, which will be shown by all capable DNLA devices to identify a running digital media server. By default, the {\em FriendlyName} will be set to \verb|pDLNA v$VERSION on $HOSTNAME| or you are able to define your {\em FriendlyName} by configuring it like this:
+The {\em FriendlyName} configures a name, which will be shown by all capable DNLA devices to identify a running digital media server. The maximum length of the {FriendlyName} is limited to 32 characters and the allowed characters are:
+\begin{itemize}
+	\item letters and number
+	\item spaces and dots
+	\item dashes and underscores
+\end{itemize}
+
+Additionally, you are able to use the in table\ref{tab:AvailableFriendlyNameVariables} listed variables in the {\em FriendlyName}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Variable} 	& \textsc{Description}\\
+		\hline
+		\hline
+		\verb|$VERSION| 		& the currently running version, for instance v\pDLNAversion \\
+		\hline
+		\verb|$HOSTNAME| 		& the systems hostname \\
+		\hline
+		\verb|$OS| 					& the operating system's name \\
+		\hline
+	\end{tabular}
+	\caption{Available FriendlyName configuration variables}
+	\label{tab:AvailableFriendlyNameVariables}
+\end{table}
+
+By default, the {\em FriendlyName} will be set to \verb|pDLNA $VERSION on $HOSTNAME| or you are able to define your {\em FriendlyName} by configuring it like this:
 
 \begin{colframefile}
 \begin{verbatim}
-FriendlyName 'pDLNA media server'
+FriendlyName 'pDLNA $VERSION on $HOSTNAME'
 \end{verbatim}
 \end{colframefile}
 
@@ -1132,17 +1148,20 @@ TempDir /tmp
 \label{configdatabase}
 
 \subsection{DatabaseType}
+\label{configdbtype}
 
-The parameter {\em DatabaseType} defines the database, which is used by {\em pDLNA} to store necessary information (like the media items, which are member of the media library). Currently the following database types (which are listed in table~\ref{tab:AvailableDatabaseTypeparams}) are available.
+The parameter {\em DatabaseType} defines the database, which is used by {\em pDLNA} to store all th e necessary information (like the media items, which are member of the media library). Currently the following database types (which are listed in table~\ref{tab:AvailableDatabaseTypeparams}) are available.
 
 \begin{table}
 	\centering
 	\begin{tabular}{|p{7em}|p{25em}|}
 		\hline
-		\textsc{Parameter} & \textsc{Description}\\
+		\textsc{Parameter} 	& \textsc{Description}\\
 		\hline
 		\hline
-		\verb|SQLITE3| & SQLite database in version 3 \\
+		\verb|SQLITE3| 			& SQLite database in version 3 \\
+		\hline
+		\verb|MYSQL|				& MySQL database \\
 		\hline
 	\end{tabular}
 	\caption{Available DatabaseType configuration parameters}
@@ -1153,11 +1172,39 @@ By default, this parameter is set to \verb|SQLITE3| or you are able to specify a
 
 \begin{colframefile}
 \begin{verbatim}
-DatabaseType SQLITE3
+DatabaseType MYSQL
 \end{verbatim}
 \end{colframefile}
 
+\begin{colframenote}
+\textsc{NOTE:} Using MySQL as a database for {\em pDLNA} improves the performance. A short performance comparison regarding {\em pDLNA} can be accessed on \url{http://www.pdlna.com/cgi-bin/index.pl?menu=news&id=v0.64b}.
+\end{colframenote}
+
+\subsubsection{Preparing MySQL for pDLNA}
+\label{configdbtype-mysql}
+
+To use MySQL as a database server for {\em pDLNA}, creating a database and a seperate user is recommended. This can be achieved by logging in as an administrative user (for instance \verb|root|) and executing the following commands:
+
+\begin{colframecmd}
+\begin{verbatim}
+pdlna@mediaserver:~$ mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8896
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> create database pdlna;
+mysql> grant usage on pdlna.* to pdlna@localhost identified by
+ '<yourpassword>';
+mysql> grant all privileges on pdlna.* to pdlna@localhost;
+\end{verbatim}
+\end{colframecmd}
+
+Finally, {\em pDLNA} needs to be configured to use the created MySQL database with the according username and password. This is described in the following two sections~\ref{configdbname} and~\ref{configdbuser}.
+
 \subsection{DatabaseName}
+\label{configdbname}
 
 Configuring the parameter {\em DatabaseName} depends on the configuration parameter {\em DatabaseType}.
 
@@ -1173,6 +1220,35 @@ DatabaseName /tmp/pdlna.db
 
 \begin{colframeimportantnote}
 \textsc{IMPORTANT NOTE:} Please ensure, that the user, which is running {\em pDLNA}, has permissions to write to the configured path.
+\end{colframeimportantnote}
+
+\subsubsection{MySQL database}
+
+This configuration parameter defines the name of the database, which should be used by {\em pDLNA}. By default, this parameter is set to \verb|pdlna| or you are able to specify a different database by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+DatabaseName pdlna
+\end{verbatim}
+\end{colframefile}
+
+\subsection{DatabaseUsername and DatabasePassword}
+\label{configdbuser}
+
+These two configuration parameters need to be configured, if the {\em DatabaseType} is configured to \verb|MYSQL| (see section~\ref{configdbtype}) and represent the authentication information for the configured database server.
+
+These configuration parameters can be configured like this:
+\begin{colframefile}
+\begin{verbatim}
+DatabaseUsername pdlna
+DatabasePassword <yourpassword>
+\end{verbatim}
+\end{colframefile}
+
+By default, if no \em{DatabaseUsername} is configured, it will be set to \verb|pdlna|. And if no \em{DatabasePassword} is configured, no password will be used to authenticate to the database.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} It is not recommended to use the database server's administrative (for instance \verb|root|) user.
 \end{colframeimportantnote}
 
 \section{Network configuration}
@@ -1363,7 +1439,7 @@ EnableImageThumbnails	On
 By switching the parameter {\em EnableVideoThumbnails} on or off, you are able to decide if preview thumbnails of video files should be displayed on capabale devices. By default, this feature is deactivated.
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} Enabling {\em EnableVideoThumbnails} might decrease the performance of directory listings and will require \verb|Mplayer|.
+\textsc{IMPORTANT NOTE:} Enabling {\em EnableVideoThumbnails} might decrease the performance of directory listings and will require \verb|FFmpeg|.
 \end{colframeimportantnote}
 
 \begin{colframefile}
@@ -1375,7 +1451,7 @@ EnableVideoThumbnails	On
 \subsection{LowResourceMode}
 \label{LowResourceMode}
 
-By default, {\em pDLNA} opens every single video and audio file with \verb|Mplayer| to determine its codecs, length and various other attributes. This behaviour is not really IO friendly and so crawling and indexing the media library is slow. Because of small devices, with limited resource like CPU and IO, enabling the {\em LowResourceMode} increases crawling and indexing the media library enormous.
+By default, {\em pDLNA} opens every single video and audio file with \verb|FFmpeg| to determine its codecs, length and various other attributes. This behaviour is not really IO friendly and so crawling and indexing the media library is slow. Because of small devices, with limited resource like CPU and IO, enabling the {\em LowResourceMode} increases crawling and indexing the media library.
 
 By default, {\em LowResourceMode} is disabled.
 
@@ -1388,18 +1464,8 @@ LowResourceMode On
 \begin{colframeimportantnote}
 \textsc{IMPORTANT NOTE:} Enabling {\em LowResourceMode} will decrease the usability: No information like codecs, length and various other attributes will be gathered from the media itself. Because of this limited information, directory listings might not be as beautiful as when {\em LowResourceMode} is disabled.
 
-When {\em LowResourceMode} is enabled, {\em pDLNA} will ignore {\em External} and {\em Transcode} configuration blocks. {\em pDLNA} will also \textbf{not} index audio or video streams as elements from a playlist. But \verb|Mplayer| and \verb|FFmpeg| are not required.
+When {\em LowResourceMode} is enabled, {\em pDLNA} will ignore {\em External} and {\em Transcode} configuration blocks. {\em pDLNA} will also \textbf{not} index audio or video streams as elements from a playlist. But \verb|FFmpeg| is not required.
 \end{colframeimportantnote}
-
-\subsection{MPlayerBinaryPath}
-
-{\em pDLNA} has to use \verb|MPlayer| for different various tasks (see section~\ref{mplayer} for detailed information). In this cases, it is necessary to configure {\em MPlayerBinaryPath} with the correct path of \verb|MPlayer|'s binary. The default path for \verb|MPlayer|'s binary is set to \verb|/usr/bin/mplayer|.
-
-\begin{colframefile}
-\begin{verbatim}
-MPlayerBinaryPath /usr/bin/mplayer
-\end{verbatim}
-\end{colframefile}
 
 \subsection{FFmpegBinaryPath}
 
@@ -1840,6 +1906,8 @@ Since it is possible to define multiple transcoding profiles, the first transcod
 \textsc{IMPORTANT NOTE:} Transcoding is not available, when \verb|LowResourceMode| is enabled.
 \end{colframeimportantnote}
 
+An easy way to get the information, which transcoding profiles are supported by your \verb|FFmpeg| installation, is by using the WebUI (see chapter~\ref{webui}).
+
 %
 % WebUI
 %
@@ -1853,7 +1921,7 @@ Since it is possible to define multiple transcoding profiles, the first transcod
 \textsc{IMPORTANT NOTE:} If your client's IP address, which you would like to use to access the WebUI, is not included in the {\em AllowedClients} configuration parameter, you will not be able to access it.
 \end{colframeimportantnote}
 
-This small WebUI gives the chance to navigate through the indexed media items, have a detailed look on connected {\em UPnP} and {\em DLNA} devices and determine some process information like memory usage or even the amount and size of indexed media items in the database.
+This small WebUI gives the chance to navigate through the indexed media items, have a detailed look on connected {\em UPnP} and {\em DLNA} devices and determine some process information like memory usage, the amount and size of indexed media items in the database or even the supported codecs of your \verb|FFmpeg| installation.
 
 The WebUI does have a navigation part (coloured in blue) on the left side of the website. The information itself will be shown on the right side (coloured in white). The navigation is split in three different sections, which will be described in the following three sections.
 
@@ -1901,33 +1969,42 @@ Figure~\ref{fig:webgui-connecteddevice-service} shows information, including the
 	\caption{WebUI: Information about a connected device per service}
 \end{figure}
 
-\section{Statistics}
+\section{Information}
 
-The third section in the navigation includes some statistics about the running{\em pDLNA} installation.
+The third section in the navigation includes some various information about the running{\em pDLNA} installation.
 
 While figure~\ref{fig:webgui-process} shows information about the process itself (including for instance memory and cpu usage), figure~\ref{fig:webgui-library} delivers information about the amount and size of media items included in the media library.
 
 \begin{figure}
 	\centering
-		\includegraphics[width=34em]{images/webui_stats_process}
+		\includegraphics[width=34em]{images/webui_info_process}
 	\label{fig:webgui-process}
 	\caption{WebUI: Process Information}
 \end{figure}
 
 \begin{figure}
 	\centering
-		\includegraphics[width=34em]{images/webui_stats_library}
+		\includegraphics[width=34em]{images/webui_info_library}
 	\label{fig:webgui-library}
 	\caption{WebUI: Media Library Information}
 \end{figure}
 
-And finally, the following figure~\ref{fig:webgui-pdlna} shows information about the installed {\em pDLNA} version and its release date. You are also able to execute a {\em Check4Updates}, which works as described in section~\ref{config-check4updates}, but shows the result in the WebUI.
+Additionally, the following figure~\ref{fig:webgui-pdlna} shows information about the installed {\em pDLNA} version and its release date. You are also able to execute a {\em Check4Updates}, which works as described in section~\ref{config-check4updates}, but shows the result in the WebUI.
 
 \begin{figure}
 	\centering
-		\includegraphics[width=34em]{images/webui_stats_pdlna}
+		\includegraphics[width=34em]{images/webui_info_pdlna}
 	\label{fig:webgui-pdlna}
 	\caption{WebUI: pDLNA Information}
+\end{figure}
+
+And finally, the following figure~\ref{fig:webgui-ffmpeg} shows information regarding the used \verb|FFmpeg| installation, if the usage of \verb|FFmpeg| is configured. This information provides easier access to supported transcoding profiles (see section~\ref{Transcoding_Profiles}).
+
+\begin{figure}
+	\centering
+		\includegraphics[width=34em]{images/webui_info_ffmpeg}
+	\label{fig:webgui-ffmpeg}
+	\caption{WebUI: FFmpeg Information}
 \end{figure}
 
 %
@@ -1941,11 +2018,13 @@ Since not everybody is willing to install {\em pDLNA} on a system, just to verif
 
 In the case, that somebody does not know {\em VMware}: VMware Player is free for personal use and is available to download via the following URL: \url{www.vmware.com/products/player/overview.html}
 
-You also might be able to convert the available {\em VMware} images and open it with {\em VirtualBox}\footnote{{\em VirtualBox} is an open source virtualization product, which is available on the product website: \url{www.virtualbox.org}.} or any other virtualization product.
+You also might be able to convert the available {\em VMware} images and open it with {\em VirtualBox}\footnote{{\em VirtualBox} is an open source virtualization product, which is available on the product website \url{www.virtualbox.org}.} or any other virtualization product.
 
 \begin{colframeimportantnote}
 \textsc{IMPORTANT NOTE:} These preinstalled {\em VMware} images are prepared to have a quick look on {\em pDLNA} and are not designed to be used in a productive environment or for any other purpose.
 \end{colframeimportantnote}
+
+All preinstalled {\em VMware} images are configured to use SQLite3 as a database.
 
 While the following section~\ref{vms-general} gives an overview about the general information, like installation of the operating system or the included media files, section~\ref{vms-specifc} describes some per operating system relevant information.
 
@@ -2023,7 +2102,7 @@ The following sections describe some specific settings, which are made to the di
 \subsection{CentOS 6}
 
 \begin{colframeimportantnote}
-\textsc{IMPORTANT NOTE:} Since \verb|MPlayer| and \verb|FFmpeg| are not part of the package management in CentOS 6, {\em pDLNA} is only able run in {\em LowResourceMode} in this preinstalled {\em VMware} image.
+\textsc{IMPORTANT NOTE:} Since \verb|FFmpeg| is not part of the package management in CentOS 6, {\em pDLNA} is only able run in {\em LowResourceMode} in this preinstalled {\em VMware} image.
 \end{colframeimportantnote}
 
 \subsubsection{Logon customization}
@@ -2300,7 +2379,7 @@ In case of having a {\em DLNA} aware device, which is not working properly with 
 \chapter{Known Issues}
 \label{knownissues}
 
-%Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via mail or via \url{https://github.com/geuma/pDLNA/issues}.
+%Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via \url{https://github.com/geuma/pDLNA/issues} or via mail.
 
 \section{FreeBSD: initscript unable to completely shut down pDLNA}
 
@@ -2342,6 +2421,32 @@ Starting pDLNA ...
 \chapter{Fixed Issues}
 \label{fixedissues}
 
+\section{parsing problem if media file name contains special regex characters like '(', ')' or others}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.64.0.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+This issue has been reported on a \verb|Raspberry Pi| running Linux with Perl 5.14.2 and locales configured to \verb|de_DE.UTF-8|.
+
+The following error appears, when files with special characters (for instance brackets) are existing, which break some regular expressions in {\em pDLNA}\footnote{\url{github.com/geuma/pDLNA/issues/21}}:
+\begin{colframecmd}
+\begin{verbatim}
+Issuing rollback() due to DESTROY without explicit disconnect()
+ of DBD::SQLite::db handle dbname=/media/TREK_2/Audio/pdlna.db at
+ ./pDLNA.pl line 63.
+Thread 1 terminated abnormally: Unmatched ) in regex; marked by
+ <-- HERE in m/^18-This Live I) <-- HERE 'm Living.mp3$/ at
+ PDLNA/ContentLibrary.pm line 152.
+\end{verbatim}
+\end{colframecmd}
+
+\subsection{Workaround}
+
+There is no workaround for this issue. Or would you like to rename your files?
+
 \section{Use of uninitialized value \$request\_line in string ne at /PDLNA/HTTPServer.pm line xxx.}
 
 \begin{colframeimportantnote}
@@ -2380,6 +2485,6 @@ This seems to be a problem with the usage of \verb|AllowedClients(ip_address_sv)
 
 \subsection{Workaround}
 
-As a workaround you are able to define the {\em AllowedCLients} configuration parameter in the conifguration file. For detailed information see section~\ref{confallowedclients}.
+As a workaround you are able to define the {\em AllowedCLients} configuration parameter in the configuration file. For detailed information see section~\ref{confallowedclients}.
 
 \end{document}
