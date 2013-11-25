@@ -58,7 +58,7 @@
   \end{center}
 }
 
-\newcommand{\pDLNAversion}{0.64.0}
+\newcommand{\pDLNAversion}{0.64.1}
 
 \begin{document}
 \pagestyle{empty}
@@ -487,24 +487,20 @@ This chapter gives an overview about the different methods for installing {\em p
 \subsection{Debian GNU/Linux 7}
 
 On a fresh installed Debian GNU/Linux 7 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and all the necessary Perl modules from the Debian repository:
+% ffmpeg libaudio-flac-header-perl libaudio-wav-perl libaudio-wma-perl libconfig-apacheformat-perl libdbd-mysql-perl libdbd-sqlite3-perl libdbi-perl libdigest-md5-perl libdigest-sha-perl libfile-mimeinfo-perl libgd-gd2-perl libgd-graph-perl libgetopt-long-descriptive-perl libimage-info-perl libio-interface-perl libio-socket-multicast-perl libmp3-info-perl libmp4-info-perl libnet-ip-perl libnet-netmask-perl libogg-vorbis-header-pureperl-perl libproc-processtable-perl libsoap-lite-perl libsys-syslog-perl libxml-simple-perl
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ sudo apt-get install \
- build-essential git ffmpeg \
- libgetopt-long-descriptive-perl \
- libfile-copy-recursive-perl \
- libaudio-flac-header-perl libaudio-wav-perl \
- libaudio-wma-perl libconfig-apacheformat-perl \
- libdevel-size-perl libdigest-sha-perl \
- libfile-mimeinfo-perl libgd-gd2-perl \
+ ffmpeg libaudio-flac-header-perl libaudio-wav-perl \
+ libaudio-wma-perl libconfig-apacheformat-perl libdbd-mysql-perl \
+ libdbd-sqlite3-perl libdbi-perl libdigest-md5-perl \
+ libdigest-sha-perl libfile-mimeinfo-perl libgd-gd2-perl \
+ libgd-graph-perl libgetopt-long-descriptive-perl \
  libimage-info-perl libio-interface-perl \
- libio-socket-multicast-perl libmp3-info-perl \
- libmp4-info-perl libnet-ip-perl \
- libnet-netmask-perl libsoap-lite-perl \
- libogg-vorbis-header-pureperl-perl \
- libproc-processtable-perl libdbi-perl \
- libdbd-sqlite3-perl libgd-graph-perl \
- libdbd-mysql-perl
+ libio-socket-multicast-perl libmp3-info-perl libmp4-info-perl \
+ libnet-ip-perl libnet-netmask-perl \
+ libogg-vorbis-header-pureperl-perl libproc-processtable-perl \
+ libsoap-lite-perl libsys-syslog-perl libxml-simple-perl
 \end{verbatim}
 \end{colframecmd}
 
@@ -2420,6 +2416,20 @@ Starting pDLNA ...
 
 \chapter{Fixed Issues}
 \label{fixedissues}
+
+\section{Movie::Info is still used by PDLNA::Media}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.64.1.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+The \verb|PDLNA::Media| Perl module is still using \verb|Movie::Info| Perl module, even if it is not required any more. So {\em pDLNA} will not start up if the \verb|Movie::Info| Perl module is not installed\footnote{\url{github.com/geuma/pDLNA/issues/23}}.
+
+\subsection{Workaround}
+
+Install the missing Perl module \verb|Movie::Info|.
 
 \section{parsing problem if media file name contains special regex characters like '(', ')' or others}
 
