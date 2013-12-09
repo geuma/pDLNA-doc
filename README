@@ -1,7 +1,7 @@
 pDLNA-doc
 (c) 2010-2013 Stefan Heumader
 email: stefan@heumader.at
-webpage: http://www.pdlna.com
+webpage: http://www.pdlna.org
 
 INTRODUCTION
 ------------
@@ -17,7 +17,7 @@ pDLNA
 -------------------------
 For pDLNA itself see the
 'pDLNA Installation, Configuration and Debugging Guide'
-available under http://www.pdlna.com/cgi-bin/index.pl?menu=source&download_install
+available under http://www.pdlna.org/cgi-bin/index.pl?menu=source&download_install
 
 BUGS & FEATURES
 ---------------

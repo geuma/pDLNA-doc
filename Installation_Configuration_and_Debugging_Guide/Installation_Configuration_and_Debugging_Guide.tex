@@ -58,7 +58,7 @@
   \end{center}
 }
 
-\newcommand{\pDLNAversion}{0.64.1}
+\newcommand{\pDLNAversion}{0.64.2}
 
 \begin{document}
 \pagestyle{empty}
@@ -752,18 +752,18 @@ the new version is going to be started.
 \section{Installing the latest release}
 \label{install-unix-latestrelease}
 
-Installing the latest release of {\em pDLNA} is the simpliest way to install {\em pDLNA}. Every release of {\em pDLNA} will be packaged as a tarball and available via the changelog section on \url{www.pdlna.com/cgi-bin/index.pl?menu=changelog} or can be downloaded directly via \url{http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest}.
+Installing the latest release of {\em pDLNA} is the simpliest way to install {\em pDLNA}. Every release of {\em pDLNA} will be packaged as a tarball and available via the changelog section on \url{www.pdlna.org/cgi-bin/index.pl?menu=changelog} or can be downloaded directly via \url{http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=release&version=latest}.
 
 \subsection{Downloading latest release}
 
-The latest release of {\em pDLNA} can be downloaded via \url{http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest}. The changelog section (\url{www.pdlna.com/cgi-bin/index.pl?menu=changelog}) gives detailed information about all releases.
+The latest release of {\em pDLNA} can be downloaded via \url{http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=release&version=latest}. The changelog section (\url{www.pdlna.org/cgi-bin/index.pl?menu=changelog}) gives detailed information about all releases.
 
 The following snippet shows the command to download the latest version using \verb|wget|:
 \begin{colframecmd}
 \begin{verbatim}
 pdlna@mediaserver:~$ cd /tmp/
 pdlna@mediaserver:/tmp$ wget \
-  http://www.pdlna.com/cgi-bin/index.pl?menu=download&type=release&version=latest
+  http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=release&version=latest
 \end{verbatim}
 \end{colframecmd}
 
@@ -1067,7 +1067,7 @@ FriendlyName 'pDLNA $VERSION on $HOSTNAME'
 \subsection{Check4Updates}
 \label{config-check4updates}
 
-If {\em Check4Updates} is enabled, the running {\em pDLNA} installation will check every 24 hours, if there is a new version of {\em pDLNA} available. Therefore, {\em pDLNA} will do a HTTP request to \url{www.pdlna.com/cgi-bin/status.pl} and transmits its \textbf{version number} including the information if it is a \textbf{beta release} and the configured or generated \textbf{UUID} as XML data to the server. The response from the server is XML data too, which will be evaluated by the running {\em pDLNA} installation and the result will be logged by the running {\em pDLNA} installation.
+If {\em Check4Updates} is enabled, the running {\em pDLNA} installation will check every 24 hours, if there is a new version of {\em pDLNA} available. Therefore, {\em pDLNA} will do a HTTP request to \url{www.pdlna.org/cgi-bin/status.pl} and transmits its \textbf{version number} including the information if it is a \textbf{beta release} and the configured or generated \textbf{UUID} as XML data to the server. The response from the server is XML data too, which will be evaluated by the running {\em pDLNA} installation and the result will be logged by the running {\em pDLNA} installation.
 
 If you do not like {\em pDLNA} to check for a new version, you are able to deactivate this feature by adding the following line to your configuration file:
 
@@ -1173,7 +1173,7 @@ DatabaseType MYSQL
 \end{colframefile}
 
 \begin{colframenote}
-\textsc{NOTE:} Using MySQL as a database for {\em pDLNA} improves the performance. A short performance comparison regarding {\em pDLNA} can be accessed on \url{http://www.pdlna.com/cgi-bin/index.pl?menu=news&id=v0.64b}.
+\textsc{NOTE:} Using MySQL as a database for {\em pDLNA} improves the performance. A short performance comparison regarding {\em pDLNA} can be accessed on \url{http://www.pdlna.org/cgi-bin/index.pl?menu=news&id=v0.64b}.
 \end{colframenote}
 
 \subsubsection{Preparing MySQL for pDLNA}
@@ -2010,7 +2010,7 @@ And finally, the following figure~\ref{fig:webgui-ffmpeg} shows information rega
 \chapter{Preinstalled VMware images}
 \label{vms}
 
-Since not everybody is willing to install {\em pDLNA} on a system, just to verify if {\em pDLNA} fullfills his needs or just likes to test {\em pDLNA} for the first time, there are some preinstalled {\em VMware} images available to download from the {\em pDLNA} website available under the following URL: \url{www.pdlna.com/cgi-bin/index.pl?menu=vm}
+Since not everybody is willing to install {\em pDLNA} on a system, just to verify if {\em pDLNA} fullfills his needs or just likes to test {\em pDLNA} for the first time, there are some preinstalled {\em VMware} images available to download from the {\em pDLNA} website available under the following URL: \url{www.pdlna.org/cgi-bin/index.pl?menu=vm}
 
 In the case, that somebody does not know {\em VMware}: VMware Player is free for personal use and is available to download via the following URL: \url{www.vmware.com/products/player/overview.html}
 
@@ -2416,6 +2416,20 @@ Starting pDLNA ...
 
 \chapter{Fixed Issues}
 \label{fixedissues}
+
+\section{DirectoryListings not working when mandatory data fields not defined}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.64.2.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+Directory listings are not working, when {\em mandatory} data fields are not defined in the XML \verb|<FILTER>| tag of the browse request from a DLNA media renderer.\footnote{\url{github.com/geuma/pDLNA/issues/24}}.
+
+\subsection{Workaround}
+
+There is no workaround for this issue.
 
 \section{Movie::Info is still used by PDLNA::Media}
 
