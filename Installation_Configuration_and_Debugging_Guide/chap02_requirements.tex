@@ -1,0 +1,384 @@
+%
+% REQUIREMENTS
+%
+
+\chapter{Requirements}
+\label{require}
+
+This chapter gives an overview regarding the supported Perl versions, necessary Perl modules and additional/optional third party software, which are required for specific functionalities of {\em pDLNA}.
+
+{\em pDLNA} in its current version (\pDLNAversion) has been tested with the in table~\ref{tab:testedunixdistris} listed UNIX derivates or Linux distrubutions and their Perl version. Your installed Perl version can be determined by executing:
+\begin{lstlisting}
+pdlna@mediaserver:~$ perl -v
+\end{lstlisting}
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{15em}|p{18em}|}
+		\hline
+		\textsc{UNIX derivate} 								& \textsc{Perl version} \\
+		\hline
+		\hline
+		CentOS 6															& \verb|5.10| \\
+		\hline
+		Debian GNU/Linux 7 (wheezy)						& \verb|5.14| \\
+		\hline
+		FreeBSD 9															& \verb|5.16| \\
+		\hline
+	\end{tabular}
+	\caption{Tested UNIX derivates or Linux distrubutions and their Perl version}
+	\label{tab:testedunixdistris}
+\end{table}
+
+\begin{colframenote}
+\textsc{NOTE:} {\em pDLNA} propably works with any other Perl version or Linux distrubution. Please feel free to contact me about your installation environment.
+\end{colframenote}
+
+\section{Perl modules}
+
+There are three tables, which give an overview about the necessary Perl modules regarding a specific UNIX derivates or Linux distrubution. While table~\ref{tab:NecessaryPerlModulesCentOS6} lists the CentOS 6 (and its variants) package names, table~\ref{tab:NecessaryPerlModulesDebian7} lists the Debian GNU/Linux 7 (and its variants) package names of these modules and finally table~\ref{tab:NecessaryPerlModulesFreeBSD9} names the FreeBSD 9 port names and their category.
+
+\begin{colframeimportantnote}
+If your favorite UNIX derivate or Linux distrubution is not one of those, you will need make sure, that these Perl modules are installed anyway.
+\end{colframeimportantnote}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|p{15em}|p{18em}|}
+		\hline
+		\textsc{Perl module name} 						&  \textsc{CentOS 6 package name}\\
+		\hline
+		\hline
+		\verb|Audio::FLAC::Header| 						& \\
+		\hline
+		\verb|Audio::Wav| 										& \\
+		\hline
+		\verb|Audio::WMA| 										& \\
+		\hline
+		\verb|Config| 												& \\
+		\hline
+		\verb|Config::ApacheFormat|						& \\
+		\hline
+		\verb|Data::Dumper| 									& \\
+		\hline
+		\verb|Date::Format| 									&	\\
+		\hline
+		\verb|DBD::mysql|											& \verb|perl-DBD-MySQL| \\
+		\hline
+		\verb|DBD::Pg|												& \verb|perl-DBD-Pg| \\
+		\hline
+		\verb|DBD::SQLite|										& \verb|perl-DBD-SQLite| \\
+		\hline
+		\verb|DBI|														& \verb|perl-DBI| \\
+		\hline
+		\verb|Digest::MD5| 										& \\
+		\hline
+		\verb|Digest::SHA| 										& \verb|perl-Digest-SHA| \\
+		\hline
+		\verb|Fcntl| 													& \\
+		\hline
+		\verb|File::Basename| 								& \\
+		\hline
+		\verb|File::Glob| 										& \\
+		\hline
+		\verb|File::MimeInfo| 								& \\
+		\hline
+		\verb|GD| 														& \verb|perl-GD|\\
+		\hline
+		\verb|GD::Graph::area| 								& \verb|perl-GDGraph| \\
+		\hline
+		\verb|Getopt::Long::Descriptive| 			& \\
+		\hline
+		\verb|HTML::Entities|									& \\
+		\hline
+		\verb|Image::Info| 										& \verb|perl-Image-Info| \\
+		\hline
+		\verb|IO::Interface| 									& \\
+		\hline
+		\verb|IO::Select| 										& \\
+		\hline
+		\verb|IO::Socket| 										& \\
+		\hline
+		\verb|IO::Socket::INET| 							& \\
+		\hline
+		\verb|IO::Socket::Multicast| 					& \\
+		\hline
+		\verb|LWP::UserAgent| 								& \\
+		\hline
+		\verb|MP3::Info| 											& \\
+		\hline
+		\verb|MP4::Info| 											& \\
+		\hline
+		\verb|Net::IP| 												& \verb|perl-Net-IP| \\
+		\hline
+		\verb|Net::Netmask| 									& \\
+		\hline
+		\verb|Ogg::Vorbis::Header::PurePerl| 	& \\
+		\hline
+		\verb|POSIX| 													& \\
+		\hline
+		\verb|Proc::ProcessTable| 						& \\
+		\hline
+		\verb|SOAP::Lite| 										& \verb|perl-SOAP-Lite| \\
+		\hline
+		\verb|Socket| 												& \\
+		\hline
+		\verb|Sys::Hostname| 									& \\
+		\hline
+		\verb|Sys::Syslog| 										& \\
+		\hline
+		\verb|threads| 												& \\
+		\hline
+		\verb|threads::shared| 								& \\
+		\hline
+		\verb|Time::HiRes|										& \verb|perl-Time-HiRes| \\
+		\hline
+		\verb|URI::Split| 										& \\
+		\hline
+		\verb|XML::Simple| 										& \verb|perl-XML-Simple| \\
+		\hline
+	\end{tabular}
+	\caption{Necessary Perl modules on CentOS 6}
+	\label{tab:NecessaryPerlModulesCentOS6}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|p{15em}|p{18em}|}
+		\hline
+		\textsc{Perl module name} 						& \textsc{Debian 7 package name} \\
+		\hline
+		\hline
+		\verb|Audio::FLAC::Header| 						& \verb|libaudio-flac-header-perl| \\
+		\hline
+		\verb|Audio::Wav| 										& \verb|libaudio-wav-perl| \\
+		\hline
+		\verb|Audio::WMA| 										& \verb|libaudio-wma-perl| \\
+		\hline
+		\verb|Config| 												& \\
+		\hline
+		\verb|Config::ApacheFormat|						& \verb|libconfig-apacheformat-perl| \\
+		\hline
+		\verb|Data::Dumper| 									& \\
+		\hline
+		\verb|Date::Format| 									& \\
+		\hline
+		\verb|DBD::mysql|											& \verb|libdbd-mysql-perl| \\
+		\hline
+		\verb|DBD::Pg|												& \verb|libdbd-pg-perl| \\
+		\hline
+		\verb|DBD::SQLite|										& \verb|libdbd-sqlite3-perl| \\
+		\hline
+		\verb|DBI|														& \verb|libdbi-perl| \\
+		\hline
+		\verb|Digest::MD5| 										& \verb|libdigest-md5-perl| \\
+		\hline
+		\verb|Digest::SHA| 										& \verb|libdigest-sha-perl| \\
+		\hline
+		\verb|Fcntl| 													& \\
+		\hline
+		\verb|File::Basename| 								& \\
+		\hline
+		\verb|File::Glob| 										& \\
+		\hline
+		\verb|File::MimeInfo| 								& \verb|libfile-mimeinfo-perl| \\
+		\hline
+		\verb|GD| 														& \verb|libgd-gd2-perl| \\
+		\hline
+		\verb|GD::Graph::area| 								& \verb|libgd-graph-perl| \\
+		\hline
+		\verb|Getopt::Long::Descriptive| 			& \verb|libgetopt-long-descriptive-perl| \\
+		\hline
+		\verb|HTML::Entities|									& \verb|libhtml-parser-perl| \\
+		\hline
+		\verb|Image::Info| 										& \verb|libimage-info-perl| \\
+		\hline
+		\verb|IO::Interface::Simple| 					& \verb|libio-interface-perl| \\
+		\hline
+		\verb|IO::Select| 										& \\
+		\hline
+		\verb|IO::Socket| 										& \\
+		\hline
+		\verb|IO::Socket::INET| 							& \\
+		\hline
+		\verb|IO::Socket::Multicast| 					& \verb|libio-socket-multicast-perl| \\
+		\hline
+		\verb|LWP::UserAgent| 								& \\
+		\hline
+		\verb|MP3::Info| 											& \verb|libmp3-info-perl| \\
+		\hline
+		\verb|MP4::Info| 											& \verb|libmp4-info-perl| \\
+		\hline
+		\verb|Net::IP| 												& \verb|libnet-ip-perl| \\
+		\hline
+		\verb|Net::Netmask| 									& \verb|libnet-netmask-perl| \\
+		\hline
+		\verb|Ogg::Vorbis::Header::PurePerl| 	& \verb|libogg-vorbis-header-pureperl-perl| \\
+		\hline
+		\verb|POSIX| 													& \\
+		\hline
+		\verb|Proc::ProcessTable| 						& \verb|libproc-processtable-perl| \\
+		\hline
+		\verb|SOAP::Lite| 										& \verb|libsoap-lite-perl| \\
+		\hline
+		\verb|Socket| 												& \\
+		\hline
+		\verb|Sys::Hostname| 									& \\
+		\hline
+		\verb|Sys::Syslog| 										& \verb|libsys-syslog-perl| \\
+		\hline
+		\verb|threads| 												& \\
+		\hline
+		\verb|threads::shared| 								& \\
+		\hline
+		\verb|Time::HiRes|										& \\
+		\hline
+		\verb|URI::Split| 										& \\
+		\hline
+		\verb|XML::Simple| 										& \verb|libxml-simple-perl| \\
+		\hline
+	\end{tabular}
+	\caption{Necessary Perl modules on Debian GNU/Linux 7}
+	\label{tab:NecessaryPerlModulesDebian7}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|p{15em}|p{18em}|}
+		\hline
+		\textsc{Perl module name} 						&  \textsc{FreeBSD 9 port name}\\
+		\hline
+		\hline
+		\verb|Audio::FLAC::Header| 						& \verb|audio/p5-Audio-FLAC-Header| \\
+		\hline
+		\verb|Audio::Wav| 										& \verb|audio/p5-Audio-Wav| \\
+		\hline
+		\verb|Audio::WMA| 										& \verb|audio/p5-Audio-WMA| \\
+		\hline
+		\verb|Config| 												& \\
+		\hline
+		\verb|Config::ApacheFormat|						& \verb|devel/p5-Config-ApacheFormat| \\
+		\hline
+		\verb|Data::Dumper| 									& \verb|devel/p5-Data-Dumper| \\
+		\hline
+		\verb|Date::Format| 									&	\\
+		\hline
+		\verb|DBD::mysql|											& \verb|databases/p5-DBD-mysql| \\
+		\hline
+		\verb|DBD::Pg|												& \verb|databases/p5-DBD-Pg| \\
+		\hline
+		\verb|DBD::SQLite|										& \verb|databases/p5-DBD-SQLite| \\
+		\hline
+		\verb|DBI|														& \verb|databases/p5-DBI| \\
+		\hline
+		\verb|Digest::MD5| 										& \\
+		\hline
+		\verb|Digest::SHA1| 									& \verb|security/p5-Digest-SHA1| \\
+		\hline
+		\verb|Fcntl| 													& \\
+		\hline
+		\verb|File::Basename| 								& \\
+		\hline
+		\verb|File::Glob| 										& \\
+		\hline
+		\verb|File::MimeInfo| 								& \verb|devel/p5-File-MimeInfo| \\
+		\hline
+		\verb|GD| 														& \verb|graphics/p5-GD| \\
+		\hline
+		\verb|GD::Graph::area| 								& \verb|graphics/p5-GD-Graph| \\
+		\hline
+		\verb|Getopt::Long::Descriptive| 			& \verb|devel/p5-Getopt-Long-Descriptive| \\
+		\hline
+		\verb|HTML::Entities|									& \\
+		\hline
+		\verb|Image::Info| 										& \verb|graphics/p5-Image-Info| \\
+		\hline
+		\verb|IO::Interface| 									& \verb|net/p5-IO-Interface| \\
+		\hline
+		\verb|IO::Select| 										& \\
+		\hline
+		\verb|IO::Socket| 										& \\
+		\hline
+		\verb|IO::Socket::INET| 							& \\
+		\hline
+		\verb|IO::Socket::Multicast| 					& \verb|net/p5-IO-Socket-Multicast| \\
+		\hline
+		\verb|LWP::UserAgent| 								& \\
+		\hline
+		\verb|MP3::Info| 											& \verb|audio/p5-MP3-Info| \\
+		\hline
+		\verb|MP4::Info| 											& \verb|multimedia/p5-MP4-Info| \\
+		\hline
+		\verb|Net::IP| 												& \verb|net-mgmt/p5-Net-IP| \\
+		\hline
+		\verb|Net::Netmask| 									& \verb|net-mgmt/p5-Net-Netmask| \\
+		\hline
+		\verb|Ogg::Vorbis::Header::PurePerl|	& \verb|audio/p5-Ogg-Vorbis-Header-PurePerl| \\
+		\hline
+		\verb|POSIX| 													& \\
+		\hline
+		\verb|Proc::ProcessTable| 						& \verb|devel/p5-Proc-ProcessTable| \\
+		\hline
+		\verb|SOAP::Lite| 										& \verb|net/p5-SOAP-Lite| \\
+		\hline
+		\verb|Socket| 												& \verb|net/p5-Socket| \\
+		\hline
+		\verb|Sys::Hostname| 									& \\
+		\hline
+		\verb|Sys::Syslog| 										& \verb|sysutils/p5-Sys-Syslog| \\
+		\hline
+		\verb|threads| 												& \\
+		\hline
+		\verb|threads::shared| 								& \\
+		\hline
+		\verb|Time::HiRes|										& \verb|devel/p5-Time-HiRes| \\
+		\hline
+		\verb|URI::Split| 										& \\
+		\hline
+		\verb|XML::Simple| 										& \verb|textproc/p5-XML-Simple| \\
+		\hline
+	\end{tabular}
+	\caption{Necessary Perl modules on FreeBSD 9}
+	\label{tab:NecessaryPerlModulesFreeBSD9}
+\end{table}
+
+As already mentioned you need to install these Perl modules. You are able to install these modules using {\em CPAN (Comprehensive Perl Archive Network)}\footnote{\url{cpan.perl.org/}} or even via the package management of your favourite Linux distribution.
+
+For example, installing the {\em XML::Simple} Perl module can be installed via {\em CPAN} by using the following command
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo cpan
+cpan[1]> install XML::Simple
+\end{lstlisting}
+or by executing the following command
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install libxml-simple-perl
+\end{lstlisting}
+on the Debian GNU/Linux distribution and its variants.
+
+For Perl modules without a package provided by your UNIX derivate or Linux distrubution, you need to install it via {\em CPAN}.
+
+\section{Third party software}
+
+{\em pDLNA} requires for specific functionalities third party software, which is open source software.
+
+\subsection{FFmpeg}
+\label{ffmpeg}
+
+% Temporary description
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Transcoding is currently not available in {\em pDLNA} in version \pDLNAversion. If you would like to use Transcoding, please use {\em pDLNA} in version 0.64.3. Transcoding will be readded to {\em pDLNA} in the future.
+\end{colframeimportantnote}
+
+%For enabling transcoding\footnote{Transcoding is converting specific media items on the fly to a (by the {\em DLNA} aware device) supported media format.} of video and audio files, \verb|FFmpeg| (\url{ffmpeg.org}) is required.
+%
+%\begin{colframeimportantnote}
+%If no Transcoding Profiles (see section~\ref{Transcoding_Profiles} for detailed information) are configured, \verb|FFmpeg| is not required. If \verb|LowResourceMode| is enabled, configured Transcoding Profiles will be ignored.
+%\end{colframeimportantnote}
+
+The \verb|FFmpeg|'s source code or binaries can be obtained from the project's official website \url{ffmpeg.org} or can be installed via the package management of your favorite UNIX derivate or Linux distrubution. The following command will install the \verb|FFmpeg| package on the Debian GNU/Linux distribution and its variants.
+
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install ffmpeg
+\end{lstlisting}
+
+The official website of \verb|FFmpeg| does also provide information, where to get binaries for your Windows operating system.

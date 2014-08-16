@@ -13,12 +13,6 @@ See http://www.perl.org for more details on Perl
 and http://www.upnp.org/ for more details on UPnP
 and http://www.dlna.org/ for mode details on DLNA.
 
-pDLNA
--------------------------
-For pDLNA itself see the
-'pDLNA Installation, Configuration and Debugging Guide'
-available under http://www.pdlna.org/cgi-bin/index.pl?menu=source&download_install
-
 BUGS & FEATURES
 ---------------
 Email me or contact me on GitHub if you find bugs

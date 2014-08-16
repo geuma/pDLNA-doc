@@ -1,0 +1,66 @@
+%
+% KNOWN ISSUES
+%
+
+\chapter{Known Issues}
+\label{knownissues}
+
+%Currently there are no known issues. If you have found an issue while running {\em pDLNA}, please report the issue via \url{https://github.com/geuma/pDLNA/issues} or via mail.
+
+\section{PostgreSQL: NOTICE messages when initializing database}
+
+\subsection{Description}
+
+When a PostgreSQL database is used as a backend for {\em pDLNA}, various NOTICE messages will appear\footnote{\url{https://github.com/geuma/pDLNA/issues/28}}. This messages are only informing about some tables or primary keys, which have been created by {\em pDLNA}.
+
+The output might look like:
+\begin{lstlisting}
+root@mediaserver:~# /etc/init.d/pdlna start
+Starting pDLNA ...
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "metadata_pkey" for table "metadata"
+NOTICE:  CREATE TABLE will create implicit sequence "items_id_seq" for serial column "items.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "items_pkey" for table "items"
+NOTICE:  CREATE TABLE will create implicit sequence "device_ip_id_seq" for serial column "device_ip.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "device_ip_pkey" for table "device_ip"
+NOTICE:  CREATE TABLE will create implicit sequence "device_bm_id_seq" for serial column "device_bm.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "device_bm_pkey" for table "device_bm"
+NOTICE:  CREATE TABLE will create implicit sequence "device_udn_id_seq" for serial column "device_udn.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "device_udn_pkey" for table "device_udn"
+NOTICE:  CREATE TABLE will create implicit sequence "device_nts_id_seq" for serial column "device_nts.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "device_nts_pkey" for table "device_nts"
+NOTICE:  CREATE TABLE will create implicit sequence "device_service_id_seq" for serial column "device_service.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "device_service_pkey" for table "device_service"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "stat_mem_pkey" for table "stat_mem"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "stat_items_pkey" for table "stat_items"
+\end{lstlisting}
+
+\subsection{Workaround}
+
+At the moment, there is no workaround for this issue. Just ignore these messages, if they appear.
+
+\section{FreeBSD: initscript unable to completely shut down pDLNA}
+
+\subsection{Description}
+
+On FreeBSD, there seems to be a problem shutting down {\em pDLNA} via the included initscript\footnote{\url{https://github.com/geuma/pDLNA/issues/20}}. After stopping and starting {\em pDLNA}, the following error message will occur:
+\begin{lstlisting}
+[root@mediaserver ~]# /etc/rc.d/pdlna start
+Starting pDLNA ...
+[root@mediaserver ~]# /etc/rc.d/pdlna restart
+Starting pDLNA ...
+[root@mediaserver ~]# Cannot bind to Multicast socket: Address already in use
+Going to terminate pDLNA/v0.63.0 on freebsd/9.0-release with FriendlyName 'pDLNA v0.63.0 on mediaserver' ...
+\end{lstlisting}
+
+\subsection{Workaround}
+
+Since there is no fix for this issue today, this problem can be handled by a workaround. Get the process ID of the still running {\em pDLNA} process, kill it, remove the PID file (if any) and use the initscript afterwards again to start {\em pDLNA}:
+\begin{lstlisting}
+[root@mediaserver ~]# ps | grep pDLNA
+2327   0  I    0:22.46 /usr/bin/perl ./pDLNA.pl -f /etc/pdlna.conf
+2651   0  R+   0:00.01 grep pDLNA
+[root@mediaserver ~]# kill -9 2327
+[root@mediaserver ~]# rm /var/run/pdlna.pid
+[root@mediaserver ~]# /etc/rc.d/pdlna start
+Starting pDLNA ...
+\end{lstlisting}

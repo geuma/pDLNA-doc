@@ -1,0 +1,903 @@
+%
+% CONFIGURATION MANUAL
+%
+
+\chapter{Configuration}
+\label{config}
+
+This chapter gives an overview about the possible parameters to configure {\em pDLNA} and describes their functionality and their possible impact on the installation. By default, the configuration file is stored in \verb|/etc/pdlna.conf|. If you would like to change the location of the configuration file, you need to change the following line in the initscript (by default \verb|/etc/init.d/pdlna|) to the correct location:
+\begin{colframefile}
+\begin{verbatim}
+CFGFILE="/etc/pdlna.conf"
+\end{verbatim}
+\end{colframefile}
+
+Some of the available configuration parameters are binary values, which can be enabled or disabled. To enable one of those parameters, simple configure the parameter to one of the following values:
+\begin{itemize}
+	\item \verb|on|
+	\item \verb|true|
+	\item \verb|yes|
+	\item \verb|enabled|
+	\item \verb|enable|
+	\item \verb|1|
+\end{itemize}
+The parsing of these values is case insenstive and if you would like to disable one of these parameters, simple use another value (.e.g. \verb|disabled|, \verb|Off| or even \verb|foo|).
+
+There might also be some configuration parameters which are marked as \verb|EXPERIMENTAL|. Please use them carefully.
+
+\section{Global parameters}
+
+\subsection{FriendlyName}
+
+The {\em FriendlyName} configures a name, which will be shown by all capable DNLA devices to identify a running digital media server. The maximum length of the {FriendlyName} is limited to 32 characters and the allowed characters are:
+\begin{itemize}
+	\item letters and number
+	\item spaces and dots
+	\item dashes and underscores
+\end{itemize}
+
+Additionally, you are able to use the in table~\ref{tab:AvailableFriendlyNameVariables} listed variables in the {\em FriendlyName}.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Variable} 	& \textsc{Description}\\
+		\hline
+		\hline
+		\verb|$VERSION| 		& the currently running version, for instance v\pDLNAversion \\
+		\hline
+		\verb|$HOSTNAME| 		& the systems hostname \\
+		\hline
+		\verb|$OS| 					& the operating system's name \\
+		\hline
+	\end{tabular}
+	\caption{Available FriendlyName configuration variables}
+	\label{tab:AvailableFriendlyNameVariables}
+\end{table}
+
+By default, the {\em FriendlyName} will be set to \verb|pDLNA $VERSION on $HOSTNAME| or you are able to define your {\em FriendlyName} by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+FriendlyName 'pDLNA $VERSION on $HOSTNAME'
+\end{verbatim}
+\end{colframefile}
+
+It might happen, that the default value, based on the hostname, generates a {\em FriendlyName} which is longer than 32 characters. In this case, please specify the {\em FriendlyName} manually.
+
+\subsection{Check4Updates}
+\label{config-check4updates}
+
+If {\em Check4Updates} is enabled, the running {\em pDLNA} installation will check every 24 hours, if there is a new version of {\em pDLNA} available. Therefore, {\em pDLNA} will do a HTTP request to \url{www.pdlna.org/cgi-bin/status.pl} and transmits its \textbf{version number} including the information if it is a \textbf{beta release} and the configured or generated \textbf{UUID} as XML data to the server. The response from the server is XML data too, which will be evaluated by the running {\em pDLNA} installation and the result will be logged by the running {\em pDLNA} installation.
+
+If you do not like {\em pDLNA} to check for a new version, you are able to deactivate this feature by adding the following line to your configuration file:
+
+\begin{colframefile}
+\begin{verbatim}
+Check4Updates Off
+\end{verbatim}
+\end{colframefile}
+
+\subsection{Check4UpdatesNotification}
+\label{config-check4updatesnotification}
+
+If {\em Check4Updates} and {\em Check4UpdatesNotification} is enabled and a device with a \verb|urn:samsung.com:serviceId:MessageBoxService| is connected, {\em pDLNA} will send a message regarding an available update to this service.
+
+You are also able to deactivate this {\em FunFeature} by adding  the following line to your configuration file:
+
+\begin{colframefile}
+\begin{verbatim}
+Check4UpdatesNotification Off
+\end{verbatim}
+\end{colframefile}
+
+\subsection{EnableGeneralStatistics}
+\label{config-enablegeneralstatistics}
+
+With the {\em EnableGeneralStatistics} configuration parameter, you are able to specify if {\em pDLNA} should store statistics data like
+\begin{itemize}
+	\item memory usage
+	\item amount of media items
+\end{itemize}
+in the database and should draw graphs in the WebUI.
+
+By default, this feature is activated and you are able to deactivate it by adding the following line to your configuration file:
+\begin{colframefile}
+\begin{verbatim}
+EnableGeneralStatistics Off
+\end{verbatim}
+\end{colframefile}
+
+\subsection{EnableDBStatistics (EXPERIMENTAL)}
+
+This {\em EnableDBStatistics} configuration parameters enables {\em pDLNA} to store information about most of the database queries.
+
+By default, this feature is deactivated and you are able to activate it by adding the following line to your configuration file:
+\begin{colframefile}
+\begin{verbatim}
+EnableDBStatistics On
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Enabling this feature will decrease the performance of your {\em pDLNA} installation and should only be used to do some investigations to improve database performance.
+\end{colframeimportantnote}
+
+\subsection{PIDFile}
+
+This parameter specifies the location of the {\em PIDFile}, which is used to store the process ID of a running {\em pDLNA} installation. By default, the parameter is set to \verb|/var/run/pdlna.pid| or you are able to specify a different location by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+PIDFile /var/run/pdlna.pid
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please ensure, that the user, which is running {\em pDLNA}, has permissions to write to the configured path.
+\end{colframeimportantnote}
+
+\subsection{TempDir}
+
+This parameter defines the directory, where {\em pDLNA} will store temporary files for thumbnails and so on. By default, this parameter is set to \verb|/tmp| or you are able to specify a different location by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+TempDir /tmp
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please ensure, that the user, which is running {\em pDLNA}, has permissions to write to the configured path.
+\end{colframeimportantnote}
+
+\section{Database configuration}
+\label{configdatabase}
+
+\subsection{DatabaseType}
+\label{configdbtype}
+
+The parameter {\em DatabaseType} defines the database, which is used by {\em pDLNA} to store all the necessary information (like the media items, which are member of the media library). Currently the following database types (which are listed in table~\ref{tab:AvailableDatabaseTypeparams}) are available.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Parameter} 	& \textsc{Description}\\
+		\hline
+		\hline
+		\verb|SQLITE3| 			& SQLite database in version 3 \\
+		\hline
+		\verb|MYSQL|				& MySQL database \\
+		\hline
+		\verb|PGSQL|				& PostgreSQL database \\
+		\hline
+	\end{tabular}
+	\caption{Available DatabaseType configuration parameters}
+	\label{tab:AvailableDatabaseTypeparams}
+\end{table}
+
+By default, this parameter is set to \verb|SQLITE3| or you are able to specify a different database type by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+DatabaseType MYSQL
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframenote}
+\textsc{NOTE:} Using MySQL as a database for {\em pDLNA} improves the performance and is recommended. A short performance comparison between a SQLite and MySQL backend can be accessed on \url{http://www.pdlna.org/cgi-bin/index.pl?menu=news&id=c586fc819a}.
+\end{colframenote}
+
+\subsubsection{Preparing MySQL for pDLNA}
+\label{configdbtype-mysql}
+
+At first, you do need a running MySQL server on the machine, which is running {\em pDLNA}. This is possible to achieve by executing the following command
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install mysql-server
+\end{lstlisting}
+on a Debian GNU/Linux distribution and its variants.
+
+To use MySQL as a database server for {\em pDLNA}, creating a database and a seperate user is recommended. This can be achieved by logging in as an administrative user (for instance \verb|root|) and executing the following commands:
+
+\begin{lstlisting}
+pdlna@mediaserver:~$ mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8896
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> CREATE DATABASE pdlna CHARACTER SET utf8 COLLATE utf8_general_ci;
+mysql> GRANT USAGE ON pdlna.* TO pdlna@localhost IDENTIFIED BY '<yourpassword>';
+mysql> GRANT ALL privileges ON pdlna.* TO pdlna@localhost;
+\end{lstlisting}
+
+Finally, {\em pDLNA} needs to be configured to use the created MySQL database with the according username and password. This is described in the following two sections~\ref{configdbname} and~\ref{configdbuser}.
+
+\subsubsection{Preparing PostgreSQL for pDLNA}
+\label{configdbtype-postgresql}
+
+As described in section~\ref{configdbtype-mysql}, a running PostgreSQL server is required for this configuration. On a Debian GNU/Linux distribution and its variants, a PostgreSQL server can be installed by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install postgresql
+\end{lstlisting}
+
+To use PostgreSQL as a database backend for {\em pDLNA}, creating a database and a seperate user is recommended. This can be achieved by logging in as an administrative user and executing the following commands:
+\begin{lstlisting}
+root@mediaserver:~# su - postgres
+postgres@mediaserver:~$ createdb -E UTF8 pdlna
+postgres@mediaserver:~$ psql pdlna
+psql (9.1.11)
+Type "help" for help.
+
+pdlna=# CREATE USER pdlna WITH PASSWORD '<yourpassword>';
+CREATE ROLE
+pdlna=# \q
+\end{lstlisting}
+% createdb -E UTF8 --locale=en_US.utf8 pdlna
+
+For PostgreSQL, the database encoding must be specified when the database is created. If it is not, the database will have to be dumped and re-imported into a new database.
+
+\subsection{DatabaseName}
+\label{configdbname}
+
+Configuring the parameter {\em DatabaseName} depends on the configuration parameter {\em DatabaseType}.
+
+\subsubsection{SQLite database in version 3}
+
+This parameter defines the location, where {\em pDLNA} will store the SQLite database file itself. By default, this parameter is set to \verb|/tmp/pdlna.db| or you are able to specify a different location by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+DatabaseName /tmp/pdlna.db
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please ensure, that the user, which is running {\em pDLNA}, has permissions to write to the configured path.
+\end{colframeimportantnote}
+
+\subsubsection{MySQL or PostgreSQL database}
+
+This configuration parameter defines the name of the database, which should be used by {\em pDLNA}. By default, this parameter is set to \verb|pdlna| or you are able to specify a different database by configuring it like this:
+
+\begin{colframefile}
+\begin{verbatim}
+DatabaseName pdlna
+\end{verbatim}
+\end{colframefile}
+
+\subsection{DatabaseUsername and DatabasePassword}
+\label{configdbuser}
+
+These two configuration parameters need to be configured, if the {\em DatabaseType} is configured to \verb|MYSQL| or to \verb|PGSQL| (see section~\ref{configdbtype}) and represent the authentication information for the configured database server.
+
+These configuration parameters can be configured like this:
+\begin{colframefile}
+\begin{verbatim}
+DatabaseUsername pdlna
+DatabasePassword <yourpassword>
+\end{verbatim}
+\end{colframefile}
+
+By default, if no \em{DatabaseUsername} is configured, it will be set to \verb|pdlna|. And if no \em{DatabasePassword} is configured, no password will be used to authenticate to the database.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} It is not recommended to use the database server's administrative (for instance \verb|root|) user.
+\end{colframeimportantnote}
+
+\section{Network configuration}
+\label{confignetwork}
+
+If you are not sure about the installed network interfaces and configured IP addresses, execute the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+				valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+    link/ether 00:0c:29:bc:fc:da brd ff:ff:ff:ff:ff:ff
+    inet 192.168.145.139/24 brd 192.168.145.255 scope global eth0
+    inet6 fe80::20c:29ff:febc:fcda/64 scope link
+				valid_lft forever preferred_lft forever
+\end{lstlisting}
+In the following two sections regarding the configuration of {\em ListenInterface} and {\em ListenIPAddress} this output will be taken as an example.
+
+\subsection{ListenInterface}
+
+The {\em ListenInterface} parameter specifies the network interface, {\em pDLNA} should be using. If the parameter is \textbf{not} specified, {\em pDLNA} will try to determine the first active network interface with an IP address.
+
+In case, that {\em pDLNA} was not able to determine the correct network interface, you need to specify it by the following configuration line:
+\begin{colframefile}
+\begin{verbatim}
+ListenInterface eth0
+\end{verbatim}
+\end{colframefile}
+
+\subsection{ListenIPAddress}
+
+The {\em ListenIPAddress} parameter specifies the IP address, {\em pDLNA} should use to communicate with the {\em DLNA} capable devices. If {\em ListenIPAddress} is \textbf{not} specified, {\em pDLNA} will try to determine the first IP address on the configured or even detected {\em ListenInterface} configuration parameter. Otherwise you are able to define it by configuring {\em ListenIPAddress} like this:
+\begin{colframefile}
+\begin{verbatim}
+ListenIPAddress 192.168.145.139
+\end{verbatim}
+\end{colframefile}
+
+\subsection{HTTPPort}
+\label{confignetwork-httpport}
+
+The {\em HTTPPort} parameter defines the TCP port, which should be used by the integrated HTTP server. By default it will be set to \verb|8001| or you are able to define another by the following parameter:
+
+\begin{colframefile}
+\begin{verbatim}
+HTTPPort 8001
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please ensure, that the configured TCP port is \textbf{not} used by any other application, otherwise {\em pDLNA} will not be able to start up correctly.
+\end{colframeimportantnote}
+
+\subsection{AllowedClients}
+\label{confallowedclients}
+
+For reasons of data privacy, you need to specify IP address(es) and/or subnet(s), which should be able to communicate with {\em pDLNA}. {\em SSDP} is limited to the local subnet because of the Multicast communication (as long as there is no multicast routing), but HTTP is not limited to the local subnet.
+
+Nevertheless, {\em pDLNA} listens additionally to the already mentioned {\em HTTPPort} (see section~\ref{confignetwork-httpport}) to UDP communication on port 1900 and it is recommended to restrict the {\em AllowedClients} as good as possible.
+
+\begin{colframefile}
+\begin{verbatim}
+AllowedClients 192.168.145.2, 192.168.145.128/26, \
+ 192.168.145.192/255.255.255.252
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} if \textbf{none} are specified, the local subnet matching the {\em ListenIPAddress} will be configured automatically. Please limit the number of hosts.
+\end{colframeimportantnote}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} The hosts, which should access the WebUI (see chapter~\ref{webui}) have also to be added to the {\em AllowedClients} configuration parameter.
+\end{colframeimportantnote}
+
+\section{SSDP configuration}
+
+\subsection{CacheControl}
+
+{\em CacheControl} represents a parameter in the {\em Simple Service Discovery Protocol (SSDP)} and defines the time in seconds, clients will cache the server's information. The value has impact on the interval {\em pDLNA} is going to send out its {\em SSDP} alive messages.
+
+Most devices and {\em pDLNA} use as a default value \verb|1800| seconds. If you would like to use a different value, define it in seconds like this:
+
+\begin{colframefile}
+\begin{verbatim}
+CacheControl	1800
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Changing this value \textbf{may} result into malfunction of {\em pDLNA}.
+\end{colframeimportantnote}
+
+\subsection{UUID}
+
+The {\em Universally Unique Identifier (UUID)} is used in the {\em Simple Service Discovery Protocol (SSDP)} as an unique identifier. RFC 4122\footnote{\url{www.ietf.org/rfc/rfc4122.txt}} describes the format and the different methods to generate a UUID.
+
+The available configuration parameters are listed in table~\ref{tab:AvailableUUIDparams}. If \textbf{none} is specified, \verb|Version4| will be used or you are able to change the parameter by the following line:
+\begin{colframefile}
+\begin{verbatim}
+UUID Version4MAC
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} the method for generating the UUIDs are \textbf{not} (completely) compliant to RFC 4122 and are \textbf{only} pseudo-random.
+\end{colframeimportantnote}
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Parameter} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|Version3| & the hostname's MD5 checksum \\
+		\hline
+		\verb|Version4| & random generated UUID \\
+		\hline
+		\verb|Version4MAC| & random generated UUID including the MAC address of the configured {\em ListenInterface} in the end \\
+		\hline
+		\verb|Version5| & the hostname's SHA-1 checksum \\
+		\hline
+		\verb|<staticUUID>| & define a static UUID, which is formated like \verb|56657273-696f-6e34-4d41-000c29bcfcda| \\
+		\hline
+	\end{tabular}
+	\caption{Available UUID configuration parameters}
+	\label{tab:AvailableUUIDparams}
+\end{table}
+
+\section{DLNA configuration}
+
+\subsection{BufferSize}
+
+The {\em BufferSize} defines the default size of a chunk, which is used to transfer streaming data. The default value for the {\em BufferSize} is \verb|32768|. The following example shows how to change the value:
+
+\begin{colframefile}
+\begin{verbatim}
+BufferSize 1337
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Changing this value \textbf{may} result into malfunction of {\em pDLNA} or may even result into a crash of your system because of high memory usage.
+\end{colframeimportantnote}
+
+\subsection{SpecificViews (EXPERIMENTAL)}
+
+The {\em SpecificViews} configuration parameters enables for specific {\em DLNA} aware devices, like
+\begin{itemize}
+	\item Samsung TV
+\end{itemize}
+a different method for directory listings. By default, this value is disabled. To enable this feature, simple configure it by adding the following line to your configuration file:
+
+\begin{colframefile}
+\begin{verbatim}
+SpecificViews	Off
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Enabling {\em SpecificViews} in the current version will result in not being able to fulfill a directory listing request on a {\em Samsung TV}.
+\end{colframeimportantnote}
+
+\subsection{EnableImageThumbnails}
+
+By switching the parameter {\em EnableImageThumbnails} on or off, you are able to decide if preview thumbnails of images should be displayed on capabale devices. By default, this feature is deactivated.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Enabling {\em EnableImageThumbnails} might decrease the performance of directory listings.
+\end{colframeimportantnote}
+
+\begin{colframefile}
+\begin{verbatim}
+EnableImageThumbnails	On
+\end{verbatim}
+\end{colframefile}
+
+\subsection{EnableVideoThumbnails}
+\label{EnableVideoThumbnails}
+
+By switching the parameter {\em EnableVideoThumbnails} on or off, you are able to decide if preview thumbnails of video files should be displayed on capabale devices. By default, this feature is deactivated.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Enabling {\em EnableVideoThumbnails} might decrease the performance of directory listings and will require \verb|FFmpeg|.
+\end{colframeimportantnote}
+
+\begin{colframefile}
+\begin{verbatim}
+EnableVideoThumbnails	On
+\end{verbatim}
+\end{colframefile}
+
+\subsection{LowResourceMode}
+\label{LowResourceMode}
+
+By default, {\em pDLNA} opens (after indexing) every single video and audio file with \verb|FFmpeg| to determine its codecs, length and various other attributes.
+
+This behaviour is not really IO friendly and takes some time. The chart on \url{http://www.pdlna.org/cgi-bin/index.pl?menu=news&id=c586fc819a} might give you an overview regarding that invested time.
+
+Because of small devices, with limited resources like CPU or IO, enabling the {\em LowResourceMode} skips gathering this additional information.
+
+By default, {\em LowResourceMode} is disabled, but can be enabled by adding the following line to the configuration file:
+\begin{colframefile}
+\begin{verbatim}
+LowResourceMode On
+\end{verbatim}
+\end{colframefile}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Enabling {\em LowResourceMode} will decrease the usability and disable some features:
+\begin{itemize}
+	\item \textbf{Limited information:} No information like codecs, length and various other attributes will be gathered from a media file itself.
+	\item \textbf{Directory Listings:} Because of this limited information, directory listings might not be as beautiful as when {\em LowResourceMode} is disabled.
+\end{itemize}
+
+When {\em LowResourceMode} is enabled, {\em pDLNA} will ignore {\em External} and {\em Transcode} configuration blocks. {\em pDLNA} will also \textbf{not} index audio or video streams as elements from a playlist.
+
+Therefore \verb|FFmpeg| is not required at all.
+\end{colframeimportantnote}
+
+\subsection{FFmpegBinaryPath}
+
+{\em pDLNA} has to use \verb|FFmpeg|, if {\em LowResourceMode} (see previous section~\ref{LowResourceMode}) is disabled, for transcoding and gathering information about media files. So it is necessary to configure {\em FFmpegBinaryPath} with the correct path of \verb|FFmpeg|'s binary. The default path for \verb|FFmpeg|'s binary is set to \verb|/usr/bin/ffmpeg|. For detailed information about \verb|FFmpeg| please see section~\ref{ffmpeg}.
+
+\begin{colframefile}
+\begin{verbatim}
+FFmpegBinaryPath /usr/bin/ffmpeg
+\end{verbatim}
+\end{colframefile}
+
+\section{Logging}
+
+\subsection{LogFile}
+
+The {\em LogFile} configuration parameter defines the logging location of {\em pDLNA}. Table~\ref{tab:AvailableLogFileparams} gives an overview about the available configuration options.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Parameter} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|STDERR| & all logging output will be printed to {\em STDERR} \\
+		\hline
+		\verb|SYSLOG| & all logging output will be logged to syslog \\
+		\hline
+		\verb|<full path to| & specify a full path to a file, {\em pDLNA} should use as a logfile\\
+		\verb| log file>| &  (like \verb|/var/log/pdlna.log|) \\
+		\hline
+	\end{tabular}
+	\caption{Available LogFile configuration parameters}
+	\label{tab:AvailableLogFileparams}
+\end{table}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please ensure, that the user, which is running {\em pDLNA} has permissions to write to the configured path.
+\end{colframeimportantnote}
+
+If {\em LogFile} is not specified, {\em pDLNA} will print all logging output to {\em STDERR}.
+
+\begin{colframefile}
+\begin{verbatim}
+LogFile /var/log/pdlna.log
+\end{verbatim}
+\end{colframefile}
+
+\subsection{LogFileMaxSize}
+
+{\em pDLNA} is able to keep track of the logfile's size and clear it, if the size exceeds a value specified by {\em LogFileMaxSize} in Megabytes. The configured value has to be \textbf{greater than 0 and less than 100}.
+
+By default, {\em LogFileMaxSize} is set to 10 Megabytes.
+
+\begin{colframefile}
+\begin{verbatim}
+LogFileMaxSize 10
+\end{verbatim}
+\end{colframefile}
+
+\subsection{LogFileRotation}
+
+{\em pDLNA} is able to rotate logfiles on his own. This {\em LogFileRotation} configuration parameter defines, how many logfiles will be stored, if the logfile's size exceeds the {\em LogFileMaxSize} configuration parameter.
+
+For instance, a configured {\em LogFileRotation} parameter of \verb|4| will tell {\em pDLNA} to keep four old logfiles. A directory listing would look like:
+\begin{lstlisting}
+pdlna@mediaserver:~$ ls /var/log/pdlna.log*
+/var/log/pdlna.log     /var/log/pdlna.log.2   /var/log/pdlna.log.4
+/var/log/pdlna.log.1   /var/log/pdlna.log.3
+\end{lstlisting}
+
+By default, {\em LogFileRotation} is set to \verb|0|, which will result in removing old log information after rotation.
+
+\begin{colframefile}
+\begin{verbatim}
+LogFileRotation 4
+\end{verbatim}
+\end{colframefile}
+
+\subsection{LogLevel}
+
+{\em pDLNA} is capable to differentiate between different kind of log messages by their {\em LogLevel}. Specifying a higher {\em LogLevel} will result in more detailed logging messages including the messages of the lower {\em LogLevels}. Please see table~\ref{tab:AvailableLogLevelparams} for detailed information about the different {\em LogLevel}
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{LogLevel} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|0| & normal and error messages \\
+		\hline
+		\verb|1| & debug \\
+		\hline
+		\verb|2| & debug 2 \\
+		\hline
+		\verb|3| & debug 3 \\
+		\hline
+	\end{tabular}
+	\caption{Available LogLevel configuration parameters}
+	\label{tab:AvailableLogLevelparams}
+\end{table}
+
+
+If {\em LogLevel} is \textbf{not} specified, it will be set to 0.
+
+\begin{colframefile}
+\begin{verbatim}
+LogLevel 1
+\end{verbatim}
+\end{colframefile}
+
+\subsection{LogCategory}
+
+{\em pDLNA} is also capable to differentiate between different kind of log messages by their {\em LogCategory}. To activate log messages of one of the categories listed in table~\ref{tab:AvailableLogCategoryparams}, simple configure them via a comma seperated list, like in the following example, which will enable all available categories:
+
+\begin{colframefile}
+\begin{verbatim}
+LogCategory discovery,httpdir,httpstream,library,httpgeneric,
+ database,transcoding,soap
+\end{verbatim}
+\end{colframefile}
+
+By default, only some generic messages will be logged and \textbf{none} of these categories are enabled.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{LogCategory} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|discovery| & SSDP messages \\
+		\hline
+		\verb|httpdir| & messages from the directory listings via HTTP \\
+		\hline
+		\verb|httpstream| & messages from the streaming via HTTP \\
+		\hline
+		\verb|library| & messages from building the media library \\
+		\hline
+		\verb|httpgeneric| & generic HTTP messages \\
+		\hline
+		\verb|database| & Database log messages, like queries and so on \\
+		\hline
+		\verb|transcoding| & Transcoding log messages \\
+		\hline
+		\verb|soap| & SOAP log messages \\
+		\hline
+	\end{tabular}
+	\caption{Available LogCategory configuration parameters}
+	\label{tab:AvailableLogCategoryparams}
+\end{table}
+
+\subsection{DateFormat}
+
+By configuring {\em DateFormat}, you are able to define the format of time and date in log or debug messages. The following table~\ref{tab:AvailableDateFormatparams} shows valid variables, their value and other valid characters to format the {\em DateFormat} string.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{Variables} & \textsc{Description} \\
+		\hline
+		\hline
+		\verb|%m| & number of month \\
+		\hline
+		\verb|%d| & numeric day of the month \\
+		\hline
+		\verb|%H| & hour, 24 hour clock \\
+		\hline
+		\verb|%I| & hour, 12 hour clock \\
+		\hline
+		\verb|%p| & AM or PM \\
+		\hline
+		\verb|%M| & minute \\
+		\hline
+		\verb|%S| & second \\
+		\hline
+		\verb|%s| & seconds since the epoch, UCT (aka unixtimestamps) \\
+		\hline
+		\verb|%o| & ornate day of month -- 1st, 2nd, 25th, etc. \\
+		\hline
+		\verb|%Y| & year \\
+		\hline
+		\verb|%Z| & timezone in ascii. eg: PST \\
+		\hline
+		\verb|,-_:| and spaces & characters to format the date string \\
+		\hline
+	\end{tabular}
+	\caption{Available DateFormat configuration variables}
+	\label{tab:AvailableDateFormatparams}
+\end{table}
+
+If {\em DateFormat} is \textbf{not} specified, it will be set to \verb|%Y-%m-%d %H:%M:%S|, which will result for instance in \verb|2012-12-21 13:37:00|. Otherwise configure the parameter by adding the following line to the configuration file.
+\begin{colframefile}
+\begin{verbatim}
+DateFormat '%Y-%m-%d %H:%M:%S'
+\end{verbatim}
+\end{colframefile}
+
+\section{Media Configuration}
+
+\subsection{RescanMediaInterval}
+
+By configuring {\em RescanMediaInterval}, you are able to define the interval, when {\em pDLNA} recrawls the configured media directories (including found playlist files) and external media items.
+
+The following table~\ref{tab:RescanMediaIntervalyParams} shows valid variables and their descriptions to configure {\em RescanMediaInterval}.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{12em}|p{20em}|}
+		\hline
+		\textsc{RescanMediaInterval} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|never| & never recrawl the media directories \\
+		\hline
+		\verb|hourly| & media library will be marked as expired after 60 minutes \\
+		\hline
+		\verb|halfdaily| & media library will be marked as expired after 12 hours \\
+		\hline
+		\verb|daily| & media library will be marked as expired after 24 hours \\
+		\hline
+	\end{tabular}
+	\caption{Available RescanMediaInterval configuration variables}
+	\label{tab:RescanMediaIntervalyParams}
+\end{table}
+
+If {\em RescanMediaInterval} is \textbf{not} specified, it will be set to \verb|daily|.
+
+\begin{colframefile}
+\begin{verbatim}
+RescanMediaInterval daily
+\end{verbatim}
+\end{colframefile}
+
+\subsection{Directory}
+\label{configDirectory}
+
+By default and for reasons of data privacy, {\em pDLNA} will \textbf{not} scan automatically for media files and will \textbf{not} add them automatically to the media library.
+
+Therefore you need to configure your media directories in the configuration file in a configuration block called \verb|<Directory>|. Each of these blocks can be configured separately with parameters, which are described in table~\ref{tab:AvailableDirectoryParams}.
+
+Additionally, table~\ref{tab:supportedMediaTypes} gives an overview about the different media types and their mime types.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{6em}|p{18em}|}
+		\hline
+		\textsc{Parameter} & \textsc{Information} & \textsc{Description}\\
+		\hline
+		\hline
+		\verb|MediaType| & obligatory & specify the type of media files, which should be crawled: \verb|video|, \verb|audio|, \verb|image|, \verb|all| \\
+		\hline
+		\verb|Recursion| & optional, by default: \verb|yes| & specify if these directories should be crawled recursively (by \verb|yes| or \verb|no|) \\
+		\hline
+		\verb|ExcludeDirs| & optional & exclude a comma seperated list of directory names from being crawled and added to the media library \\
+		\hline
+		\verb|ExcludeItems| & optional & exclude a comma seperated list of file names from being crawled and added to the media library \\
+		\hline
+		\verb|AllowPlaylists| & optional, by default: \verb|no|& enable AllowPlaylists configuration parameter to initialize playlist files \\
+		\hline
+	\end{tabular}
+	\caption{Available Directory block configuration parameters}
+	\label{tab:AvailableDirectoryParams}
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{7em}|p{25em}|}
+		\hline
+		\textsc{MediaType} & \textsc{MimeTypes}\\
+		\hline
+		\hline
+		\verb|video| & \verb|video/x-msvideo|, \verb|video/x-matroska|, \verb|video/mp4|, \verb|video/mpeg|, \verb|video/x-flv| \\
+		\hline
+		\verb|audio| & \verb|audio/mpeg|, \verb|audio/mp4|, \verb|audio/x-ms-wma|, \verb|audio/x-flac|, \verb|audio/x-wav|, \verb|video/x-theora|, \verb|audio/ac3|, \verb|audio/x-aiff| \\
+		\hline
+		\verb|image| & \verb|image/jpeg|, \verb|image/gif| \\
+		\hline
+		\verb|Playlist| & \verb|audio/x-scpls|, \verb|audio/x-mpegurl|, \verb|application/vnd.apple.mpegurl|, \verb|audio/x-ms-asx|, \verb|video/x-ms-asf|, \verb|application/xspf+xml| \\
+		\hline
+	\end{tabular}
+	\caption{Supported MimeTypes}
+	\label{tab:supportedMediaTypes}
+\end{table}
+
+The following configuration block will crawl the directory \verb|/media/video/| \textbf{recursively} for only \textbf{video} files.
+
+\begin{colframefile}
+\begin{verbatim}
+<Directory "/media/video/">
+  MediaType      video
+  Recursion      yes
+</Directory>
+\end{verbatim}
+\end{colframefile}
+
+The next configuration snippet will crawl the directory \verb|/media/music/| \textbf{recursively} for only \textbf{music} files. Additionally {\em pDLNA} excludes directories which are called \verb|Justin Bieber| or \verb|Lady Gaga| and also ignores files with the following names: \verb|justin_bieber.mp3| or \verb|lady_gaga.mp3|. Additionally, if {\em pDLNA} finds a \textbf{Playlist file}, {\em pDLNA} will also add it to the media library.
+
+\begin{colframefile}
+\begin{verbatim}
+<Directory "/media/music/">
+  MediaType      audio
+  ExcludeDirs    "Justin Bieber,Lady Gaga"
+  ExcludeItems   "justin_bieber.mp3,lady_gaga.mp3"
+  AllowPlaylists true
+</Directory>
+\end{verbatim}
+\end{colframefile}
+
+The third configuration example will crawl the directory \verb|/media/images/| \textbf{recursively} for only \textbf{images}.
+
+\begin{colframefile}
+\begin{verbatim}
+<Directory "/media/images/">
+  MediaType      image
+</Directory>
+\end{verbatim}
+\end{colframefile}
+
+And the last snippet crawls the directory \verb|/media/misc/| \textbf{not recursively} for all sort of media files but not for \textbf{Playlist files}.
+
+\begin{colframefile}
+\begin{verbatim}
+<Directory "/media/misc/">
+  MediaType      all
+  Recursion      no
+  AllowPlaylists off
+</Directory>
+\end{verbatim}
+\end{colframefile}
+
+\subsection{External media items and Streams}
+\label{configExternal}
+
+% Temporary description
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This feature is currently not available in {\em pDLNA} in version \pDLNAversion. If you would like to use external media items or streams, please use {\em pDLNA} in version 0.64.3. External media items will be readded to {\em pDLNA} in the future.
+\end{colframeimportantnote}
+
+%Additionally you are able to add external media items to the media library. Therefore there are currently two kind of external media items:
+%\begin{itemize}
+%	\item scripts
+%	\item streams
+%\end{itemize}
+%These configured external media items will be added to the root directory of the media library.
+%
+%A valid configuration block for a script has to look like the following example. Since {\em pDLNA} is not able to determine the type of the media, which will be served by the script, it is needed to define the media type by the {\em MediaType} parameter.
+%
+%\begin{colframefile}
+%\begin{verbatim}
+%<External "mpegstream">
+%  Executable external_programs/mpegstream_src.pl
+%  MediaType  video
+%</External>
+%\end{verbatim}
+%\end{colframefile}
+
+%For configuring a stream as an external media item, a valid configuration block looks like the following example. Therefor the only parameter needed is the \verb|StreamingURL| parameter with a valid streaming URL\footnote{For detailed information regarding supported streaming URLs please see section~\ref{externalStreams}.}.
+
+%\begin{colframefile}
+%\begin{verbatim}
+%<External "FM4">
+%  StreamingURL http://mp3stream1.apasf.apa.at:8000/
+%</External>
+%\end{verbatim}
+%\end{colframefile}
+%
+%\begin{colframeimportantnote}
+%\textsc{IMPORTANT NOTE:} External media items are not available, when \verb|LowResourceMode| is enabled.
+%\end{colframeimportantnote}
+
+%\subsubsection{Streams}
+%\label{externalStreams}
+
+% Temporary description
+%\begin{colframeimportantnote}
+%\textsc{IMPORTANT NOTE:} Also streams are not available in {\em pDLNA} in version \pDLNAversion. If you would like to use streams, please use {\em pDLNA} in version 0.64.3. streams media items will be readded to {\em pDLNA} in the future.
+%\end{colframeimportantnote}
+
+%Currently {\em pDLNA} only supports \verb|http://| and \verb|mms://| streams.
+
+% Temporary description
+\section{Transcoding Profiles}
+\label{Transcoding_Profiles}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This feature is currently not available in {\em pDLNA} in version \pDLNAversion. If you would like to use Transcoding, please use {\em pDLNA} in version 0.64.3. Transcoding will be readded to {\em pDLNA} in the future.
+\end{colframeimportantnote}
+
+%\input{chap06_configuration-transcoding}

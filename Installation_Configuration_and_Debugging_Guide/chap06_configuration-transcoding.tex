@@ -1,0 +1,87 @@
+\section{Transcoding Profiles}
+\label{Transcoding_Profiles}
+
+Since not all {\em DLNA} aware devices support all different kinds of audio or video codecs, transcoding these media files allows playing these files on these devices anyway.
+
+Table~\ref{tab:supportedaudiotranscodingprofiles} gives an overview about the currently tested and supported transcoding profiles for audio files. The green colored table cells in this table show the currently supported and tested transcoding possiblites for audio items.
+
+\begin{sidewaystable}
+	\centering
+	\begin{tabular}{|p{4.7em}||p{2.8em}|p{2.8em}|p{2.8em}|p{2.8em}|p{2.8em}|p{2.8em}|p{2.8em}|p{2.8em}|}
+		\hline
+		\diagbox{Out}{In}		& \textsc{aac} 			& \textsc{ac3} 			& \textsc{flac} 			& \textsc{mp3} 				& \textsc{vorbis} 		& \textsc{wav} 				& \textsc{wmav1}		& \textsc{wmav2} \\
+		\hline
+		\hline
+		\textsc{aac} 				& \cellcolor{Grey} 	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{ac3}				& \cellcolor{Green} &	\cellcolor{Grey}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{flac} 			& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{mp3} 				& \cellcolor{Green} &	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{vorbis} 		& \cellcolor{Green} & \cellcolor{Green}	& \cellcolor{Green}	 	& \cellcolor{Green}		& \cellcolor{Grey} 		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{wav} 				& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green} 	& \cellcolor{Green}		& \cellcolor{Grey} 		&	\cellcolor{Green}	& \cellcolor{Green} \\
+		\hline
+		\textsc{wmav1}			& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Grey} 	&	\cellcolor{Green}	\\
+		\hline
+		\textsc{wmav2}			& \cellcolor{Green}	&	\cellcolor{Green}	& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		& \cellcolor{Green}		&	\cellcolor{Green}	& \cellcolor{Grey} \\
+		\hline
+	\end{tabular}
+	\caption{Supported Audio Transcoding Profiles}
+	\label{tab:supportedaudiotranscodingprofiles}
+\end{sidewaystable}
+
+The following configuration snippet will transcode all audio files, which are {\em vorbis} encoded audio data to a {\em flac} encoded audio stream \textbf{on condition that} the {\em DLNA} client IP address matches the comma seperated list of the configured \verb|ClientIPs| parameter.
+
+\begin{colframefile}
+\begin{verbatim}
+<Transcode "ogg2flac">
+  MediaType      audio
+  AudioCodecIn   vorbis
+  AudioCodecOut  flac
+  ClientIPs      192.168.0.1,192.168.0.128/25
+</Transcode>
+\end{verbatim}
+\end{colframefile}
+
+Since it is possible to define multiple transcoding profiles, the first transcoding profile, which matches the criteria, will be used. So please ensure to configure the more specific on the top of the transcoding profiles.\footnote{This functionality can be compared with a firewall rule set.}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Transcoding depends on the supported audio and video codecs of your \verb|FFmpeg| installation and some validation in the source code to ensure its functionality. Table~\ref{tab:requiredffmpegaudio} gives an overview regarding the required \verb|FFmpeg| encoding audio codecs and formats to encode audio files.
+\end{colframeimportantnote}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|p{10em}|p{11em}|p{10em}|}
+		\hline
+		\textsc{Transcoded Codec} & \textsc{FFmpeg audio codec} & \textsc{FFmpeg format} \\
+		\hline
+		\hline
+		\textsc{aac} 							& \verb|libfaac| 							& \verb|m4v| \\
+		\hline
+		\textsc{ac3} 							& \verb|ac3|									& \verb|ac3| \\
+		\hline
+		\textsc{flac} 						& \verb|flac|									& \verb|flac| \\
+		\hline
+		\textsc{mp3} 							& \verb|libmp3lame|						& \verb|mp3| \\
+		\hline
+		\textsc{vorbis} 					& \verb|libvorbis|						& \verb|ogg| \\
+		\hline
+		\textsc{wav} 							& \verb|pcm_s16le|						& \verb|wav| \\
+		\hline
+		\textsc{wmav1} 						& \verb|wmav1|								& \verb|asf| \\
+		\hline
+		\textsc{wmav2} 						& \verb|wmav2|								& \verb|asf| \\
+		\hline
+	\end{tabular}
+	\caption{Required encoding audio codecs and formats by your FFmpeg installation}
+	\label{tab:requiredffmpegaudio}
+\end{table}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Transcoding is not available, when \verb|LowResourceMode| is enabled.
+\end{colframeimportantnote}
+
+An easy way to get the information, which transcoding profiles are supported by your \verb|FFmpeg| installation, is by using the WebUI (see chapter~\ref{webui}).

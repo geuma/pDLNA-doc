@@ -1,0 +1,553 @@
+%
+% INSTALLING ON LINUX
+%
+
+\chapter{Installing on UNIX and Linux}
+\label{linux}
+
+This chapter gives an overview about the different methods for installing {\em pDLNA} on your favorite UNIX derivate or Linux distrubution. The first section gives an overview about installing the necessary prerequisites for various UNIX derivates or Linux distrubutions. The second section describes the installation steps via the official \verb|git| repository, while the third section describes installing {\em pDLNA} from a packed tarball.
+
+\section{Install prerequisites}
+\label{install-prerequisites}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} The following described steps to install the prerequisites for {\em pDLNA} do not include installing the necessary Perl modules for the provided \verb|install.pl| script. This script requires the \verb|File::Copy::Recursive| and \verb|Getopt::Long::Descriptive| Perl modules additionally. These Perl modules are included in the repository from the Debian GNU/Linux distribution and its variants by the name \verb|libfile-copy-recursive-perl| and \verb|libgetopt-long-descriptive-perl|.
+\end{colframeimportantnote}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} In this chapter \verb|sudo| is used for commands, which require administrative rights to fulfill certain tasks. If you do not like or at least do not want to use \verb|sudo|, please ensure to execute the listed commands with an adminstrative user like \verb|root|.
+\end{colframeimportantnote}
+
+\subsection{CentOS 6}
+
+On a fresh CentOS 6 (mininal) installation, the following command installs necessary CentOS packages and some necessary Perl Modules from the official repository:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo yum install bind-utils cpan make gcc libogg-devel libogg libvorbis libvorbis-devel vorbis-tools perl-DBD-MySQL perl-DBD-Pg perl-DBD-SQLite perl-DBI perl-Digest-SHA perl-GD perl-GDGraph perl-Image-Info perl-Net-IP perl-SOAP-Lite perl-Time-HiRes perl-XML-Simple perl-YAML
+\end{lstlisting}
+
+Afterwards you still need to install a lot of Perl modules via {\em CPAN} itself, since they are not included in the official repository:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo cpan
+cpan[1]> install Getopt::Long::Descriptive
+cpan[2]> install Audio::FLAC::Header Audio::Wav Audio::WMA
+cpan[3]> install Config::ApacheFormat
+cpan[4]> install Date::Format File::MimeInfo
+cpan[5]> install IO::Interface IO::Socket::Multicast
+cpan[6]> install MP3::Info MP4::Info
+cpan[7]> install Net::Netmask
+cpan[8]> install Ogg::Vorbis::Header::PurePerl
+cpan[9]> install Proc::ProcessTable
+\end{lstlisting}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} In the default repositories of CentOS, there is no package for \verb|FFmpeg|. Either install \verb|FFmpeg| manually or run {\em pDLNA} in \verb|LowResourceMode| (see section~\ref{LowResourceMode} for detailed information).
+\end{colframeimportantnote}
+
+\subsection{Debian GNU/Linux 7}
+
+On a fresh installed Debian GNU/Linux 7 operating system, you are able to execute the following command to install necessary Debian GNU/Linux packages and all the necessary Perl modules from the Debian repository:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install ffmpeg libaudio-flac-header-perl libaudio-wav-perl libaudio-wma-perl libconfig-apacheformat-perl libdbd-mysql-perl libdbd-pg-perl libdbd-sqlite3-perl libdbi-perl libdigest-md5-perl libdigest-sha-perl libfile-mimeinfo-perl libgd-gd2-perl libgd-graph-perl libgetopt-long-descriptive-perl libhtml-parser-perl libimage-info-perl libio-interface-perl libio-socket-multicast-perl libmp3-info-perl libmp4-info-perl libnet-ip-perl libnet-netmask-perl libogg-vorbis-header-pureperl-perl libproc-processtable-perl libsoap-lite-perl libsys-syslog-perl libxml-simple-perl
+\end{lstlisting}
+
+\subsection{FreeBSD 9}
+
+Since FreeBSD 9 brings \verb|portsnap|, which is a fast and user-friendly tool for retrieving the {\em Ports Collection}, installing required software, which is part of the {\em Ports Collection} is easy. The following three commands will download all {\em Ports}, extract them and will also update the {\em Ports} tree. At this point you might not have \verb|sudo| installed, so please execute these commands with administrative rights.
+\begin{lstlisting}
+[root@mediaserver ~]$ portsnap fetch
+[root@mediaserver ~]$ portsnap extract
+[root@mediaserver ~]$ portsnap update
+\end{lstlisting}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Prior versions of FreeBSD 9.2\footnote{\url{http://www.freebsd.org/security/unsupported.html}} are no longer supported. Please use \verb|freebsd-update| to upgrade your FreeBSD installation.
+\end{colframeimportantnote}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} FreeBSD 9 might come with a \textbf{non-threaded} Perl version. In this case, please ensure to deinstall the running Perl version and recompile it with threads. This can be done for version 5.12 by the command \verb|[root@ms /usr/ports/lang/perl5.12/]$ make WITH_THREADS=yes|.
+\end{colframeimportantnote}
+
+Afterwards, you will be able to look, if there is already a {\em Port} for the required software available, by simply visiting \url{http://www.freebsd.org/cgi/ports.cgi}. If the {\em Port} is available, it will list the category and its name. Afterwards you are able to compile and install the software. For instance, if you would like to install \verb|git|, which is available in the category \verb|devel|, this can be done by the following command:
+\begin{lstlisting}
+[root@mediaserver ~]$ cd /usr/ports/devel/git
+[root@mediaserver /usr/ports/devel/git]$ sudo make install clean
+\end{lstlisting}
+
+To install all required Perl modules, which are included in the {\em Ports Collection} (see table~\ref{tab:NecessaryPerlModulesFreeBSD9}), follow the two steps listed above for compiling and installing. Additionally, you are able to install the Perl modules \verb|File::Copy::Recursive| and \verb|Getopt::Long::Descriptive| (necessary for the \verb|install.pl| script) which are named \verb|p5-File-Copy-Recursive| and \verb|p5-Getopt-Long-Descriptive|. Both modules are member of the \verb|devel| category.
+
+Afterwards you still need to install some Perl modules via {\em CPAN} itself, since they are not included in the {\em Ports Collection}:
+\begin{lstlisting}
+[pdlna@mediaserver ~]$ sudo cpan
+cpan[1]> install Date::Format
+cpan[2]> install HTML::Entities
+cpan[3]> install LWP::UserAgent
+cpan[4]> install URI::Split
+\end{lstlisting}
+
+If you would like {\em pDLNA} to use \verb|FFmpeg| (see section~\ref{ffmpeg}), you are also able to install them via the {\em Ports Collection} by the following commands:
+\begin{lstlisting}
+[pdlna@mediaserver ~]$ cd /usr/ports/multimedia/ffmpeg
+[pdlna@mediaserver /usr/ports/multimedia/ffmpeg]$ sudo make install clean
+\end{lstlisting}
+
+\section{Installing via git}
+\label{install-git}
+
+Installing {\em pDLNA} via a \verb|git clone| is a simple way to install {\em pDLNA} und keep it up to date. \verb|git| is a distributed revision control system and is developed by Linus Torvalds. The official \verb|git| repository is hosted on GitHub (\url{github.com/geuma/pDLNA/}), which is a web-based hosting service for software development projects.
+
+\subsection{Cloning the git repository}
+
+At first the \verb|git| software must be installed on the computer, {\em pDLNA} should be run at. The \verb|git| source code can be obtained from the project's official website \url{git-scm.com/} or can be installed via the package management of your favorite Linux distribution. The following command will install the \verb|git| package on the Debian GNU/Linux distribution and its variants.
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo apt-get install git
+\end{lstlisting}
+
+After installing \verb|git| you need to clone the repository by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ git clone git://github.com/geuma/pDLNA.git
+\end{lstlisting}
+In the end, a directory named {\em pDLNA} has been created, which should look like the following directory listing:
+\begin{lstlisting}
+pdlna@mediaserver:~/pDLNA$ ls -lah
+total 104K
+drwxr-xr-x 6 pdlna pdlna 4.0K Jun  7 17:07 .
+drwxr-xr-x 4 pdlna pdlna 4.0K Jan 11 13:28 ..
+-rwxr-xr-x 1 pdlna pdlna  19K Jan 10 19:21 CHANGELOG
+drwxr-xr-x 3 pdlna pdlna 4.0K Jan  9 18:29 etc
+drwxr-xr-x 2 pdlna pdlna 4.0K Nov 23  2013 external_programs
+drwxr-xr-x 8 pdlna pdlna 4.0K Jun  7 17:07 .git
+-rwxr-xr-x 1 pdlna pdlna 1.2K Jan  9 18:29 INSTALL
+-rwxr-xr-x 1 pdlna pdlna 6.7K Jan 12 12:44 install.pl
+-rwxr-xr-x 1 pdlna pdlna  35K Nov 23  2013 LICENSE
+-rwxr-xr-x 1 pdlna pdlna  845 Jan  9 18:29 README
+-rwxr-xr-x 1 pdlna pdlna 1.4K Nov 23  2013 TODO
+drwxr-xr-x 4 pdlna pdlna 4.0K Jan  9 18:29 usr
+-rwxr-xr-x 1 pdlna pdlna   21 Jan  9 18:29 VERSION
+\end{lstlisting}
+
+\subsection{Finalizing the installation}
+
+The easiest way to finalize the installation is to copy the default configuration file from the \verb|git clone| to the \verb|/etc/| directory by executing the following commands. For copying the configuration file you might need superuser rights.
+\begin{lstlisting}
+pdlna@mediaserver:~$ cd ~/pDLNA/
+pdlna@mediaserver:~/pDLNA$ sudo cp etc/pdlna.conf /etc/
+\end{lstlisting}
+Additionally you should copy the sample initscript from the \verb|git clone| to the \verb|/etc/init.d/| directory and setting the execute bit by executing the following commands. This step might also require superuser rights.
+\begin{lstlisting}
+pdlna@mediaserver:~$ cd ~/pDLNA/
+pdlna@mediaserver:~/pDLNA$ sudo cp etc/init.d/pdlna /etc/init.d/
+pdlna@mediaserver:~/pDLNA$ sudo chmod +x /etc/init.d/pdlna
+\end{lstlisting}
+In the end you need to change the \verb|DIR| variable in the initscript (line 20) by editing the file \verb|/etc/init.d/pdlna| with your favourite editor like {\em vim}, {\em nano} or whatever you like. The following snippet shows you an example command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo vim /etc/init.d/pdlna
+\end{lstlisting}
+After opening the file, jump to line 20 and edit the path for the {\em DIR} variable to the path, where the {\em pDLNA.pl} is stored. If you have cloned the \verb|git| repository to \verb|/home/pdlna/pDLNA/| you need to set the variable to the following value:
+\begin{colframefile}
+\begin{verbatim}
+DIR="/home/pdlna/pDLNA/usr/sbin/"
+\end{verbatim}
+\end{colframefile}
+
+Additionally you need to check for the dependencies (see chapter~\ref{require}) you are able to run the \verb|install.pl| script with the (\verb|-c| or \verb|--checkrequirements|) parameter, which is stored in the \verb|git| repository:
+\begin{lstlisting}
+pdlna@mediaserver:~/pDLNA$ perl install.pl -c
+------------------------------------------------------
+Step 1:
+Testing for necessary Perl Modules ...
+------------------------------------------------------
+ok 1 - use Audio::FLAC::Header;
+ok 2 - use Audio::Wav;
+ok 3 - use Audio::WMA;
+ok 4 - use Config;
+ok 5 - use Config::ApacheFormat;
+ok 6 - use Data::Dumper;
+ok 7 - use Date::Format;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::Pg;
+ok 10 - use DBD::SQLite;
+ok 11 - use DBI;
+ok 12 - use Digest::MD5;
+ok 13 - use Digest::SHA;
+ok 14 - use Fcntl;
+ok 15 - use File::Basename;
+ok 16 - use File::Glob;
+ok 17 - use File::MimeInfo;
+ok 18 - use GD;
+ok 19 - use GD::Graph::area;
+ok 20 - use Getopt::Long::Descriptive;
+ok 21 - use HTML::Entities;
+ok 22 - use Image::Info;
+ok 23 - use IO::Interface::Simple;
+ok 24 - use IO::Select;
+ok 25 - use IO::Socket;
+ok 26 - use IO::Socket::INET;
+ok 27 - use IO::Socket::Multicast;
+ok 28 - use LWP::UserAgent;
+ok 29 - use MP3::Info;
+ok 30 - use MP4::Info;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Ogg::Vorbis::Header::PurePerl;
+ok 34 - use POSIX;
+ok 35 - use Proc::ProcessTable;
+ok 36 - use SOAP::Lite;
+ok 37 - use Socket;
+ok 38 - use Sys::Hostname;
+ok 39 - use Sys::Syslog;
+ok 40 - use threads;
+ok 41 - use threads::shared;
+ok 42 - use Time::HiRes;
+ok 43 - use URI::Split;
+ok 44 - use XML::Simple;
+1..44
+\end{lstlisting}
+The output above shows the executed \verb|install.pl| script with its output. As long as all of these checks return \verb|ok|, all necessary requirements are fullfilled.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|FFmpeg| is installed. For detailed information regarding the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
+\end{colframeimportantnote}
+
+After the initial configuration (see chapter~\ref{config}), you are able to start {\em pDLNA} by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo /etc/init.d/pdlna start
+\end{lstlisting}
+
+\subsection{Updating pDLNA}
+\label{install-unix-git-update}
+
+Because of the \verb|git clone| updating {\em pDLNA} is pretty easy if there have not been any changes to your \verb|git clone|. By executing the following commands
+\begin{lstlisting}
+pdlna@mediaserver:~$ cd pDLNA/
+pdlna@mediaserver:~/pDLNA$ git pull
+\end{lstlisting}
+{\em pDLNA} will be updated to the latest version, which is currently pushed to the git repository. After checking for requirements by executing \verb|install.pl -c| and restarting {\em pDLNA} via
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo /etc/init.d/pdlna restart
+\end{lstlisting}
+the new version is going to be started.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} In some cases it might be necessary to follow the steps from installing {\em pDLNA} via a \verb|git clone| again.
+\end{colframeimportantnote}
+
+\section{Installing the latest release}
+\label{install-unix-latestrelease}
+
+Installing the latest release of {\em pDLNA} is the simpliest way to install {\em pDLNA}. Every release of {\em pDLNA} will be packaged as a tarball and available via the changelog section on \url{www.pdlna.org/cgi-bin/index.pl?menu=changelog} or can be downloaded directly via \url{http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=release&version=latest}.
+
+\subsection{Downloading latest release}
+\label{install-unix-latest-release-download}
+
+The latest release of {\em pDLNA} can be downloaded via \url{http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=release&version=latest}. The changelog section (\url{www.pdlna.org/cgi-bin/index.pl?menu=changelog}) gives detailed information about all releases.
+
+The following snippet shows the command to download the latest version using \verb|wget|:
+\begin{lstlisting}
+pdlna@mediaserver:~$ cd /tmp/
+pdlna@mediaserver:/tmp$ wget \
+  "http://www.pdlna.org/cgi-bin/index.pl?menu=download&type=rel&version=lat" \
+	-O pDLNA.tgz
+\end{lstlisting}
+
+\subsection{Installation}
+\label{install-unix-latest-release-installation}
+
+After downloading the latest version of {\em pDLNA} to the \verb|/tmp| directory, you should extract the tarball and change to the extracted directory by executing the following commands:
+\begin{lstlisting}
+pdlna@mediaserver:/tmp$ tar xzf pDLNA.tgz
+pdlna@mediaserver:/tmp$ cd pDLNA
+\end{lstlisting}
+
+In this directory, there is a script called \verb|install.pl|, which supports checking for requirements (\verb|-c| or \verb|--checkrequirements|), installing (\verb|-i| or \verb|--install|) and updating the application (\verb|-u| or \verb|--update|). Additionally the help function (\verb|-h| or \verb|--help|) prints out more detailed information.
+
+So the first step to install {\em pDLNA} should be to run the installation script to check for the necessary requirements (see chapter~\ref{require}) by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:/tmp/pDLNA$ perl install.pl -c
+------------------------------------------------------
+Step 1:
+Testing for necessary Perl Modules ...
+------------------------------------------------------
+ok 1 - use Audio::FLAC::Header;
+ok 2 - use Audio::Wav;
+ok 3 - use Audio::WMA;
+ok 4 - use Config;
+ok 5 - use Config::ApacheFormat;
+ok 6 - use Data::Dumper;
+ok 7 - use Date::Format;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::Pg;
+ok 10 - use DBD::SQLite;
+ok 11 - use DBI;
+ok 12 - use Digest::MD5;
+ok 13 - use Digest::SHA;
+ok 14 - use Fcntl;
+ok 15 - use File::Basename;
+ok 16 - use File::Glob;
+ok 17 - use File::MimeInfo;
+ok 18 - use GD;
+ok 19 - use GD::Graph::area;
+ok 20 - use Getopt::Long::Descriptive;
+ok 21 - use HTML::Entities;
+ok 22 - use Image::Info;
+ok 23 - use IO::Interface::Simple;
+ok 24 - use IO::Select;
+ok 25 - use IO::Socket;
+ok 26 - use IO::Socket::INET;
+ok 27 - use IO::Socket::Multicast;
+ok 28 - use LWP::UserAgent;
+ok 29 - use MP3::Info;
+ok 30 - use MP4::Info;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Ogg::Vorbis::Header::PurePerl;
+ok 34 - use POSIX;
+ok 35 - use Proc::ProcessTable;
+ok 36 - use SOAP::Lite;
+ok 37 - use Socket;
+ok 38 - use Sys::Hostname;
+ok 39 - use Sys::Syslog;
+ok 40 - use threads;
+ok 41 - use threads::shared;
+ok 42 - use Time::HiRes;
+ok 43 - use URI::Split;
+ok 44 - use XML::Simple;
+1..44
+\end{lstlisting}
+The output above shows the different tests and their results, which were performed by the installation script. As long as all of these checks return \verb|ok|, all necessary requirements are fullfilled. For a complete overview regarding the requirements please see chapter~\ref{require}.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} The checking will not include checking if \verb|FFmpeg| is installed. For detailed information regarding the usage of \verb|FFmpeg| see section~\ref{ffmpeg}.
+\end{colframeimportantnote}
+
+When all requirements have been fixed and installed, you are able to rerun the installation script by executing the installation script with the \verb|--install| parameter. By default, the script will install {\em pDLNA} to the \verb|/opt| directory, which can be changed by setting the \verb|--prefix=/path/to/your/directory| parameter. The following output shows the installation process, which is started by checking the requirements for {\em pDLNA}. While step 2 is checking for two more Perl modules for the installation itself, step 3 installs the necessary files from {\em pDLNA} to the specified directory and step 4 modifies the installed files for the installation specific parts. In the end, step 5 verifies the installation.
+\begin{lstlisting}
+pdlna@mediaserver:/tmp/pDLNA$ sudo perl install.pl -i
+------------------------------------------------------
+Step 1:
+Testing for necessary Perl Modules ...
+------------------------------------------------------
+ok 1 - use Audio::FLAC::Header;
+ok 2 - use Audio::Wav;
+ok 3 - use Audio::WMA;
+ok 4 - use Config;
+ok 5 - use Config::ApacheFormat;
+ok 6 - use Data::Dumper;
+ok 7 - use Date::Format;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::Pg;
+ok 10 - use DBD::SQLite;
+ok 11 - use DBI;
+ok 12 - use Digest::MD5;
+ok 13 - use Digest::SHA;
+ok 14 - use Fcntl;
+ok 15 - use File::Basename;
+ok 16 - use File::Glob;
+ok 17 - use File::MimeInfo;
+ok 18 - use GD;
+ok 19 - use GD::Graph::area;
+ok 20 - use Getopt::Long::Descriptive;
+ok 21 - use HTML::Entities;
+ok 22 - use Image::Info;
+ok 23 - use IO::Interface::Simple;
+ok 24 - use IO::Select;
+ok 25 - use IO::Socket;
+ok 26 - use IO::Socket::INET;
+ok 27 - use IO::Socket::Multicast;
+ok 28 - use LWP::UserAgent;
+ok 29 - use MP3::Info;
+ok 30 - use MP4::Info;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Ogg::Vorbis::Header::PurePerl;
+ok 34 - use POSIX;
+ok 35 - use Proc::ProcessTable;
+ok 36 - use SOAP::Lite;
+ok 37 - use Socket;
+ok 38 - use Sys::Hostname;
+ok 39 - use Sys::Syslog;
+ok 40 - use threads;
+ok 41 - use threads::shared;
+ok 42 - use Time::HiRes;
+ok 43 - use URI::Split;
+ok 44 - use XML::Simple;
+------------------------------------------------------
+Step 2:
+Testing for necessary Perl Modules for installation ...
+------------------------------------------------------
+ok 45 - use File::Copy;
+ok 46 - use File::Copy::Recursive;
+------------------------------------------------------
+Step 3:
+Installing files ...
+------------------------------------------------------
+ok 47 - Installed './usr/lib/perl5/PDLNA' to '/opt/pDLNA/usr/lib/perl5/PDLNA'.
+ok 48 - Set rights for '/opt/pDLNA/usr/lib/perl5/PDLNA'.
+ok 49 - Installed './usr/sbin/pDLNA.pl' to '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+ok 50 - Set rights for '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+ok 51 - Installed './etc/pdlna.conf' to '/etc/pdlna.conf'.
+ok 52 - Set rights for '/etc/pdlna.conf'.
+ok 53 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
+ok 54 - Set rights for '/opt/pDLNA/external_programs'.
+ok 55 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
+ok 56 - Set rights for '/opt/pDLNA/VERSION'.
+ok 57 - Installed './etc/init.d/pdlna' to '/etc/init.d/pdlna'.
+ok 58 - Set rights for '/etc/init.d/pdlna'.
+ok 59 - Installed './README' to '/opt/pDLNA/README'.
+ok 60 - Set rights for '/opt/pDLNA/README'.
+ok 61 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
+ok 62 - Set rights for '/opt/pDLNA/LICENSE'.
+------------------------------------------------------
+Step 4:
+Setting of relevant paths ...
+------------------------------------------------------
+ok 63 - Changed path for binary in '/etc/init.d/pdlna'.
+ok 64 - Changed path for lib in '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+------------------------------------------------------
+Step 5:
+Checking for pDLNA Perl Modules ...
+------------------------------------------------------
+ok 65 - use PDLNA::Config;
+ok 66 - use PDLNA::ContentLibrary;
+ok 67 - use PDLNA::Daemon;
+ok 68 - use PDLNA::Database;
+ok 69 - use PDLNA::Devices;
+ok 70 - use PDLNA::FFmpeg;
+ok 71 - use PDLNA::HTTPServer;
+ok 72 - use PDLNA::HTTPXML;
+ok 73 - use PDLNA::Log;
+ok 74 - use PDLNA::Media;
+ok 75 - use PDLNA::SOAPClient;
+ok 76 - use PDLNA::SOAPMessages;
+ok 77 - use PDLNA::SpecificViews;
+ok 78 - use PDLNA::SSDP;
+ok 79 - use PDLNA::Statistics;
+ok 80 - use PDLNA::Status;
+ok 81 - use PDLNA::Utils;
+ok 82 - use PDLNA::WebUI;
+1..82
+\end{lstlisting}
+
+After configuring your {\em pDLNA} installation (see chapter~\ref{config}), you are able to start {\em pDLNA} by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo /etc/init.d/pdlna start
+\end{lstlisting}
+
+\subsection{Updating pDLNA}
+\label{install-unix-latest-release-updating}
+
+As described in the section~\ref{install-unix-latest-release-download}, start by downloading the latest release of {\em pDLNA}. After extracting the downloaded tarball and checking for requirements by executing \verb|install.pl -c| (as described in section~\ref{install-unix-latest-release-installation}), it is possible to update the {\em pDLNA} installation by executing the following command:
+\begin{lstlisting}
+pdlna@mediaserver:/tmp/pDLNA$ sudo perl install.pl -u
+------------------------------------------------------
+Step 1:
+Testing for necessary Perl Modules ...
+------------------------------------------------------
+ok 1 - use Audio::FLAC::Header;
+ok 2 - use Audio::Wav;
+ok 3 - use Audio::WMA;
+ok 4 - use Config;
+ok 5 - use Config::ApacheFormat;
+ok 6 - use Data::Dumper;
+ok 7 - use Date::Format;
+ok 8 - use DBD::mysql;
+ok 9 - use DBD::Pg;
+ok 10 - use DBD::SQLite;
+ok 11 - use DBI;
+ok 12 - use Digest::MD5;
+ok 13 - use Digest::SHA;
+ok 14 - use Fcntl;
+ok 15 - use File::Basename;
+ok 16 - use File::Glob;
+ok 17 - use File::MimeInfo;
+ok 18 - use GD;
+ok 19 - use GD::Graph::area;
+ok 20 - use Getopt::Long::Descriptive;
+ok 21 - use HTML::Entities;
+ok 22 - use Image::Info;
+ok 23 - use IO::Interface::Simple;
+ok 24 - use IO::Select;
+ok 25 - use IO::Socket;
+ok 26 - use IO::Socket::INET;
+ok 27 - use IO::Socket::Multicast;
+ok 28 - use LWP::UserAgent;
+ok 29 - use MP3::Info;
+ok 30 - use MP4::Info;
+ok 31 - use Net::IP;
+ok 32 - use Net::Netmask;
+ok 33 - use Ogg::Vorbis::Header::PurePerl;
+ok 34 - use POSIX;
+ok 35 - use Proc::ProcessTable;
+ok 36 - use SOAP::Lite;
+ok 37 - use Socket;
+ok 38 - use Sys::Hostname;
+ok 39 - use Sys::Syslog;
+ok 40 - use threads;
+ok 41 - use threads::shared;
+ok 42 - use Time::HiRes;
+ok 43 - use URI::Split;
+ok 44 - use XML::Simple;
+------------------------------------------------------
+Step 2:
+Testing for necessary Perl Modules for installation ...
+------------------------------------------------------
+ok 45 - use File::Copy;
+ok 46 - use File::Copy::Recursive;
+------------------------------------------------------
+Step 3:
+Installing files ...
+------------------------------------------------------
+ok 47 - Installed './usr/lib/perl5/PDLNA' to '/opt/pDLNA/usr/lib/perl5/PDLNA'.
+ok 48 - Set rights for '/opt/pDLNA/usr/lib/perl5/PDLNA'.
+ok 49 - Installed './usr/sbin/pDLNA.pl' to '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+ok 50 - Set rights for '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+ok 51 - Did not install './etc/pdlna.conf' to '/etc/pdlna.conf', since we are only upgrading the installation.
+ok 52 - Installed './external_programs' to '/opt/pDLNA/external_programs'.
+ok 53 - Set rights for '/opt/pDLNA/external_programs'.
+ok 54 - Installed './VERSION' to '/opt/pDLNA/VERSION'.
+ok 55 - Set rights for '/opt/pDLNA/VERSION'.
+ok 56 - Installed './etc/init.d/pdlna' to '/etc/init.d/pdlna'.
+ok 57 - Set rights for '/etc/init.d/pdlna'.
+ok 58 - Installed './README' to '/opt/pDLNA/README'.
+ok 59 - Set rights for '/opt/pDLNA/README'.
+ok 60 - Installed './LICENSE' to '/opt/pDLNA/LICENSE'.
+ok 61 - Set rights for '/opt/pDLNA/LICENSE'.
+------------------------------------------------------
+Step 4:
+Setting of relevant paths ...
+------------------------------------------------------
+ok 62 - Changed path for binary in '/etc/init.d/pdlna'.
+ok 63 - Changed path for lib in '/opt/pDLNA/usr/sbin/pDLNA.pl'.
+------------------------------------------------------
+Step 5:
+Checking for pDLNA Perl Modules ...
+------------------------------------------------------
+ok 64 - use PDLNA::Config;
+ok 65 - use PDLNA::ContentLibrary;
+ok 66 - use PDLNA::Daemon;
+ok 67 - use PDLNA::Database;
+ok 68 - use PDLNA::Devices;
+ok 69 - use PDLNA::FFmpeg;
+ok 70 - use PDLNA::HTTPServer;
+ok 71 - use PDLNA::HTTPXML;
+ok 72 - use PDLNA::Log;
+ok 73 - use PDLNA::Media;
+ok 74 - use PDLNA::SOAPClient;
+ok 75 - use PDLNA::SOAPMessages;
+ok 76 - use PDLNA::SpecificViews;
+ok 77 - use PDLNA::SSDP;
+ok 78 - use PDLNA::Statistics;
+ok 79 - use PDLNA::Status;
+ok 80 - use PDLNA::Utils;
+ok 81 - use PDLNA::WebUI;
+1..81
+\end{lstlisting}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Executing \verb|install.pl -u| will not overwrite an already existing \verb|/etc/pdlna.conf| configuration file.
+\end{colframeimportantnote}
+
+After successfully updating the {\em pDLNA} installation, the command
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo /etc/init.d/pdlna restart
+\end{lstlisting}
+will restart {\em pDLNA} and the updated version is going to be started.

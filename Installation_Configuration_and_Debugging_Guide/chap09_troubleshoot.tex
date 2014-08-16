@@ -1,0 +1,90 @@
+%
+% Troubleshooting
+%
+
+\chapter{Debugging and reporting problems}
+\label{troubleshooting}
+
+This is not (yet) a real troubleshooting guide to {\em pDLNA}. Currently it is more a small handbook to do some general debugging and how to gather some necessary information on a running Linux operating system. You are also able to forward this gathered information to me.
+
+\section{Debugging}
+
+When starting {\em pDLNA}, the process will parse the configuration file\footnote{Please see chapter~\ref{config} for more details.} and will not start until everything is configured correctly. In some cases {\em pDLNA} might not be able to determine the correct {\em ListenInterface}, where you need to configure this information by hand. The following command starts {\em pDLNA}.
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo /etc/init.d/pdlna start
+\end{lstlisting}
+
+Once {\em pDLNA} is running successfully, you are able to verify this by running the following two commands. The first one checks all the running processes for the {\em pDLNA} process, while the second one prints out the stored PID. If both PID match each other, everything should be fine.
+
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo ps -ef | grep pDLNA
+root     13162     1  3 09:18 pts/2    00:00:50   /usr/bin/perl ./pDLNA.pl -f /etc/pdlna.conf
+\end{lstlisting}
+
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo cat /var/run/pdlna.pid
+13162
+\end{lstlisting}
+
+The following listings are based on the network configuration listed in~\ref{confignetwork}. So, the next step to identify a lowlevel network problem of {\em pDLNA} will be to check if {\em pDLNA} is listening to the two necessary network ports. There is \textbf{port 1900 UDP} needed for the {\em SSDP} communication and configured {\em HTTPPort}\footnote{By default this port is port 8001 TCP and can be changed in the configuration file (see section~\ref{confignetwork-httpport}).} for the {\em DLNA} communication via HTTP. The following command checks the network statistics and filters for the lines including the PID of the running {\em pDLNA} installation.
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo netstat -taunp | grep 13162
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address
+ Foreign Address         State       PID/Program name
+tcp        0      0 192.168.145.139:8001     0.0.0.0:*               LISTEN      13162/perl
+udp        0      0 192.168.145.139:37302    239.255.255.250:1900    ESTABLISHED 13162/perl
+udp    53368      0 0.0.0.0:1900             0.0.0.0:*                           13162/perl
+\end{lstlisting}
+If your network statistics output shows, that {\em pDLNA} is correctly listening to \textbf{port 1900 UDP} and the configured {\em HTTPPort}, the network communication should be working.
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} {\em AllowedClients} is configured to the local subnet by default.
+\end{colframeimportantnote}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} Please also check your firewall configuration.
+\end{colframeimportantnote}
+
+As a simple test you can visit the WebUI (see chapter~\ref{webui}), which can be accessed by the following URL: \verb|http://ListenIPAddress:HTTPPort/webui/|. If you are receiving an {\em HTTP Error Code 403}, your host is not configured as an {\em AllowedClients}. If your Browser is running in a {\em timeout}, there might be a problem with your configuration.
+
+After checking the general process and network information, the next step is about increasing the {\em LogLevel} and configuring the necessary {\em LogCategory} from table~\ref{tab:AvailableLogCategoryparams}. At first you need to configure {\em LogLevel} to the highest {\em LogLevel} available in table~\ref{tab:AvailableLogLevelparams} for the most detailed log messages.
+
+\subsection{My device is not able to discover {\em pDLNA}}
+
+If your {\em DLNA} capable device is not able to discover {\em pDLNA}, please set the configuration parameter {\em LogCategory} to \verb|discovery, httpgeneric| and restart {\em pDLNA}. Additionally you are able to do a packet capture with the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo tcpdump -i ListenInterface -s 1500 \
+  -w capture_full.pcap
+\end{lstlisting}
+Please ensure to fill in the configured {\em ListenInterface}.
+
+\subsection{My media directories are not read correctly}
+
+In the case, that {\em pDLNA} was not able to read in your shared directories correctly, enable the {\em LogCategory} \verb|library| in the configuration file and restart the installed version of {\em pDLNA}. An easy way to navigate quickly through the media library and check for problems is by using the WebUI (see chapter~\ref{webui}).
+
+For a detailed look on the structure and contents of the media library, check your database.
+
+\subsection{My device is not able to list the directories/items shared by {\em pDLNA}}
+
+If browsing the shared media directories is not working properly by your {\em DLNA} aware devices, configure the {\em LogCategory} to \verb|httpgeneric, httpdir|, restart {\em pDLNA} and do a packet capture with the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo tcpdump -p HTTPPort -s 1500 -w capture_http.pcap
+\end{lstlisting}
+Please ensure to fill in the configured {\em HTTPPort} (by default set to \verb|8001|).
+
+For a detailed look on the structure and contents of the media library, check your database.
+
+\subsection{{\em pDLNA} is not able to stream media items to my device}
+
+In any case, that streaming of videos, music or images is not working properly, please set the {\em LogCategory} parameter to \verb|httpgeneric, httpstream|, restart {\em pDLNA} and start a packet capture with the following command:
+\begin{lstlisting}
+pdlna@mediaserver:~$ sudo tcpdump -p HTTPPort -s 1500 -w capture_http.pcap
+\end{lstlisting}
+Please ensure to fill in the configured {\em HTTPPort} (by default set to \verb|8001|).
+
+\section{Reporting problems}
+
+If you are not able to fix the problem or just want me to take a closer look, please supply all mentioned information, like network statistics, packet captures, logs and so on.
+
+In case of having a {\em DLNA} aware device, which is not working properly with {\em pDLNA} please supply a full packet capture, including the whole {\em SSDP} and {\em DLNA} packets of this specific device communicating with another digital media server (which is working properly). In this case I might be able to deternmine the differences and supply a new version of {\em pDLNA} which is supporting this device.

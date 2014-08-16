@@ -1,0 +1,89 @@
+%
+% FIXED ISSUES
+%
+
+\chapter{Fixed Issues}
+\label{fixedissues}
+
+\section{DirectoryListings not working when mandatory data fields not defined}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.64.2.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+Directory listings are not working, when {\em mandatory} data fields are not defined in the XML \verb|<FILTER>| tag of the browse request from a DLNA media renderer.\footnote{\url{github.com/geuma/pDLNA/issues/24}}.
+
+\subsection{Workaround}
+
+There is no workaround for this issue.
+
+\section{Movie::Info is still used by PDLNA::Media}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.64.1.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+The \verb|PDLNA::Media| Perl module is still using \verb|Movie::Info| Perl module, even if it is not required any more. So {\em pDLNA} will not start up if the \verb|Movie::Info| Perl module is not installed\footnote{\url{github.com/geuma/pDLNA/issues/23}}.
+
+\subsection{Workaround}
+
+Install the missing Perl module \verb|Movie::Info|.
+
+\section{parsing problem if media file name contains special regex characters like '(', ')' or others}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been finally fixed with {\em pDLNA} in version 0.65.0.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+This issue has been reported on a \verb|Raspberry Pi| running Linux with Perl 5.14.2 and locales configured to \verb|de_DE.UTF-8|.
+
+The following error appears, when files with special characters (for instance brackets) are existing, which break some regular expressions in {\em pDLNA}\footnote{\url{github.com/geuma/pDLNA/issues/21}}:
+\begin{lstlisting}
+Issuing rollback() due to DESTROY without explicit disconnect() of DBD::SQLite::db handle dbname=/media/TREK_2/Audio/pdlna.db at ./pDLNA.pl line 63.
+Thread 1 terminated abnormally: Unmatched ) in regex; marked by <-- HERE in m/^18-This Live I) <-- HERE 'm Living.mp3$/ at PDLNA/ContentLibrary.pm line 152.
+\end{lstlisting}
+
+\subsection{Workaround}
+
+There is no workaround for this issue. Or would you like to rename your files?
+
+\section{Use of uninitialized value \$request\_line in string ne at /PDLNA/HTTPServer.pm line xxx.}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.62.0.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+Apparently {\em pDLNA} sometimes starts to print, for unknown reasons, the following warning message to \verb|STDOUT| infinitely\footnote{\url{github.com/geuma/pDLNA/issues/13}}:
+\begin{lstlisting}
+Use of uninitialized value $request_line in string ne at /PDLNA/HTTPServer.pm line xxx.
+\end{lstlisting}
+
+\subsection{Workaround}
+
+Since, this message is only a warning message, it does not affect the functionality of {\em pDLNA}. But actually, it increases the system load. A restart of {\em pDLNA} will fix the problem temporarily, but the issue might take place again.
+
+\section{AllowedClients auto detection on FreeBSD is defect}
+
+\begin{colframeimportantnote}
+\textsc{IMPORTANT NOTE:} This issue has been fixed with {\em pDLNA} in version 0.61.0.
+\end{colframeimportantnote}
+
+\subsection{Describtion}
+
+Apparently {\em pDLNA} dies with the following error message on {\em FreeBSD} if {\em AllowedClients} auto detection is enabled\footnote{\url{github.com/geuma/pDLNA/issues/4}}:
+\begin{lstlisting}
+AllowedClients(ip_address_sv) at PDLNA/Config.pm line xxx.
+\end{lstlisting}
+This seems to be a problem with the usage of \verb|AllowedClients(ip_address_sv)| on {\em FreeBSD}.
+
+\subsection{Workaround}
+
+As a workaround you are able to define the {\em AllowedCLients} configuration parameter in the configuration file. For detailed information see section~\ref{confallowedclients}.
